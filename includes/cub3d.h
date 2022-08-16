@@ -40,9 +40,23 @@ typedef struct	s_img {
 }				t_img;
 
 
+typedef struct s_grid_data 
+{
+    int col;
+    int row;
+    int rect_width;
+    int rect_height;
+    int space_color;
+    int wall_color;
+} t_grid_data;
+
+
 t_map_list *create_map_list (char *map);
 void push_to_list (t_map_list **map, char *column);
 void	my_mlx_pixel_put(t_img *data, int x, int y, int color);
-
+void draw_rect (t_img *data, int x, int y, int width, int height, int color);
+void calculate_grid (t_map_list *list, int *rect_width, int *rect_height, int *col, int *row);
+void draw_grid (t_map_list *list, t_grid_data grid, t_img *img);
+void draw_row (t_map_list *tmp, t_grid_data grid, t_img *img, int *j, int *x, int y);
 
 #endif 
