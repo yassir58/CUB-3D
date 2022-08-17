@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yelatman <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/10 16:58:49 by yelatman          #+#    #+#              #
-#    Updated: 2021/11/12 18:55:38 by yelatman         ###   ########.fr        #
+#    Updated: 2022/08/17 15:27:17 by ochoumou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRC = ft_atoi.c ft_isalpha.c  ft_itoa.c ft_memmove.c ft_putnbr_fd.c \
 	  ft_striteri.c ft_strlen.c ft_strrchr.c ft_toupper.c \
       ft_calloc.c ft_isdigit.c ft_memcmp.c ft_putchar_fd.c ft_split.c \
 	  ft_strjoin.c ft_strmapi.c ft_strtrim.c \
-      ft_isalnum.c ft_isprint.c ft_memcpy.c ft_putendl_fd.c ft_strchr.c ft_strlcat.c ft_strncmp.c ft_substr.c
+      ft_isalnum.c ft_isprint.c ft_memcpy.c ft_putendl_fd.c ft_strchr.c ft_strlcat.c ft_strncmp.c ft_substr.c ft_strcmp.c
 BONUS_SRCS = ft_lstnew.c ft_lstadd_front.c ft_lstsize.c \
 			 ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c \
 			 ft_lstclear.c ft_lstiter.c ft_lstmap.c

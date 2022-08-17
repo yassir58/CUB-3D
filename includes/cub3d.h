@@ -16,20 +16,7 @@
 #define RES_X 1080
 #define RES_Y 820
 
-typedef struct s_map_list 
-{
-    char *column;
-    struct s_map_list *next;
-} t_map_list ;
-
-
-typedef struct s_game_data
-{
-    int tile_size;
-    int row_number;
-    int col_number;
-    int **cos_sin_table;
-} t_game_data;
+#define WALL_CHARS "01NSWE"
 
 typedef struct	s_img {
 	void	*img;
@@ -39,6 +26,28 @@ typedef struct	s_img {
 	int		endian;
 }				t_img;
 
+typedef struct s_map_list 
+{
+    char *column;
+    struct s_map_list *next;
+} t_map_list;
+
+typedef struct s_game_params 
+{
+    char *key;
+    char *value;
+    struct s_game_params *next;
+} t_game_params;
+
+typedef struct s_game_data
+{
+    int height;
+    int width;
+    int floor;
+    int ceil;
+    int **map;
+    t_game_params *params;
+} t_game_data;
 
 typedef struct s_grid_data 
 {
@@ -58,5 +67,14 @@ void draw_rect (t_img *data, int x, int y, int width, int height, int color);
 void calculate_grid (t_map_list *list, int *rect_width, int *rect_height, int *col, int *row);
 void draw_grid (t_map_list *list, t_grid_data grid, t_img *img);
 void draw_row (t_map_list *tmp, t_grid_data grid, t_img *img, int *j, int *x, int y);
+void    parse_map(char *path, t_game_data *data);
+
+
+// Parse list related functions
+
+t_game_params   *new_params(char *key, char *value);
+void            add_param(t_game_params **lst, t_game_params *new);
+int             search_params_list(char *key, t_game_params *list);
+void            print_params_list(t_game_params *list);
 
 #endif 

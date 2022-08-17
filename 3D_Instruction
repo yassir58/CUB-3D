@@ -1,0 +1,14 @@
++ Left and right ARROW keys will be reserved for the rotation of the FOV
++ W,A,S,D will be reserved for moving the point through the map
++ ESC and the red cross Will close the window
++ The map will only contain these characters N, S , E , W , 0 , 1
+  => N: The player will be facing NORTH
+  => S: The player will be facing SOUTH
+  => E: The player will be facing EAST
+  => W: The player will be facing WEST
+  => 0: An empty space
+  => 1: A wall
+
++ The game should have a map content validator and elements validator.
++ The game informations can be separated by one or more spaces.
++ The map content should always be the last thin the file.
