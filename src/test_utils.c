@@ -51,6 +51,11 @@ void draw_row (t_map_list *tmp, t_grid_data grid, t_img *img, int *j, int *x, in
             draw_rect (img, *x, y, grid.rect_width, grid.rect_height, grid.space_color);
         else if (tmp->column[*j] == '1')
             draw_rect (img, *x, y, grid.rect_width, grid.rect_height, grid.wall_color);
+        else if (tmp->column[*j] == 'P')
+        {
+            draw_rect (img, *x, y, grid.rect_width, grid.rect_height, grid.space_color);
+            draw_player (img, *x, y, 10, 0x00FF0000);
+        }
         *x += grid.rect_width;
         (*j)++;
     }
