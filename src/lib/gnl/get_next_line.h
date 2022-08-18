@@ -19,5 +19,5 @@
 
 #define BUFFER_SIZE 1
 
-char	*advanced_get_next_line(int fd, int status);
+char	*get_next_line(int fd);
 #endif
