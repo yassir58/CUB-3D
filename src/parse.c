@@ -76,9 +76,9 @@ void    add_params_to_list(char *line, t_game_params **params_list)
     {
         key = ft_strdup(splitted[0]);
         value = ft_strdup(splitted[1]);
-        if (!search_params_list(key, (*params_list)))
+        if (!search_params_list(key, params_list))
         {
-            if (ft_strcmp(key, "F") || ft_strcmp(key, "C"))
+            if (!ft_strcmp(key, "F") || !ft_strcmp(key, "C"))
             {
                 // !LEAK
                 value = ft_itoa(get_color(value));
@@ -99,10 +99,8 @@ t_game_params *get_params_list(int fd)
     line = advanced_get_next_line(fd, 0);
     while (!check_map_line(line))
     {
-        // Get the insert this param in the linked list params
-        line = advanced_get_next_line(fd, 0);
-        printf("Line: %s\n", line);
         add_params_to_list(line, &params_list);
+        line = advanced_get_next_line(fd, 0);
     }
     return (params_list);
 }
@@ -117,5 +115,11 @@ void    parse_map(char *path, t_game_data *data)
         return ;
     list = get_params_list(fd);
     print_params_list(list);
+    char *str = advanced_get_next_line(fd, 0);
+    while (str)
+    {
+        printf("%s\n", str);
+        str = advanced_get_next_line(fd, 0);
+    }
     // open the map and send fd to the appropriate function so it can get the game params.
 }

@@ -19,14 +19,14 @@ void	add_param(t_game_params **lst, t_game_params *new)
 	*lst = new;
 }
 
-int search_params_list(char *key, t_game_params *list)
+int search_params_list(char *key, t_game_params **list)
 {
     t_game_params *tmp;
 
-    tmp = list;
+    tmp = *list;
     while (tmp != NULL)
     {
-        if (ft_strcmp(key, tmp->key))
+        if (!ft_strcmp(key, tmp->key))
             return (1);
         tmp = tmp->next;
     }
@@ -40,7 +40,7 @@ void    print_params_list(t_game_params *list)
     tmp = list;
     while (tmp != NULL)
     {
-        printf("Key:%s = Value:%s\n", tmp->key ,tmp->value);
+        printf("Key:%s Value:%s\n", tmp->key ,tmp->value);
         tmp = tmp->next;
     }
 }
