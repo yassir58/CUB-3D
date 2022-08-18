@@ -10,23 +10,18 @@ void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
 }
 
 
-void draw_rect (t_img *data, int x, int y, int width, int height, int color)
+void draw_rect (int x, int y, int color)
 {
 	int i;
 	int j;
-	int clr;
 
 	i = 0;
 	j = 0;
-	while (i < height)
+	while (i < TILE_SIZE)
 	{
-		while (j < width)
+		while (j < TILE_SIZE)
 		{
-			// if (i == 0 || j == 0 || (j == width) || (i == height))
-			// 	clr = 0x00FF0000;
-			// else
-				clr = color;
-				my_mlx_pixel_put (data , (x + j), (y + i), clr);
+			my_mlx_pixel_put ((&g_data.img) , (x + j), (y + i), color);
 			j++;
 		}
 		j = 0;
@@ -34,7 +29,7 @@ void draw_rect (t_img *data, int x, int y, int width, int height, int color)
 	}
 }
 
-void draw_player (t_img *data, int x, int y,double radius,  int color)
+void draw_player (int x, int y,double radius,  int color)
 {
 	double i, angle, x1, y1, j;
 
@@ -48,7 +43,7 @@ void draw_player (t_img *data, int x, int y,double radius,  int color)
 			angle  =  i;
 			x1 = j * cos(angle * (M_PI / 180));
 			y1 = j * sin (angle * (M_PI / 180));
-			my_mlx_pixel_put (data , (x + x1), (y + y1), color);
+			my_mlx_pixel_put ((&g_data.img) , (x + x1), (y + y1), color);
 			i += 0.1;
 		}
 		i = 0;

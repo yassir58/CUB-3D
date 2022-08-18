@@ -1,7 +1,7 @@
 #include "../includes/cub3d.h"
 
 
-void calculate_grid (t_map_list *list, int *rect_width, int *rect_height, int *col, int *row)
+void calculate_grid (t_map_list *list, int *col, int *row)
 {
  
     t_map_list *temp;
@@ -14,50 +14,45 @@ void calculate_grid (t_map_list *list, int *rect_width, int *rect_height, int *c
         (*row)++;
         temp = temp->next;
     }
-    *rect_height = 32;
-    *rect_width = 32;
 }
 
 
-void draw_grid (t_map_list *list, t_grid_data grid, t_img *img)
+void draw_grid (void)
 {
     int x, y ,i ,j;
-    int color;
-    t_map_list *tmp;
-  
-    tmp = list;
-    x = 0, y = 0, i = 0, j = 0, color = 0;
-    printf ("|col %d| row %d| width %d| height %d|\n", grid.col, grid.row, grid.rect_width, grid.rect_height);
+
+    x = 0, y = 0, i = 0, j = 0;
    
-    while (i < grid.row)
+    while (i < g_data.grid.row)
     {
-        draw_row (tmp, grid, img, &j , &x, y);
+        draw_row (i, &j , &x, y);
         j = 0;
         x = 0;
-        y += grid.rect_height;
-        printf ("[y:%d]\n", y);
-        tmp = tmp->next;
+        y += TILE_SIZE;
         i++;
     }
 }
 
 
-void draw_row (t_map_list *tmp, t_grid_data grid, t_img *img, int *j, int *x, int y)
+void draw_row (int i, int *j, int *x, int y)
 {
-    printf ("x:%d y:%d\n", *x, y);
-    while (*j < grid.col)
+    while (*j < g_data.grid.col)
     {  
-        if (tmp->column[*j] == '0')
-            draw_rect (img, *x, y, grid.rect_width, grid.rect_height, grid.space_color);
-        else if (tmp->column[*j] == '1')
-            draw_rect (img, *x, y, grid.rect_width, grid.rect_height, grid.wall_color);
-        else if (tmp->column[*j] == 'P')
+        if (g_data.data.map[i][*j] == '1')
+            draw_rect (*x, y, WALL_CLR);
+        else if (g_data.data.map[i][*j] == 'P')
         {
-            draw_rect (img, *x, y, grid.rect_width, grid.rect_height, grid.space_color);
-            draw_player (img, *x, y, 10, 0x00FF0000);
+            draw_rect (*x, y, SPACE_CLR);
+            if (g_data.player.initx == 0 && g_data.player.inity == 0)
+            {
+                g_data.player.initx = *x;
+                g_data.player.inity = y;
+            }
+            draw_player (g_data.player.initx, g_data.player.inity, g_data.player.radius, 0x00FF0000);
         }
-        *x += grid.rect_width;
+        else
+            draw_rect (*x, y, SPACE_CLR);
+        *x += TILE_SIZE;
         (*j)++;
     }
-    printf ("[x:%d]\n", *x);
 }

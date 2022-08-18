@@ -21,3 +21,5 @@ int	handle_keypress(int keycode, t_vars *vars)
         move_player_right ();
     return (0);
 }
+
+
