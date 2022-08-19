@@ -19,7 +19,7 @@
 #define SPACE_CLR 0x00FFFFFF
 #define WALL_CLR  0x002A0944
 #define ROT_ANGLE (M_PI / 2) // 90 deg
-#define moveSpeed 10
+#define moveSpeed 20
 #define rotationSpeed (3 * (M_PI / 180))
 # define XK_ESCAPE  53
 # define XK_LEFT    123

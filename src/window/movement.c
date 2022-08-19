@@ -5,8 +5,8 @@ void move_player_up (void)
 {
     int c;
 
-    c =  check_for_wall (g_data.player.initx , g_data.player.inity - moveSpeed);
-    if (check_outside_map (0) && c != '1')
+    c =  check_for_wall (g_data.player.initx + g_data.player.radius , (g_data.player.inity + g_data.player.radius) - moveSpeed);
+    if (c != '1')
     {
         g_data.player.inity -= moveSpeed;
         mlx_clear_window (g_data.vars.mlx, g_data.vars.mlx_win);
@@ -20,8 +20,8 @@ void move_player_down (void)
 {
     int c;
 
-    c = check_for_wall (g_data.player.initx, g_data.player.inity + moveSpeed);
-    if (check_outside_map (1) && c != '1')
+    c = check_for_wall (g_data.player.initx + g_data.player.radius, g_data.player.inity - g_data.player.radius  + moveSpeed);
+    if (c != '1')
     {
         g_data.player.inity += moveSpeed;
         mlx_clear_window (g_data.vars.mlx, g_data.vars.mlx_win);
@@ -35,8 +35,8 @@ void move_player_left (void)
 {
     int c;
 
-    c = check_for_wall (g_data.player.initx - moveSpeed, g_data.player.inity);
-    if (check_outside_map (2) && c != '1')
+    c = check_for_wall (g_data.player.initx  - moveSpeed, g_data.player.inity);
+    if (c != '1')
     {
         g_data.player.initx -= moveSpeed;
         mlx_clear_window (g_data.vars.mlx, g_data.vars.mlx_win);
@@ -49,8 +49,8 @@ void move_player_right (void)
 {
     int c;
 
-    c = check_for_wall (g_data.player.initx + moveSpeed, g_data.player.inity);
-    if (check_outside_map (3) && c != '1')
+    c = check_for_wall (g_data.player.initx  + moveSpeed, g_data.player.inity);
+    if (c != '1')
     {
         g_data.player.initx += moveSpeed;
         mlx_clear_window (g_data.vars.mlx, g_data.vars.mlx_win);
