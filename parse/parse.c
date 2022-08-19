@@ -33,8 +33,13 @@ int get_color(char *str)
     color = 0;
     if (count_seperator(str, ',') == 2)
     {
-        color = 65536 * ft_atoi(rgb[0]) + 256 * ft_atoi(rgb[1]) + ft_atoi(rgb[2]);
-        return (color);
+        if (ft_atoi(rgb[0]) <= 255 && ft_atoi(rgb[1]) <= 255 && ft_atoi(rgb[2]) <= 255)
+        {
+            color = 65536 * ft_atoi(rgb[0]) + 256 * ft_atoi(rgb[1]) + ft_atoi(rgb[2]);
+            return (color);
+        }
+        else
+            app_error();
     }
     return (-1);
 }
@@ -51,6 +56,8 @@ int check_map_line(char *str)
     int i;
 
     i = 0;
+    if (!str)
+        return (0);
     while (str[i] && str[i] == ' ')
         i += 1;
     if (!str[i])
@@ -90,36 +97,38 @@ void    add_params_to_list(char *line, t_game_params **params_list)
     }
 }
 
-t_game_params *get_params_list(int fd)
+void    get_lists(int fd, t_game_data *data)
 {
     char *line;
     t_game_params *params_list;
+    t_map_line *lines_list;
 
     params_list = NULL;
+    // Still not sure weather we need all the information to validate the map 
     line = advanced_get_next_line(fd, 0);
     while (!check_map_line(line))
     {
         add_params_to_list(line, &params_list);
         line = advanced_get_next_line(fd, 0);
     }
-    return (params_list);
+    while (check_map_line(line))
+    {
+        add_line(&lines_list, new_line(line));
+        line = advanced_get_next_line(fd, 0);
+    }
+    data->params = params_list;
+    data->lines = lines_list;
 }
 
 void    parse_map(char *path, t_game_data *data)
 {
     int fd;
-    t_game_params *list;
 
     fd = open(path, O_RDONLY);
     if (fd < 0)
         return ;
-    list = get_params_list(fd);
-    print_params_list(list);
-    char *str = advanced_get_next_line(fd, 0);
-    while (str)
-    {
-        printf("%s\n", str);
-        str = advanced_get_next_line(fd, 0);
-    }
+    get_lists(fd, data);
+    print_params_list(data->params);
+    print_lines_list(data->lines);
     // open the map and send fd to the appropriate function so it can get the game params.
 }
