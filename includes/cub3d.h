@@ -33,6 +33,13 @@
 # define EMPTY_SPACE 1
 # define PLAYER 2
 
+#define WALL_CHARS "01NSWE "
+
+typedef struct s_map_line {
+    char *line;
+    struct s_map_line *next;
+} t_map_line;
+
 typedef struct s_game_params 
 {
     char *key;
@@ -50,7 +57,7 @@ typedef struct s_game_data
     int width;
     int floor;
     int ceil;
-    char **map;
+    t_map_line *lines;
     t_game_params *params;
 } t_game_data;
 
@@ -124,11 +131,14 @@ int     next_horizontal_position (int y);
 int check_for_wall (int x, int y);
 // Parse list related functions
 
+char            *advanced_get_next_line(int fd, int status);
 t_game_params   *new_params(char *key, char *value);
 void            add_param(t_game_params **lst, t_game_params *new);
-int             search_params_list(char *key, t_game_params *list);
+int             search_params_list(char *key, t_game_params **list);
 void            print_params_list(t_game_params *list);
-
+void            add_line(t_map_line **lst, t_map_line *new);
+t_map_line      *new_line(char *line);
+void    print_lines_list(t_map_line *list);
 
 void draw_player (int x, int y,double radius,  int color);
 int	handle_keypress(int keycode, t_vars *vars);
