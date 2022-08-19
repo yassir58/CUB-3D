@@ -1,6 +1,5 @@
 #include "../../includes/cub3d.h"
 
-
 int check_for_wall (int x, int y)
 {
     int indx_x, indx_y;
@@ -12,7 +11,6 @@ int check_for_wall (int x, int y)
     c = g_data.data.map[indx_y][indx_x];
     return (c);
 }
-
 
 int next_vertical_position (int x)
 {
