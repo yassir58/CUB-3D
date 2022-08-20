@@ -77,6 +77,7 @@ void    add_params_to_list(char *line, t_game_params **params_list)
     char **splitted;
     char *key;
     char *value;
+    int color;
 
     splitted = ft_split(line, ' ');
     if (splitted[0] && splitted[1])
@@ -88,12 +89,42 @@ void    add_params_to_list(char *line, t_game_params **params_list)
             if (!ft_strcmp(key, "F") || !ft_strcmp(key, "C"))
             {
                 // !LEAK
-                value = ft_itoa(get_color(value));
+                color = get_color(value);
+                if (color == -1)
+                    app_error();
+                value = ft_itoa(color);
             }
             add_param(params_list, new_params(key, value));
         }
         else
             app_error();
+    }
+}
+
+int number_of_el(char **table)
+{
+    int i;
+
+    i = 0;
+    while (table[i] != NULL)
+        i++;
+    return (i);
+}
+
+void    validate_map(char **map)
+{
+    // This function will be reponsible for validating the the map.
+
+    // Printing all the elements to see if the map has been sucessfully.
+    int i;
+    int size;
+
+    size = number_of_el(map);
+    i = 0;
+    while (i < size)
+    {
+        printf("%s\n", map[i]);
+        i++;
     }
 }
 
@@ -104,7 +135,7 @@ void    get_lists(int fd, t_game_data *data)
     t_map_line *lines_list;
 
     params_list = NULL;
-    // Still not sure weather we need all the information to validate the map 
+    lines_list = NULL;
     line = advanced_get_next_line(fd, 0);
     while (!check_map_line(line))
     {
@@ -116,6 +147,8 @@ void    get_lists(int fd, t_game_data *data)
         add_line(&lines_list, new_line(line));
         line = advanced_get_next_line(fd, 0);
     }
+    if (line)
+        app_error();
     data->params = params_list;
     data->lines = lines_list;
 }
@@ -123,12 +156,12 @@ void    get_lists(int fd, t_game_data *data)
 void    parse_map(char *path, t_game_data *data)
 {
     int fd;
+    char **map;
 
     fd = open(path, O_RDONLY);
     if (fd < 0)
         return ;
     get_lists(fd, data);
-    print_params_list(data->params);
-    print_lines_list(data->lines);
+    validate_map(convert_lines_table(data->lines));
     // open the map and send fd to the appropriate function so it can get the game params.
 }

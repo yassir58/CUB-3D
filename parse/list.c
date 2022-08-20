@@ -13,6 +13,21 @@ t_game_params	*new_params(char *key, char *value)
 	return (new_list);
 }
 
+int lines_number(t_map_line *list)
+{
+    int i;
+    t_map_line *tmp;
+
+    i = 0;
+    tmp = list;
+    while (tmp != NULL)
+    {
+        i += 1;
+        tmp = tmp->next;
+    }
+    return (i);
+}
+
 void	add_param(t_game_params **lst, t_game_params *new)
 {
 	new->next = *lst;
@@ -31,10 +46,26 @@ t_map_line	*new_line(char *line)
 	return (new_list);
 }
 
+t_map_line	*last_line(t_map_line *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
+}
+
 void	add_line(t_map_line **lst, t_map_line *new)
 {
-	new->next = *lst;
-	*lst = new;
+	t_map_line	*last_node;
+
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	last_node = last_line(*lst);
+	last_node->next = new;
 }
 
 int search_params_list(char *key, t_game_params **list)
