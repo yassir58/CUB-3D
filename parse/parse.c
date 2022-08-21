@@ -1,10 +1,23 @@
 #include "../includes/cub3d.h"
 
-void    app_error()
+void    app_error(int code)
 {
-    printf("Warning: Parse error exiting\n");
+    if (code == 1)
+        printf("Error: parse error exiting\n");
+    else if (code == 2)
+        printf("Error: invalid map exiting\n");
+    else if (code == 3)
+        printf("Error: map colors are incorrect\n");
+    else if (code == 4)
+        printf("Error: invalid map extension\n");
+    else if (code == 5)
+        printf("Error: could not open file.\n");
     exit(1);
 }
+
+// !TODO: 
+//     + Validate the map extension.
+//     + Check that every texture file exits if its not return an error.
 
 int count_seperator(char *str, char c)
 {
@@ -39,7 +52,7 @@ int get_color(char *str)
             return (color);
         }
         else
-            app_error();
+            app_error(3);
     }
     return (-1);
 }
@@ -91,13 +104,13 @@ void    add_params_to_list(char *line, t_game_params **params_list)
                 // !LEAK
                 color = get_color(value);
                 if (color == -1)
-                    app_error();
+                    app_error(3);
                 value = ft_itoa(color);
             }
             add_param(params_list, new_params(key, value));
         }
         else
-            app_error();
+            app_error(3);
     }
 }
 
@@ -111,21 +124,13 @@ int number_of_el(char **table)
     return (i);
 }
 
-void    validate_map(char **map)
+void    validate_extension(char *path)
 {
-    // This function will be reponsible for validating the the map.
-
-    // Printing all the elements to see if the map has been sucessfully.
-    int i;
     int size;
 
-    size = number_of_el(map);
-    i = 0;
-    while (i < size)
-    {
-        printf("%s\n", map[i]);
-        i++;
-    }
+    size = ft_strlen(path) - 4;
+    if (strcmp(".cub",path + size))
+        app_error(4);
 }
 
 void    get_lists(int fd, t_game_data *data)
@@ -148,7 +153,7 @@ void    get_lists(int fd, t_game_data *data)
         line = advanced_get_next_line(fd, 0);
     }
     if (line)
-        app_error();
+        app_error(1);
     data->params = params_list;
     data->lines = lines_list;
 }
@@ -158,10 +163,11 @@ void    parse_map(char *path, t_game_data *data)
     int fd;
     char **map;
 
+    validate_extension(path);
     fd = open(path, O_RDONLY);
     if (fd < 0)
-        return ;
-    get_lists(fd, data);
-    validate_map(convert_lines_table(data->lines));
+        app_error(5);
+    // get_lists(fd, data);
+    // validate_map(convert_lines_table(data->lines));
     // open the map and send fd to the appropriate function so it can get the game params.
 }

@@ -34,6 +34,8 @@
 # define PLAYER 2
 
 #define WALL_CHARS "01NSWE "
+#define WALL_LINE "1 "
+#define PLAYER_CHARS "NSWE"
 
 typedef struct s_map_line {
     char *line;
@@ -129,17 +131,23 @@ int     check_outside_map (int flag);
 int     next_vertical_position (int x);
 int     next_horizontal_position (int y);
 int check_for_wall (int x, int y);
-// Parse list related functions
-
-char            *advanced_get_next_line(int fd, int status);
-t_game_params   *new_params(char *key, char *value);
-void            add_param(t_game_params **lst, t_game_params *new);
-int             search_params_list(char *key, t_game_params **list);
-void            print_params_list(t_game_params *list);
-void            add_line(t_map_line **lst, t_map_line *new);
-t_map_line      *new_line(char *line);
-void    print_lines_list(t_map_line *list);
 
 void draw_player (int x, int y,double radius,  int color);
 int	handle_keypress(int keycode, t_vars *vars);
+
+// Parse list related functions
+t_game_params   *new_params(char *key, char *value);
+t_map_line      *new_line(char *line);
+int             search_params_list(char *key, t_game_params **list);
+int             lines_number(t_map_line *list);
+void            add_param(t_game_params **lst, t_game_params *new);
+void            add_line(t_map_line **lst, t_map_line *new);
+// Convert list to table
+char            **convert_lines_table(t_map_line *list);
+// Reading file
+char            *advanced_get_next_line(int fd, int status);
+// Printing lists
+void            print_lines_list(t_map_line *list);
+void            print_params_list(t_game_params *list);
+
 #endif 
