@@ -2,6 +2,7 @@
 
 void    app_error(int code)
 {
+    //! In this function we should free all the allocated lists before exit.
     if (code == 1)
         printf("Error: parse error exiting\n");
     else if (code == 2)
@@ -83,6 +84,16 @@ int check_map_line(char *str)
             return (0);
     }
     return (1);
+}
+
+void    check_path(char *path)
+{
+    int fd;
+
+    fd = open(path, O_RDONLY);
+    close(fd);
+    if (fd < 0)
+        app_error(5);
 }
 
 void    add_params_to_list(char *line, t_game_params **params_list)
