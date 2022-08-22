@@ -19,7 +19,7 @@
 #define SPACE_CLR 0x00FFFFFF
 #define WALL_CLR  0x002A0944
 #define ROT_ANGLE (M_PI / 2) // 90 deg
-#define moveSpeed 20
+#define moveSpeed 3
 #define rotationSpeed (3 * (M_PI / 180))
 # define XK_ESCAPE  53
 # define XK_LEFT    123
@@ -32,6 +32,10 @@
 # define WALL 0
 # define EMPTY_SPACE 1
 # define PLAYER 2
+# define RIGHT 0
+# define LEFT 1
+# define DOWN 2
+# define UP 3
 
 typedef struct s_game_params 
 {
@@ -119,9 +123,10 @@ void    move_player_down (void);
 void    move_player_up (void);
 void    init_player (void);
 int     check_outside_map (int flag);
-int     next_vertical_position (int x);
-int     next_horizontal_position (int y);
-int check_for_wall (int x, int y);
+int     position_in_map (int cord);
+int     check_for_wall (int x, int y, int flag);
+void    get_player_position (int *row, int *col);
+void    draw_line (int start_x, int start_y, int end_x, int end_y);
 // Parse list related functions
 
 t_game_params   *new_params(char *key, char *value);
@@ -130,6 +135,6 @@ int             search_params_list(char *key, t_game_params *list);
 void            print_params_list(t_game_params *list);
 
 
-void draw_player (int x, int y,double radius,  int color);
+void draw_player (int color);
 int	handle_keypress(int keycode, t_vars *vars);
 #endif 

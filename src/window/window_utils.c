@@ -1,9 +1,6 @@
 #include "../../includes/cub3d.h"
 
 
-
-
-
 int	handle_keypress(int keycode, t_vars *vars)
 {
     if (keycode == XK_ESCAPE)

@@ -48,11 +48,12 @@ void draw_row (int i, int *j, int *x, int y)
                 g_data.player.initx = *x;
                 g_data.player.inity = y;
             }
-            draw_player (g_data.player.initx, g_data.player.inity, g_data.player.radius, 0x00FF0000);
+            draw_player (0x00FF0000);
         }
         else
             draw_rect (*x, y, SPACE_CLR);
         *x += TILE_SIZE;
         (*j)++;
     }
+    // draw_line (100, 100, 200, 200);
 }
