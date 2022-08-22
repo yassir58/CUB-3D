@@ -4,13 +4,13 @@ void    app_error(int code)
 {
     //! In this function we should free all the allocated lists before exit.
     if (code == 1)
-        printf("Error: parse error exiting\n");
+        printf("Error: parse error: invalid map.\n");
     else if (code == 2)
-        printf("Error: invalid map exiting\n");
+        printf("Error: invalid map.\n");
     else if (code == 3)
-        printf("Error: map colors are incorrect\n");
+        printf("Error: map colors are incorrect.\n");
     else if (code == 4)
-        printf("Error: invalid map extension\n");
+        printf("Error: invalid map extension.\n");
     else if (code == 5)
         printf("Error: could not open file.\n");
     exit(1);
@@ -102,7 +102,7 @@ void    add_params_to_list(char *line, t_game_params **params_list)
     char *key;
     char *value;
     int color;
-
+    // TODO: I think that i should validate the key according to the attributes mentioned in the subject.
     splitted = ft_split(line, ' ');
     if (splitted[0] && splitted[1])
     {
@@ -178,7 +178,7 @@ void    parse_map(char *path, t_game_data *data)
     fd = open(path, O_RDONLY);
     if (fd < 0)
         app_error(5);
-    // get_lists(fd, data);
-    // validate_map(convert_lines_table(data->lines));
+    get_lists(fd, data);
+    validate_map(convert_lines_table(data->lines), lines_number(data->lines));
     // open the map and send fd to the appropriate function so it can get the game params.
 }
