@@ -31,6 +31,7 @@ int validate_player_position(char *line)
 
 void    validate_map(char **map, int map_size)
 {
+    //  !Call the validate extension function here.
     //  ?This function will be reponsible for validating the the map.
     //  ?Validation:
     //      ?- The first line of the map cannot be a player so as the last line
@@ -43,7 +44,8 @@ void    validate_map(char **map, int map_size)
     }
     else
     {
-        printf("Error: invalid map parse error\n");
+        printf("Error: invalid map parse error: validtion function\n");
+        exit(1);
     }
     // Printing all the elements to see if the map has been sucessfully.
     // int i;
