@@ -45,8 +45,8 @@ void draw_row (int i, int *j, int *x, int y)
             draw_rect (*x, y, SPACE_CLR);
             if (g_data.player.initx == 0 && g_data.player.inity == 0)
             {
-                g_data.player.initx = *x;
-                g_data.player.inity = y;
+                g_data.player.initx = *x + (TILE_SIZE / 2);
+                g_data.player.inity = y + (TILE_SIZE / 2);
             }
             draw_player (0x00FF0000);
         }

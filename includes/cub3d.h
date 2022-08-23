@@ -19,7 +19,7 @@
 #define SPACE_CLR 0x00FFFFFF
 #define WALL_CLR  0x002A0944
 #define ROT_ANGLE (M_PI / 2) // 90 deg
-#define moveSpeed 3
+#define moveSpeed 6
 #define rotationSpeed (3 * (M_PI / 180))
 # define XK_ESCAPE  53
 # define XK_LEFT    123
@@ -133,10 +133,9 @@ void    move_player_down (void);
 void    move_player_up (void);
 void    init_player (void);
 int     check_outside_map (int flag);
-int     next_vertical_position (int x);
-int     next_horizontal_position (int y);
-int check_for_wall (int x, int y);
-
+int     position_in_map (int x);
+int     check_for_wall (int x, int y);
+void draw_line (int start_x, int start_y, int end_x, int end_y);
 void draw_player (int color);
 int	handle_keypress(int keycode, t_vars *vars);
 
