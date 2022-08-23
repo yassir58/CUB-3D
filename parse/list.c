@@ -1,6 +1,6 @@
 #include "../includes/cub3d.h"
 
-t_game_params	*new_params(char *key, char *value)
+t_game_params	*new_params(char *key, char *value, int index)
 {
 	t_game_params	*new_list;
 
@@ -9,6 +9,7 @@ t_game_params	*new_params(char *key, char *value)
 		return (NULL);
     new_list->key = key;
 	new_list->value = value;
+    new_list->index = index;
 	new_list->next = NULL;
 	return (new_list);
 }
@@ -28,10 +29,26 @@ int lines_number(t_map_line *list)
     return (i);
 }
 
+t_game_params   *last_param(t_game_params *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
+}
+
 void	add_param(t_game_params **lst, t_game_params *new)
 {
-	new->next = *lst;
-	*lst = new;
+	t_game_params	*last_node;
+
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	last_node = last_param(*lst);
+	last_node->next = new;
 }
 
 t_map_line	*new_line(char *line)
@@ -82,6 +99,9 @@ int search_params_list(char *key, t_game_params **list)
     return (0);
 }
 
+
+
+
 void    print_params_list(t_game_params *list)
 {
     t_game_params *tmp;
@@ -89,7 +109,7 @@ void    print_params_list(t_game_params *list)
     tmp = list;
     while (tmp != NULL)
     {
-        printf("Key:%s Value:%s\n", tmp->key ,tmp->value);
+        printf("Key:%s Value:%s Index:%d\n", tmp->key ,tmp->value, tmp->index);
         tmp = tmp->next;
     }
 }
