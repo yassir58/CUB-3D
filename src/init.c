@@ -43,7 +43,7 @@ void init_player (void)
 {
     g_data.player.initx = 0;
     g_data.player.inity = 0;
-    g_data.player.radius = 6;
+    g_data.player.radius = 2;
     g_data.player.turnDirection = 0;
     g_data.player.walkDirection = 0;
     g_data.player.x_cord = 0;
