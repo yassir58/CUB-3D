@@ -1,6 +1,6 @@
 #include "../../includes/cub3d.h"
 
-
+/*
 void move_player_up (void)
 {
     check_for_wall (g_data.player.initx, g_data.player.inity - (moveSpeed), UP);
@@ -67,3 +67,4 @@ void draw_line (int start_x, int start_y, int end_x, int end_y)
         x=x+1;
     }
 }
+*/

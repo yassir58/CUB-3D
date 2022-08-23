@@ -1,5 +1,5 @@
 #include "../../includes/cub3d.h"
-
+/*
 int check_for_wall (int x, int y, int flag)
 {
     int indx_x, indx_y;
@@ -64,4 +64,4 @@ void get_player_position (int *row, int *col)
         j = 0;
         i++;
     }
-}
+}*/
