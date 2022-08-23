@@ -15,6 +15,14 @@ void    app_error(int code)
         printf("Error: could not open file.\n");
     else if (code == 6)
         printf("Error: invalid identifer\n");
+    else if (code == 7)
+        printf("Error: invalid player position.\n");
+    else if (code == 8)
+        printf("Error: invalid map structure.\n");
+    else if (code == 9)
+        printf("Error: player exists in multiple places.\n");
+     else if (code == 10)
+        printf("Error: player does not exist.\n");
     exit(1);
 }
 
@@ -134,7 +142,6 @@ void    check_path(char *path)
     int fd;
 
     fd = open(path, O_RDONLY);
-    printf("%d\n", fd);
     close(fd);
     if (fd < 0)
         app_error(5);
@@ -146,6 +153,7 @@ void    add_params_to_list(char *line, t_game_params **params_list)
     char *key;
     char *value;
     int color;
+    // 
     // TODO: I think that i should validate the key according to the attributes mentioned in the subject.
     splitted = ft_split(line, ' ');
     if (splitted[0] && splitted[1])
