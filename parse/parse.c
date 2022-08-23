@@ -21,7 +21,47 @@ void    app_error(int code)
 // !TODO: 
 //     + Validate the map extension.
 //     + Check that every texture file exits if its not return an error.
+//     + Check the order of the elements according to the map
 
+int check_identifier(char *id)
+{
+    if (!ft_strcmp(id, "NO") || !ft_strcmp(id, "SO") || !ft_strcmp(id, "WE") || !ft_strcmp(id, "EA"))
+        return (1);
+    else if (!ft_strcmp(id, "F") || !ft_strcmp(id, "C"))
+        return (2);
+    return (0);
+}
+
+int get_identifer_number(char *id)
+{
+    if (!ft_strcmp(id, "NO"))
+        return (1);
+    else if (!ft_strcmp(id, "SO"))
+        return (2);
+    else if (!ft_strcmp(id, "WE"))
+        return (3);
+    else if (!ft_strcmp(id, "EA"))
+        return (4);
+    else if (!ft_strcmp(id, "F"))
+        return (5);
+    else if (!ft_strcmp(id, "C"))
+        return (6);
+    return (0);
+}
+
+void check_identifers_order(t_game_params *params)
+{
+    t_game_params *tmp;
+
+    tmp = params;
+    while (tmp->next != NULL)
+    {
+        if (tmp->index < tmp->next->index)
+            tmp = tmp->next;
+        else
+            app_error(6);
+    }
+}
 
 int count_seperator(char *str, char c)
 {
