@@ -99,9 +99,6 @@ int search_params_list(char *key, t_game_params **list)
     return (0);
 }
 
-
-
-
 void    print_params_list(t_game_params *list)
 {
     t_game_params *tmp;

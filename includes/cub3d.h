@@ -7,6 +7,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <math.h>
+#include <stdbool.h>
 #include "../src/lib/libft/libft.h"
 #include "../src/lib/gnl/get_next_line.h"
 #include <mlx.h>
@@ -50,6 +51,7 @@ typedef struct s_game_params
 {
     char *key;
     char *value;
+    int index;
     struct s_game_params *next;
 } t_game_params;
 
@@ -143,7 +145,7 @@ void draw_player (int color);
 int	handle_keypress(int keycode, t_vars *vars);
 
 // Parse list related functions
-t_game_params   *new_params(char *key, char *value);
+t_game_params	*new_params(char *key, char *value, int index);
 t_map_line      *new_line(char *line);
 int             search_params_list(char *key, t_game_params **list);
 int             lines_number(t_map_line *list);
@@ -156,5 +158,12 @@ char            *advanced_get_next_line(int fd, int status);
 // Printing lists
 void            print_lines_list(t_map_line *list);
 void            print_params_list(t_game_params *list);
+// Map validation
+
+void    validate_map(char **map, int map_size);
+
+// Error management
+
+void    app_error(int code);
 
 #endif 
