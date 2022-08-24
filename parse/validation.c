@@ -52,12 +52,9 @@ void validate_player_occurrence(char **map)
     {
         while (map[i][j] != '\0')
         {
-            if (!player)
-            {
-                if (ft_strchr(PLAYER_CHARS, map[i][j]) && !player)
-                    player = true;
-            }
-            else
+            if (ft_strchr(PLAYER_CHARS, map[i][j]) && !player)
+                player = true;
+            else if (ft_strchr(PLAYER_CHARS, map[i][j]) && player)
                 app_error(9);
             j++;
         }
