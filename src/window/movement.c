@@ -49,7 +49,7 @@ void move_player_right (void)
 {
     int flag;
 
-    flag = check_for_wall ((g_data.player.initx + g_data.player.radius) + moveSpeed,
+    flag = check_for_wall ((g_data.player.initx) + moveSpeed,
      g_data.player.inity);
     if (g_data.player.initx + moveSpeed <= RES_X && flag)
         g_data.player.initx += moveSpeed;
@@ -75,13 +75,13 @@ void draw_line (int start_x, int start_y, int end_x, int end_y)
     {
         if(p >= 0)
         {
-            my_mlx_pixel_put (&g_data.img, x, y, 0x00FF0000);
+            my_mlx_pixel_put (&g_data.img, x, y, 0x00000000);
             y=y+1;
             p=p+2*dy-2*dx;
         }
         else
         {
-            my_mlx_pixel_put (&g_data.img, x, y, 0x00FF0000);
+            my_mlx_pixel_put (&g_data.img, x, y, 0x00000000);
             p=p+2*dy;
         }
         x=x+1;

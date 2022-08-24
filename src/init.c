@@ -48,4 +48,7 @@ void init_player (void)
     g_data.player.walkDirection = 0;
     g_data.player.x_cord = 0;
     g_data.player.y_cord = 0;
+    g_data.player.deriction_arrow_x = 0;
+    g_data.player.deriction_arrow_y = 0;
+    g_data.player.deriction_arrow_length = 20;
 }

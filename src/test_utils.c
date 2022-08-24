@@ -55,5 +55,5 @@ void draw_row (int i, int *j, int *x, int y)
         *x += TILE_SIZE;
         (*j)++;
     }
-    // draw_line (100, 100, 200, 200);
+    
 }
