@@ -37,6 +37,10 @@
 # define LEFT 1
 # define DOWN 2
 # define UP 3
+# define N 270
+# define S 90
+# define W 180
+# define E 360
 
 #define WALL_CHARS "01NSWE "
 #define WALL_LINE "1 "
@@ -98,11 +102,11 @@ typedef struct s_player
     int x_cord;
     int y_cord;
     int radius;
-    int turnDirection;
-    int walkDirection;
-    int deriction_arrow_x;
-    int deriction_arrow_y;
-    int deriction_arrow_length;
+    double turnDirection;
+    double walkDirection;
+    int d_x;
+    int d_y;
+    int d_length;
 } t_player;
 
 typedef struct s_vars 
@@ -140,10 +144,12 @@ void    init_player (void);
 int     check_outside_map (int flag);
 int     position_in_map (int x);
 int     check_for_wall (int x, int y);
-void draw_line (int start_x, int start_y, int end_x, int end_y);
-void draw_player (int color);
-int	handle_keypress(int keycode, t_vars *vars);
-
+void    draw_line (int x, int y);
+void    draw_player (int color);
+int	    handle_keypress(int keycode, t_vars *vars);
+void    get_rotation_cords (int *x_2, int *y_2, double angle);
+double  deg_to_radian (int deg);
+void    DDA(int X0, int Y0, int X1, int Y1);
 // Parse list related functions
 t_game_params	*new_params(char *key, char *value, int index);
 t_map_line      *new_line(char *line);

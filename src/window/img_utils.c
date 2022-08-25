@@ -23,9 +23,9 @@ void draw_rect (int x, int y, int color)
 	{
 		while (j < TILE_SIZE)
 		{
-			if (i == 0 || j == 0 || (j == TILE_SIZE) || (i == TILE_SIZE))
-				clr = 0x00FF0000;
-			else
+			// if (i == 0 || j == 0 || (j == TILE_SIZE) || (i == TILE_SIZE))
+			// 	clr = 0x00FF0000;
+			// else
 				clr = color;
 			my_mlx_pixel_put ((&g_data.img) , (x + j), (y + i), clr);
 			j++;
@@ -38,11 +38,14 @@ void draw_rect (int x, int y, int color)
 void draw_player (int color)
 {
 	double i, angle, x1, y1, j;
+	// int x_2;
+	// int y_2;
+	// double ang;
 
 	i = 0.0, angle = 0.0, x1 = 0.0, y1 = 0.0 , j = 0.0;
 
-	g_data.player.deriction_arrow_x = g_data.player.initx;
-	g_data.player.deriction_arrow_y = g_data.player.inity;
+	g_data.player.d_x = g_data.player.initx;
+	g_data.player.d_y = g_data.player.inity;
 	while (j <= g_data.player.radius)
 	{
 		while (i < 360)
@@ -56,5 +59,6 @@ void draw_player (int color)
 		i = 0;
 		j += 0.1;
 	}
-	 draw_line (g_data.player.deriction_arrow_x, g_data.player.deriction_arrow_y, g_data.player.deriction_arrow_x + 100, g_data.player.deriction_arrow_y + 200);
+	printf ("|x = %d|y = %d|\n", g_data.player.d_x, g_data.player.d_y);
+	draw_line (g_data.player.d_x, g_data.player.d_y);
 }
