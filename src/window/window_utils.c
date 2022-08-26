@@ -9,12 +9,16 @@ int	handle_keypress(int keycode, t_vars *vars)
         exit (EXIT_SUCCESS);
     }
     else if (keycode == XK_UP)
-        move_player_up ();
+        move_player (UP);
     else if (keycode == XK_DOWN)
-        move_player_down ();
+        move_player (DOWN);
     else if (keycode == XK_LEFT)
-        move_player_left ();
+        move_player(LEFT);
     else if (keycode == XK_RIGHT)
-        move_player_right ();
+        move_player(RIGHT);
+    else if (keycode == R_LEFT)
+        rotate_player (LEFT);
+    else if (keycode == R_RIGHT)
+        rotate_player (RIGHT);
     return (0);
 }

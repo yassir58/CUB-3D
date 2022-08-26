@@ -66,7 +66,7 @@ void draw_line (int x, int y)
 
     x_2 = x;
     y_2 = y;
-    angle = deg_to_radian (W);
+    angle = deg_to_radian (g_data.player.v_angle);
     get_rotation_cords (&x_2, &y_2, angle);
     DDA (x , y , x_2, y_2);
     printf ("|x2= %d|y2 = %d|\n", x_2, y_2);

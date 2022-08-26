@@ -51,4 +51,5 @@ void init_player (void)
     g_data.player.d_x = 0;
     g_data.player.d_y = 0;
     g_data.player.d_length = 20;
+    g_data.player.v_angle = W;
 }

@@ -21,22 +21,27 @@
 #define WALL_CLR  0x002A0944
 #define ROT_ANGLE (M_PI / 2) // 90 deg
 #define moveSpeed 4
-#define rotationSpeed (3 * (M_PI / 180))
+#define rotationSpeed 4
+//(3 * (M_PI / 180))
 # define XK_ESCAPE  53
-# define XK_LEFT    123
-# define XK_UP     126
-# define XK_RIGHT  124
-# define XK_DOWN   125
-# define KEY_PRESS 2
+# define XK_LEFT    0
+# define XK_UP      13
+# define XK_RIGHT   2
+# define XK_DOWN    1
+# define KEY_PRESS  2
 # define DESTROY_NOTIFY 17
 # define BUTTON_PRESS 4
 # define WALL 0
 # define EMPTY_SPACE 1
-# define PLAYER 2
-# define RIGHT 0
-# define LEFT 1
-# define DOWN 2
-# define UP 3
+# define PLAYER     2
+# define RIGHT      0
+# define LEFT       1
+# define DOWN       2
+# define UP         3
+# define R_LEFT     123
+# define R_UP       126
+# define R_RIGHT    124
+# define R_DOWN     125
 # define N 270
 # define S 90
 # define W 180
@@ -107,6 +112,7 @@ typedef struct s_player
     int d_x;
     int d_y;
     int d_length;
+    int v_angle;
 } t_player;
 
 typedef struct s_vars 
@@ -136,10 +142,7 @@ void    draw_row(int i, int *j, int *x, int y);
 void    parse_map(char *path, t_game_data *data);
 void    init_window (t_map_list *map);
 char    **get_map_vector (t_map_list *list);
-void    move_player_right (void);
-void    move_player_left (void);
-void    move_player_down (void);
-void    move_player_up (void);
+void    move_player (int flag);
 void    init_player (void);
 int     check_outside_map (int flag);
 int     position_in_map (int x);
@@ -150,6 +153,8 @@ int	    handle_keypress(int keycode, t_vars *vars);
 void    get_rotation_cords (int *x_2, int *y_2, double angle);
 double  deg_to_radian (int deg);
 void    DDA(int X0, int Y0, int X1, int Y1);
+void    rerender_map (void);
+void    rotate_player (int direction);
 // Parse list related functions
 t_game_params	*new_params(char *key, char *value, int index);
 t_map_line      *new_line(char *line);

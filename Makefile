@@ -3,7 +3,7 @@ SRCS= src/test.c parse/test_parse.c src/lib/gnl/get_next_line.c src/window/img_u
 src/window/window_utils.c src/init.c src/window/movement.c src/window/movement_utils.c src/math_utils.c
 OBJS= $(SRCS:.c=.o)
 FLAGS= -Wall -Wextra -Werror
-LIB= -Lmlx -lmlx -framework OpenGL -framework AppKit
+LIB= -lmlx -framework OpenGL -framework AppKit
 HEADER= includes/cub3d.h
 MYLIB=src/lib/libft/libft.a
 NAME=cub3d
@@ -18,11 +18,12 @@ $(NAME):$(OBJS)
 
 all:$(NAME)
 
-libft_clean:
-	@cd src/lib/libft && make clean && cd ../../..
+
 
 clean: 
-	@rm $(OBJS)
+	cd src/lib/libft && make clean && cd ../../..
+	rm $(OBJS)
 
 fclean: clean 
-	@rm $(NAME) src/lib/libft/libft.a
+	cd src/lib/libft && make fclean && cd ../../..
+	rm $(NAME)
