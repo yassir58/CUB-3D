@@ -71,7 +71,7 @@ void validate_player_position(char *line)
         app_error(7);
 }
 
-void    validate_map(char **map, int map_size)
+char    **validate_map(char **map, int map_size)
 {
     int i;
     
@@ -98,4 +98,5 @@ void    validate_map(char **map, int map_size)
         printf("Error: invalid map parse error: validtion function\n");
         exit(1);
     }
+    return (map);
 }

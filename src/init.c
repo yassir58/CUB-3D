@@ -18,7 +18,7 @@ char **get_map_vector (t_map_list *list)
 {
     char **map_vector;
     t_map_list *tmp;
-    t_map_list *ptr;
+    // t_map_list *ptr;
     int i;
 
     i = 0;
@@ -28,10 +28,10 @@ char **get_map_vector (t_map_list *list)
         return (NULL);
     while (tmp)
     {
-        ptr = tmp;
+        // ptr = tmp;
         map_vector[i] = ft_strdup (tmp->column);
         tmp = tmp->next;
-        free (tmp);
+        // free (tmp);
         i++;
     }
     map_vector[i] = NULL;

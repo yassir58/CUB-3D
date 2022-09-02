@@ -12,8 +12,8 @@
 #include "../src/lib/gnl/get_next_line.h"
 #include <mlx.h>
 
-#define FEILD_OF_VIEW_ANGLE ((FOV * (M_PI / 180)))
 #define FOV 60
+#define FEILD_OF_VIEW_ANGLE ((FOV * (M_PI / 180)))
 #define RES_X 1080
 #define RES_Y 820
 #define TILE_SIZE 32
@@ -22,7 +22,6 @@
 #define ROT_ANGLE (M_PI / 2) // 90 deg
 #define moveSpeed 4
 #define rotationSpeed 4
-//(3 * (M_PI / 180))
 # define XK_ESCAPE  53
 # define XK_LEFT    0
 # define XK_UP      13
@@ -47,6 +46,11 @@
 # define W 180
 # define E 360
 
+# define RAY_UP 1
+# define RAY_DOWN 2
+# define RAY_LEFT 3
+# define RAY_RIGHT 4
+
 #define WALL_CHARS "01NSWE "
 #define WALL_LINE "1 "
 #define PLAYER_CHARS "NSWE"
@@ -69,7 +73,6 @@ typedef struct s_game_data
     int tile_size;
     int row_number;
     int col_number;
-    double **cos_sin_table;
     int height;
     int width;
     int floor;
@@ -93,6 +96,27 @@ typedef struct s_map_list
     struct s_map_list *next;
 } t_map_list;
 
+
+typedef struct s_intersection_data {
+    double xstep;
+    double ystep;
+    double xintercept;
+    double yintercept;
+    double wallHitX;
+    double wallHitY;
+    double wallHorzHitX;
+    double wallHorzHitY;
+    double wallVertHitX;
+    double wallVertHitY;
+    double nextHorzTouchX;
+    double nextHorzTouchY;
+    double nextVertTouchX;
+    double nextVertTouchY;
+    double distanceHorizontal;
+    double distanceVertical;
+    bool wallHorzIntesected;
+    bool wallVertIntesected;
+} t_intersection_data;
 
 typedef struct s_grid_data 
 {
