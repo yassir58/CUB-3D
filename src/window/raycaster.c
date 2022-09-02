@@ -49,8 +49,31 @@ double getCorrectAgnle(double angle)
     return (normalizedAngle);
 }
 
-void    castRay(double rayAngle)
+void    castRay(double rayAngle, t_intersection_data *data, t_game_data *game)
 {
+    double horizontalDistance;
+    double verticalDistance;
+    double rayDistance;
+
+    getHorzIntersection(rayAngle, data, game);
+    getVertIntersection(rayAngle, data, game);
+    if (data->wallHorzIntesected)
+        horizontalDistance = calculateDistance(g_data.player.initx, g_data.player.inity, data->wallHorzHitX, data->wallHorzHitY);
+    if (data->wallVertIntesected)
+        verticalDistance = calculateDistance(g_data.player.initx, g_data.player.inity, data->wallVertHitX, data->wallVertHitY);
+    if (verticalDistance > horizontalDistance)
+    {
+        rayDistance = verticalDistance;
+        data->wallHitX = data->wallHorzHitX;
+        data->wallHitY = data->wallHorzHitY;
+    }
+    else
+    {
+        rayDistance = horizontalDistance;
+        data->wallHitX = data->wallVertHitX;
+        data->wallHitY = data->wallVertHitY;
+    }
+    //TODO: Draw a line in the canvas using the wallHitX and wallHitY
     // Here will be the code that will be responsible for casting one ray.
 }
 
