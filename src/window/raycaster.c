@@ -13,19 +13,29 @@ int get_angle_direction(double rayAngle)
         return (RAY_RIGHT);
     else if (!rayFacingRight)
         return (RAY_LEFT);
+    return (0);
 }
 
 int checkCoordinatesWall(double x, double y, t_game_data *data)
 {
-    char **map;
     int X;
     int Y;
+    // int i;
+
+    // i = 0;
 
     //! Here i should return 1 if x or y is out of boundes
     X = floor(x / TILE_SIZE);
     Y = floor(y / TILE_SIZE);
-    map = convert_lines_table(data->lines);
-    if (map[X][Y] == '1')
+    // map = convert_lines_table(data->lines);
+    // printf("Before the segfault in convert function.\n");
+    // while (i < string_table_number(data->map))
+    // {
+    //     printf("%s", data->map[i]);
+    //     i++;
+    // }
+    // while (1);
+    if (data->map[Y][X] == '1')
         return (1);
     return (0);
 }
@@ -55,6 +65,9 @@ void    castRay(double rayAngle, t_intersection_data *data, t_global_state *stat
     double verticalDistance;
     double rayDistance;
 
+    horizontalDistance = 0.0;
+    verticalDistance = 0.0;
+    rayDistance = 0.0;
     getHorzIntersection(rayAngle, data, state);
     getVertIntersection(rayAngle, data, state);
     if (data->wallHorzIntesected)
@@ -63,35 +76,42 @@ void    castRay(double rayAngle, t_intersection_data *data, t_global_state *stat
         verticalDistance = calculateDistance(state->player->initx, state->player->inity, data->wallVertHitX, data->wallVertHitY);
     if (verticalDistance > horizontalDistance)
     {
-        rayDistance = verticalDistance;
+        rayDistance = horizontalDistance;
         data->wallHitX = data->wallHorzHitX;
         data->wallHitY = data->wallHorzHitY;
     }
     else
     {
-        rayDistance = horizontalDistance;
+        rayDistance = verticalDistance;
         data->wallHitX = data->wallVertHitX;
         data->wallHitY = data->wallVertHitY;
     }
     //TODO: Draw a line in the canvas using the wallHitX and wallHitY
+    DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
     // Here will be the code that will be responsible for casting one ray.
 }
 
 void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global_state *state)
 {
+
     data->wallHorzIntesected = false;
     data->yintercept = floor(state->player->inity / TILE_SIZE) * TILE_SIZE;
     if (get_angle_direction(rayAngle) == RAY_DOWN)
         data->yintercept += TILE_SIZE;
     data->xintercept = state->player->initx + ((data->yintercept - state->player->inity) / tan(rayAngle));
+    
+    printf("xintercept: %f\n", data->xintercept);
+    printf("yintercept: %f\n", data->yintercept);
     data->ystep = TILE_SIZE;
     if (get_angle_direction(rayAngle) == RAY_UP)
         data->ystep *= -1;
+
     data->xstep = data->ystep / tan(rayAngle);
     if (get_angle_direction(rayAngle) == RAY_LEFT && data->xstep > 0)
         data->xstep *= -1;
     if (get_angle_direction(rayAngle) == RAY_RIGHT && data->xstep < 0)
         data->xstep *= -1;
+
     data->nextHorzTouchX = data->xintercept;
     data->nextHorzTouchY = data->yintercept;
     if (get_angle_direction(rayAngle) == RAY_UP)
@@ -103,6 +123,7 @@ void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global
             data->wallHorzIntesected = true;
             data->wallHorzHitX = data->nextHorzTouchX;
             data->wallHorzHitY = data->nextHorzTouchY;
+            DDA(state->player->initx, state->player->inity, data->wallHorzHitX, data->wallHorzHitY, state);
             break;
         }
         else
@@ -110,6 +131,11 @@ void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global
             data->nextHorzTouchX += data->xstep;
             data->nextVertTouchY += data->ystep;
         }
+    }
+
+    for (int i = 1060; i < 1064; i++)
+    {
+        my_mlx_pixel_put(&state->img , i, 256, 0x00FF0000);
     }
 }
 
@@ -123,11 +149,13 @@ void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global
     data->xstep = TILE_SIZE;
     if (get_angle_direction(rayAngle) == RAY_LEFT)
         data->xstep *= -1;
+
     data->ystep = data->xstep * tan(rayAngle);
     if (get_angle_direction(rayAngle) == RAY_UP && data->ystep > 0)
-        data->xstep *= -1;
+        data->ystep *= -1;
     if (get_angle_direction(rayAngle) == RAY_DOWN && data->ystep < 0)
-        data->xstep *= -1;
+        data->ystep *= -1;
+
     data->nextVertTouchX = data->xintercept;
     data->nextVertTouchY = data->yintercept;
     if (get_angle_direction(rayAngle) == RAY_LEFT)
@@ -139,6 +167,7 @@ void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global
             data->wallVertIntesected = true;
             data->wallVertHitX = data->nextVertTouchX;
             data->wallVertHitY = data->nextVertTouchY;
+            // DDA(state->player->initx, state->player->inity, data->wallVertHitX, data->wallHorzHitY, state);
             break;
         }
         else
@@ -149,7 +178,7 @@ void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global
     }
 }
 
-void    raycaster(t_game_data *game, t_global_state *state)
+void    raycaster(t_global_state *state)
 {
     int columnId;
     int raysNumber;
@@ -158,16 +187,31 @@ void    raycaster(t_game_data *game, t_global_state *state)
 
     columnId = 0;
     raysNumber = state->data->window_width / RAY_THICKNESS;
-    rayAngle = state->player->v_angle - (FEILD_OF_VIEW_ANGLE / 2);
-
+    rayAngle = deg_to_radian(state->player->v_angle) - (FEILD_OF_VIEW_ANGLE / 2.0);
+    // printf("Number of rays: %d\n", raysNumber);
+    // printf("Player angle: %f\n", deg_to_radian(state->player->v_angle));
+    printf("Ray angle •: %f\n", radian_to_deg(FEILD_OF_VIEW_ANGLE));
+    printf("Ray angle in rad: %f\n", FEILD_OF_VIEW_ANGLE);
     data = (t_intersection_data *)malloc(sizeof(t_intersection_data));
     if (!data)
         return ;
+    while (columnId < 1)
+    {
 
+        getHorzIntersection(getCorrectAgnle(rayAngle), data, state);
+        // getVertIntersection(rayAngle, data, state);
+        //? Debugging purposes.
+        double x = state->player->initx + cos(rayAngle) * 90;
+        double y = state->player->inity + sin(rayAngle) * 90;
+        DDA(state->player->initx, state->player->inity, x, y, state);
+        // castRay(rayAngle, data, state);
+        rayAngle += FEILD_OF_VIEW_ANGLE / raysNumber;
+        columnId += 1;
+    }
 }
 
 
-//TODO: Create Cast ray function that will cast only one ray based on 
+//?DONE: Create Cast ray function that will cast only one ray based on 
 //?DONE: Create a function that will calculate the distance between two dots
 //?DONE: Create a function that will round the angle
 //?DONE: Caluculate horizontal interections: getHorzIntersection

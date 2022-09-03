@@ -22,3 +22,13 @@ char **convert_lines_table(t_map_line *list)
     lines_table[i] = NULL;
     return (lines_table);
 }
+
+int string_table_number(char **table)
+{
+    int i;
+
+    i = 0;
+    while (table[i])
+        i++;
+    return (i);
+}

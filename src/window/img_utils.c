@@ -23,9 +23,9 @@ void draw_rect (int x, int y, int color, t_global_state *state)
 	{
 		while (j < TILE_SIZE)
 		{
-			// if (i == 0 || j == 0 || (j == TILE_SIZE) || (i == TILE_SIZE))
-			// 	clr = 0x00FF0000;
-			// else
+			if (i == 0 || j == 0 || (j == TILE_SIZE) || (i == TILE_SIZE))
+				clr = 0x008ACB88;
+			else
 				clr = color;
 			my_mlx_pixel_put ((&state->img) , (x + j), (y + i), clr);
 			j++;
@@ -59,6 +59,6 @@ void draw_player (int color, t_global_state *state)
 		i = 0;
 		j += 0.1;
 	}
-	printf ("|x = %d|y = %d|\n", state->player->d_x, state->player->d_y);
+	// printf ("|x = %d|y = %d|\n", state->player->d_x, state->player->d_y);
 	draw_line (state->player->d_x, state->player->d_y, state);
 }

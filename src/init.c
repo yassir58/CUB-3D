@@ -8,10 +8,12 @@ t_global_state *init_simulation_data(void)
     data = (t_global_state *)malloc(sizeof(t_global_state));
     if (!data)
         return (NULL);
-    data->data = NULL;
-    data->grid = NULL;
-    data->player = NULL;
-    data->vars = NULL;
+    data->data = (t_game_data *)malloc(sizeof(t_game_data));
+    data->grid = (t_grid_data *)malloc(sizeof(t_grid_data));
+    data->player = (t_player *)malloc(sizeof(t_player));
+    data->vars = (t_vars *)malloc(sizeof(t_vars));
+    if (!data->data || !data->grid || !data->player || !data->vars)
+        return (NULL);
     return (data);
 }
 
@@ -64,6 +66,6 @@ void init_player (t_global_state *state)
     state->player->y_cord = 0;
     state->player->d_x = 0;
     state->player->d_y = 0;
-    state->player->d_length = 20;
+    state->player->d_length = 50;
     state->player->v_angle = W;
 }

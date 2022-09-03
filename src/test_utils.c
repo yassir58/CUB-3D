@@ -69,7 +69,7 @@ void draw_line (int x, int y, t_global_state *state)
     angle = deg_to_radian (state->player->v_angle);
     get_rotation_cords (&x_2, &y_2, angle, state);
     DDA (x , y , x_2, y_2, state);
-    printf ("|x2= %d|y2 = %d|\n", x_2, y_2);
+    // printf ("|x2= %d|y2 = %d|\n", x_2, y_2);
 }
 
 

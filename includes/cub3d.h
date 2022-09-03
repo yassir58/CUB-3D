@@ -16,7 +16,7 @@
 // Variables related to the ray caster.
 #define FOV 60
 #define FEILD_OF_VIEW_ANGLE ((FOV * (M_PI / 180)))
-#define TILE_SIZE 32
+#define TILE_SIZE 64
 #define RAY_THICKNESS 5
 
 #define RES_X 1080
@@ -188,6 +188,7 @@ void    draw_player (int color, t_global_state *state);
 int     handle_keypress(int keycode, t_global_state *state);
 void    get_rotation_cords (int *x_2, int *y_2, double angle, t_global_state *state);
 double  deg_to_radian (int deg);
+double  radian_to_deg(double rad);
 void    DDA(int X0, int Y0, int X1, int Y1, t_global_state *state);
 void    rerender_map (t_global_state *state);
 void    rotate_player (int direction, t_global_state *state);
@@ -202,6 +203,7 @@ void            add_param(t_game_params **lst, t_game_params *new);
 void            add_line(t_map_line **lst, t_map_line *new);
 // Convert list to table
 char            **convert_lines_table(t_map_line *list);
+int             string_table_number(char **table);
 // Reading file
 char            *advanced_get_next_line(int fd, int status);
 // Printing lists
@@ -215,4 +217,14 @@ void    validate_map(char **map, int map_size);
 
 void    app_error(int code);
 
+// Ray casting related functions
+
+void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global_state *state);
+void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global_state *state);
+void    raycaster(t_global_state *state);
+void    castRay(double rayAngle, t_intersection_data *data, t_global_state *state);
+double  getCorrectAgnle(double angle);
+double  calculateDistance(double x, double y, double x1, double y1);
+int     checkCoordinatesWall(double x, double y, t_game_data *data);
+int     get_angle_direction(double rayAngle);
 #endif 
