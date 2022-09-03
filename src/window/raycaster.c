@@ -34,7 +34,7 @@ double calculateDistance(double x, double y, double x1, double y1)
 {
     double distance;
 
-    distance = sqrt((x1 - x) * (x1 - x) + (y1 - y) * (y1 - y));
+    distance = sqrt(((x1 - x) * (x1 - x)) + ((y1 - y) * (y1 - y)));
     return (distance);
 }
 
@@ -49,18 +49,18 @@ double getCorrectAgnle(double angle)
     return (normalizedAngle);
 }
 
-void    castRay(double rayAngle, t_intersection_data *data, t_game_data *game)
+void    castRay(double rayAngle, t_intersection_data *data, t_global_state *state)
 {
     double horizontalDistance;
     double verticalDistance;
     double rayDistance;
 
-    getHorzIntersection(rayAngle, data, game);
-    getVertIntersection(rayAngle, data, game);
+    getHorzIntersection(rayAngle, data, state);
+    getVertIntersection(rayAngle, data, state);
     if (data->wallHorzIntesected)
-        horizontalDistance = calculateDistance(g_data.player.initx, g_data.player.inity, data->wallHorzHitX, data->wallHorzHitY);
+        horizontalDistance = calculateDistance(state->player->initx, state->player->inity, data->wallHorzHitX, data->wallHorzHitY);
     if (data->wallVertIntesected)
-        verticalDistance = calculateDistance(g_data.player.initx, g_data.player.inity, data->wallVertHitX, data->wallVertHitY);
+        verticalDistance = calculateDistance(state->player->initx, state->player->inity, data->wallVertHitX, data->wallVertHitY);
     if (verticalDistance > horizontalDistance)
     {
         rayDistance = verticalDistance;
@@ -77,19 +77,13 @@ void    castRay(double rayAngle, t_intersection_data *data, t_game_data *game)
     // Here will be the code that will be responsible for casting one ray.
 }
 
-void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_game_data *game)
+void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global_state *state)
 {
-    int width;
-    int height;
-
-    width = g_data.grid.col * TILE_SIZE;
-    height = g_data.grid.row * TILE_SIZE;
-
     data->wallHorzIntesected = false;
-    data->yintercept = floor(g_data.player.inity / TILE_SIZE) * TILE_SIZE;
+    data->yintercept = floor(state->player->inity / TILE_SIZE) * TILE_SIZE;
     if (get_angle_direction(rayAngle) == RAY_DOWN)
         data->yintercept += TILE_SIZE;
-    data->xintercept = g_data.player.initx + ((data->yintercept - g_data.player.inity) / tan(rayAngle));
+    data->xintercept = state->player->initx + ((data->yintercept - state->player->inity) / tan(rayAngle));
     data->ystep = TILE_SIZE;
     if (get_angle_direction(rayAngle) == RAY_UP)
         data->ystep *= -1;
@@ -102,9 +96,9 @@ void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_game_d
     data->nextHorzTouchY = data->yintercept;
     if (get_angle_direction(rayAngle) == RAY_UP)
         data->nextHorzTouchY -= 1;
-    while (data->nextHorzTouchX >= 0 && data->nextHorzTouchX <= width && data->nextHorzTouchY >= 0 && data->nextHorzTouchY <= height)
+    while (data->nextHorzTouchX >= 0 && data->nextHorzTouchX <= state->data->window_width && data->nextHorzTouchY >= 0 && data->nextHorzTouchY <= state->data->window_height)
     {
-        if (checkCoordinatesWall(data->nextHorzTouchX, data->nextHorzTouchY, game))
+        if (checkCoordinatesWall(data->nextHorzTouchX, data->nextHorzTouchY, state->data))
         {
             data->wallHorzIntesected = true;
             data->wallHorzHitX = data->nextHorzTouchX;
@@ -119,19 +113,13 @@ void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_game_d
     }
 }
 
-void    getVertIntersection(double rayAngle, t_intersection_data *data, t_game_data *game)
+void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global_state *state)
 {
-    int width;
-    int height;
-
-    width = g_data.grid.col * TILE_SIZE;
-    height = g_data.grid.row * TILE_SIZE;
-
     data->wallVertIntesected = false;
-    data->xintercept = floor(g_data.player.initx / TILE_SIZE) * TILE_SIZE;
+    data->xintercept = floor(state->player->initx / TILE_SIZE) * TILE_SIZE;
     if (get_angle_direction(rayAngle) == RAY_RIGHT)
         data->xintercept += TILE_SIZE;
-    data->yintercept = g_data.player.inity + ((data->xintercept - g_data.player.initx) * tan(rayAngle));
+    data->yintercept = state->player->inity + ((data->xintercept - state->player->initx) * tan(rayAngle));
     data->xstep = TILE_SIZE;
     if (get_angle_direction(rayAngle) == RAY_LEFT)
         data->xstep *= -1;
@@ -144,9 +132,9 @@ void    getVertIntersection(double rayAngle, t_intersection_data *data, t_game_d
     data->nextVertTouchY = data->yintercept;
     if (get_angle_direction(rayAngle) == RAY_LEFT)
         data->nextVertTouchX -= 1;
-    while (data->nextVertTouchX >= 0 && data->nextVertTouchX <= width && data->nextVertTouchY >= 0 && data->nextVertTouchY <= height)
+    while (data->nextVertTouchX >= 0 && data->nextVertTouchX <= state->data->window_width && data->nextVertTouchY >= 0 && data->nextVertTouchY <= state->data->window_height)
     {
-        if (checkCoordinatesWall(data->nextVertTouchX, data->nextVertTouchY, game))
+        if (checkCoordinatesWall(data->nextVertTouchX, data->nextVertTouchY, state->data))
         {
             data->wallVertIntesected = true;
             data->wallVertHitX = data->nextVertTouchX;
@@ -161,21 +149,21 @@ void    getVertIntersection(double rayAngle, t_intersection_data *data, t_game_d
     }
 }
 
-void    raycaster(t_game_data *game)
+void    raycaster(t_game_data *game, t_global_state *state)
 {
     int columnId;
     int raysNumber;
     double rayAngle;
     t_intersection_data *data;
 
-    //! I should restructure the code to have access to windows witdth and height variables and add some other variables like line strip
     columnId = 0;
-    raysNumber = 0;// (WINDOWS_WIDTH / LINE_STRIP)
-    rayAngle = 0;// PLAYER ROTATION ANGLE - FIELD_OF_VIEW_ANGLE / 2;
+    raysNumber = state->data->window_width / RAY_THICKNESS;
+    rayAngle = state->player->v_angle - (FEILD_OF_VIEW_ANGLE / 2);
 
     data = (t_intersection_data *)malloc(sizeof(t_intersection_data));
     if (!data)
         return ;
+
 }
 
 

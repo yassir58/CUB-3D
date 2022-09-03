@@ -1,20 +1,34 @@
 #include "../includes/cub3d.h"
 
 
-void init_window (t_map_list *map)
+t_global_state *init_simulation_data(void)
 {
-    g_data.vars.mlx = mlx_init ();
-    calculate_grid (map, &(g_data.grid.col), &(g_data.grid.row));
-    init_player ();
-    g_data.data.height = (g_data.grid.row * 32);
-    g_data.data.width = (g_data.grid.col * 32);
-    g_data.vars.mlx_win = mlx_new_window (g_data.vars.mlx, (g_data.grid.col * TILE_SIZE), (g_data.grid.row * TILE_SIZE), "CUB3D");
-    g_data.img.img = mlx_new_image (g_data.vars.mlx, g_data.data.width, g_data.data.width);
-    g_data.img.addr = mlx_get_data_addr (g_data.img.img, &(g_data.img.bits_per_pixel), &(g_data.img.line_length), &(g_data.img.endian));
-    g_data.data.map = get_map_vector (map);
+    t_global_state *data;
+
+    data = (t_global_state *)malloc(sizeof(t_global_state));
+    if (!data)
+        return (NULL);
+    data->data = NULL;
+    data->grid = NULL;
+    data->player = NULL;
+    data->vars = NULL;
+    return (data);
 }
 
-char **get_map_vector (t_map_list *list)
+void init_window (t_map_list *map, t_global_state *state)
+{
+    state->vars->mlx = mlx_init ();
+    calculate_grid (map, &(state->grid->col), &(state->grid->row));
+    init_player (state);
+    state->data->window_height = (state->grid->row * TILE_SIZE);
+    state->data->window_width = (state->grid->col * TILE_SIZE);
+    state->vars->mlx_win = mlx_new_window (state->vars->mlx, (state->grid->col * TILE_SIZE), (state->grid->row * TILE_SIZE), "CUB3D");
+    state->img.img = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_width);
+    state->img.addr = mlx_get_data_addr (state->img.img, &(state->img.bits_per_pixel), &(state->img.line_length), &(state->img.endian));
+    state->data->map = get_map_vector (map, state);
+}
+
+char **get_map_vector (t_map_list *list, t_global_state *state)
 {
     char **map_vector;
     t_map_list *tmp;
@@ -23,7 +37,7 @@ char **get_map_vector (t_map_list *list)
 
     i = 0;
     tmp = list;
-    map_vector = malloc (sizeof (char *) * (g_data.grid.row + 1));
+    map_vector = malloc (sizeof (char *) * (state->grid->row + 1));
     if (!map_vector)
         return (NULL);
     while (tmp)
@@ -39,17 +53,17 @@ char **get_map_vector (t_map_list *list)
 }
 
 
-void init_player (void)
+void init_player (t_global_state *state)
 {
-    g_data.player.initx = 0;
-    g_data.player.inity = 0;
-    g_data.player.radius = 2;
-    g_data.player.turnDirection = 0;
-    g_data.player.walkDirection = 0;
-    g_data.player.x_cord = 0;
-    g_data.player.y_cord = 0;
-    g_data.player.d_x = 0;
-    g_data.player.d_y = 0;
-    g_data.player.d_length = 20;
-    g_data.player.v_angle = W;
+    state->player->initx = 0;
+    state->player->inity = 0;
+    state->player->radius = 2;
+    state->player->turnDirection = 0;
+    state->player->walkDirection = 0;
+    state->player->x_cord = 0;
+    state->player->y_cord = 0;
+    state->player->d_x = 0;
+    state->player->d_y = 0;
+    state->player->d_length = 20;
+    state->player->v_angle = W;
 }

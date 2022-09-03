@@ -12,11 +12,15 @@
 #include "../src/lib/gnl/get_next_line.h"
 #include <mlx.h>
 
+
+// Variables related to the ray caster.
 #define FOV 60
 #define FEILD_OF_VIEW_ANGLE ((FOV * (M_PI / 180)))
+#define TILE_SIZE 32
+#define RAY_THICKNESS 5
+
 #define RES_X 1080
 #define RES_Y 820
-#define TILE_SIZE 32
 #define SPACE_CLR 0x00FFFFFF
 #define WALL_CLR  0x002A0944
 #define ROT_ANGLE (M_PI / 2) // 90 deg
@@ -73,8 +77,8 @@ typedef struct s_game_data
     int tile_size;
     int row_number;
     int col_number;
-    int height;
-    int width;
+    int window_height;
+    int window_width;
     int floor;
     int ceil;
     char **map;
@@ -147,38 +151,48 @@ typedef struct s_vars
 
 typedef struct s_global_state
 {
-    t_vars vars;
-    t_game_data data;
-    t_grid_data grid;
-    t_player player;
+    t_vars *vars;
+    t_game_data *data;
+    t_grid_data *grid;
+    t_player *player;
     t_img img;
 } t_global_state;
 
 t_global_state g_data;
 
+/**
+ * @brief Init the simulation data
+ * 
+ * @param void
+ * @return t_global_state* 
+ */
+t_global_state *init_simulation_data(void);
+
 t_map_list *create_map_list (char *map);
 void    push_to_list(t_map_list **map, char *column);
 void    my_mlx_pixel_put(t_img *data, int x, int y, int color);
-void    draw_rect(int x, int y, int clr);
+void    draw_rect (int x, int y, int color, t_global_state *state);
 void    calculate_grid(t_map_list *list, int *col, int *row);
-void    draw_grid(void);
-void    draw_row(int i, int *j, int *x, int y);
+void    draw_grid (t_global_state *state);
+void    draw_row (int i, int *j, int *x, int y, t_global_state *state);
 void    parse_map(char *path, t_game_data *data);
-void    init_window (t_map_list *map);
-char    **get_map_vector (t_map_list *list);
-void    move_player (int flag);
-void    init_player (void);
+void    init_window (t_map_list *map, t_global_state *state);
+char    **get_map_vector (t_map_list *list, t_global_state *state);
+void    move_player (int flag, t_global_state *state);
+void    init_player (t_global_state *state);
 int     check_outside_map (int flag);
 int     position_in_map (int x);
-int     check_for_wall (int x, int y);
-void    draw_line (int x, int y);
-void    draw_player (int color);
-int	    handle_keypress(int keycode, t_vars *vars);
-void    get_rotation_cords (int *x_2, int *y_2, double angle);
+int     check_for_wall (int x, int y, t_global_state *state);
+void    draw_line (int x, int y, t_global_state *state);
+void    draw_player (int color, t_global_state *state);
+int     handle_keypress(int keycode, t_global_state *state);
+void    get_rotation_cords (int *x_2, int *y_2, double angle, t_global_state *state);
 double  deg_to_radian (int deg);
-void    DDA(int X0, int Y0, int X1, int Y1);
-void    rerender_map (void);
-void    rotate_player (int direction);
+void    DDA(int X0, int Y0, int X1, int Y1, t_global_state *state);
+void    rerender_map (t_global_state *state);
+void    rotate_player (int direction, t_global_state *state);
+
+
 // Parse list related functions
 t_game_params	*new_params(char *key, char *value, int index);
 t_map_line      *new_line(char *line);

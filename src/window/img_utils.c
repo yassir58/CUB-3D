@@ -10,7 +10,7 @@ void	my_mlx_pixel_put(t_img *data, int x, int y, int color)
 }
 
 
-void draw_rect (int x, int y, int color)
+void draw_rect (int x, int y, int color, t_global_state *state)
 {
 	int i;
 	int j;
@@ -27,7 +27,7 @@ void draw_rect (int x, int y, int color)
 			// 	clr = 0x00FF0000;
 			// else
 				clr = color;
-			my_mlx_pixel_put ((&g_data.img) , (x + j), (y + i), clr);
+			my_mlx_pixel_put ((&state->img) , (x + j), (y + i), clr);
 			j++;
 		}
 		j = 0;
@@ -35,7 +35,7 @@ void draw_rect (int x, int y, int color)
 	}
 }
 
-void draw_player (int color)
+void draw_player (int color, t_global_state *state)
 {
 	double i, angle, x1, y1, j;
 	// int x_2;
@@ -44,21 +44,21 @@ void draw_player (int color)
 
 	i = 0.0, angle = 0.0, x1 = 0.0, y1 = 0.0 , j = 0.0;
 
-	g_data.player.d_x = g_data.player.initx;
-	g_data.player.d_y = g_data.player.inity;
-	while (j <= g_data.player.radius)
+	state->player->d_x = state->player->initx;
+	state->player->d_y = state->player->inity;
+	while (j <= state->player->radius)
 	{
 		while (i < 360)
 		{
 			angle  =  i;
 			x1 = j * cos(angle * (M_PI / 180));
 			y1 = j * sin (angle * (M_PI / 180));
-			my_mlx_pixel_put ((&g_data.img) , (g_data.player.initx + x1), (g_data.player.inity + y1), color);
+			my_mlx_pixel_put ((&state->img) , (state->player->initx + x1), (state->player->inity + y1), color);
 			i += 0.1;
 		}
 		i = 0;
 		j += 0.1;
 	}
-	printf ("|x = %d|y = %d|\n", g_data.player.d_x, g_data.player.d_y);
-	draw_line (g_data.player.d_x, g_data.player.d_y);
+	printf ("|x = %d|y = %d|\n", state->player->d_x, state->player->d_y);
+	draw_line (state->player->d_x, state->player->d_y, state);
 }
