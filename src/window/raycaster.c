@@ -118,7 +118,7 @@ void    castRay(double rayAngle, t_intersection_data *data, t_global_state *stat
         data->wallHitX = data->wallVertHitX;
         data->wallHitY = data->wallVertHitY;
     }
-    printf("Ray Distance: %f\n", rayDistance);
+    (void)rayDistance;
     //TODO: Draw a line in the canvas using the wallHitX and wallHitY
     DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
     // Here will be the code that will be responsible for casting one ray.
@@ -210,7 +210,7 @@ void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global
             // {
             //     my_mlx_pixel_put(&state->img , i + 2 , (int)data->nextVertTouchY, 0x00FF0000);
             // }
-            // DDA(state->player->initx, state->player->inity, data->wallVertHitX, data->wallVertHitY, state);
+            DDA(state->player->initx, state->player->inity, data->wallVertHitX, data->wallVertHitY, state);
             break;
         }
         else
@@ -248,8 +248,8 @@ void    raycaster(t_global_state *state)
     rayAngle = deg_to_radian(state->player->v_angle) - (FEILD_OF_VIEW_ANGLE / 2.0);
     // printf("Number of rays: %d\n", raysNumber);
     // printf("Player angle: %f\n", deg_to_radian(state->player->v_angle));
-    printf("Ray angle •: %f\n", radian_to_deg(FEILD_OF_VIEW_ANGLE));
-    printf("Ray angle in rad: %f\n", FEILD_OF_VIEW_ANGLE);
+    // printf("Ray angle •: %f\n", radian_to_deg(FEILD_OF_VIEW_ANGLE));
+    // printf("Ray angle in rad: %f\n", FEILD_OF_VIEW_ANGLE);
     data = (t_intersection_data *)malloc(sizeof(t_intersection_data));
     if (!data)
         return ;
@@ -257,10 +257,12 @@ void    raycaster(t_global_state *state)
     {
 
         //? Debugging purposes.
-        // double x = state->player->initx + cos(rayAngle) * 400;
-        // double y = state->player->inity + sin(rayAngle) * 400;
+        // getHorzIntersection(getCorrectAngle(rayAngle), data, state);
+        getVertIntersection(getCorrectAngle(rayAngle), data, state);
+        // double x = state->player->initx + cos(rayAngle) * 50;
+        // double y = state->player->inity + sin(rayAngle) * 50;
         // DDA(state->player->initx, state->player->inity, x, y, state);
-        castRay(rayAngle, data, state);
+        // castRay(rayAngle, data, state);
         rayAngle += FEILD_OF_VIEW_ANGLE / raysNumber;
         columnId += 1;
     }

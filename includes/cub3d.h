@@ -28,11 +28,29 @@
 #define ROT_ANGLE (M_PI / 2) // 90 deg
 #define moveSpeed 4
 #define rotationSpeed 4
-# define XK_ESCAPE  53
-# define XK_LEFT    0
-# define XK_UP      13
-# define XK_RIGHT   2
-# define XK_DOWN    1
+
+// MAC keycodes
+// # define XK_ESCAPE  53
+// # define XK_LEFT    0
+// # define XK_UP      13
+// # define XK_RIGHT   2
+// # define XK_DOWN    1
+// # define R_LEFT     123
+// # define R_UP       126
+// # define R_RIGHT    124
+// # define R_DOWN     125
+
+// Linux keycodes
+# define XK_ESCAPE  65307
+# define XK_LEFT    97
+# define XK_UP      119
+# define XK_RIGHT   100
+# define XK_DOWN    115
+# define R_LEFT     65361
+# define R_UP       65362
+# define R_RIGHT    65363
+# define R_DOWN     65364
+
 # define KEY_PRESS  2
 # define DESTROY_NOTIFY 17
 # define BUTTON_PRESS 4
@@ -43,16 +61,6 @@
 # define LEFT       1
 # define DOWN       2
 # define UP         3
-// Linux
-# define R_LEFT     123
-# define R_UP       126
-# define R_RIGHT    124
-# define R_DOWN     125
-// MAC
-// # define R_LEFT     123
-// # define R_UP       126
-// # define R_RIGHT    124
-// # define R_DOWN     125
 # define N 270
 # define S 90
 # define W 180
@@ -178,7 +186,7 @@ t_global_state *init_simulation_data(void);
 
 t_map_list *create_map_list (char *map);
 void    push_to_list(t_map_list **map, char *column);
-void    my_mlx_pixel_put(t_img *data, int x, int y, int color);
+void	my_mlx_pixel_put(t_global_state *state, int x, int y, int color);
 void    draw_rect (int x, int y, int color, t_global_state *state);
 void    calculate_grid(t_map_list *list, int *col, int *row);
 void    draw_grid (t_global_state *state);
