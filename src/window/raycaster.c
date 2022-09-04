@@ -96,12 +96,16 @@ void    castRay(double rayAngle, t_intersection_data *data, t_global_state *stat
     horizontalDistance = 0.0;
     verticalDistance = 0.0;
     rayDistance = 0.0;
-    getHorzIntersection(rayAngle, data, state);
-    getVertIntersection(rayAngle, data, state);
+    getHorzIntersection(getCorrectAngle(rayAngle), data, state);
+    getVertIntersection(getCorrectAngle(rayAngle), data, state);
     if (data->wallHorzIntesected)
         horizontalDistance = calculateDistance(state->player->initx, state->player->inity, data->wallHorzHitX, data->wallHorzHitY);
+    else
+        horizontalDistance = INT_MAX;
     if (data->wallVertIntesected)
         verticalDistance = calculateDistance(state->player->initx, state->player->inity, data->wallVertHitX, data->wallVertHitY);
+    else
+        verticalDistance = INT_MAX;
     if (verticalDistance > horizontalDistance)
     {
         rayDistance = horizontalDistance;
@@ -150,7 +154,7 @@ void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global
             data->wallHorzIntesected = true;
             data->wallHorzHitX = data->nextHorzTouchX;
             data->wallHorzHitY = data->nextHorzTouchY;
-            DDA(state->player->initx, state->player->inity, data->wallHorzHitX, data->wallHorzHitY, state);
+            // DDA(state->player->initx, state->player->inity, data->wallHorzHitX, data->wallHorzHitY, state);
             break;
         }
         else
@@ -191,12 +195,6 @@ void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global
         data->ystep *= -1;
     if (rayFacingDown(rayAngle) && data->ystep < 0)
         data->ystep *= -1;
-
-
-    for (int i = ((int)data->yintercept - 4); i < (int)data->yintercept; i++)
-    {
-        my_mlx_pixel_put(&state->img , (int)data->xintercept, i, 0x00FF0000);
-    }
     data->nextVertTouchX = data->xintercept;
     data->nextVertTouchY = data->yintercept;
     if (rayFacingLeft(rayAngle))
@@ -208,26 +206,34 @@ void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global
             data->wallVertIntesected = true;
             data->wallVertHitX = data->nextVertTouchX;
             data->wallVertHitY = data->nextVertTouchY;
-            DDA(state->player->initx, state->player->inity, data->wallVertHitX, data->wallHorzHitY, state);
+            // for (int i = ((int)data->nextVertTouchX - 4); i < (int)data->nextVertTouchX; i++)
+            // {
+            //     my_mlx_pixel_put(&state->img , i + 2 , (int)data->nextVertTouchY, 0x00FF0000);
+            // }
+            // DDA(state->player->initx, state->player->inity, data->wallVertHitX, data->wallVertHitY, state);
             break;
         }
         else
         {
-            for (int i = ((int)data->nextHorzTouchX - 4); i < (int)data->nextHorzTouchX; i++)
-            {
-                my_mlx_pixel_put(&state->img , i , (int)data->nextHorzTouchY, 0x00FF0000);
-            }
             data->nextVertTouchX += data->xstep;
             data->nextVertTouchY += data->ystep;
         }
     }
-    printf("xintercept: %f\n", data->xintercept);
-    printf("yintercept: %f\n", data->yintercept);
+    // printf("xintercept: %f\n", data->xintercept);
+    // printf("yintercept: %f\n", data->yintercept);
 
-    for (int i = ((int)data->yintercept - 4); i < (int)data->yintercept; i++)
-    {
-        my_mlx_pixel_put(&state->img , (int)data->xintercept, i, 0x00FF0000);
-    }
+    // for (int i = ((int)data->yintercept - 4); i < (int)data->yintercept; i++)
+    // {
+    //     my_mlx_pixel_put(&state->img , (int)data->xintercept, i, 0x00FF0000);
+    // }
+    // for (int i = ((int)data->yintercept + (int)data->ystep - 4); i < (int)data->yintercept + (int)data->ystep; i++)
+    // {
+    //     my_mlx_pixel_put(&state->img , (int)data->xintercept + (int)data->xstep, i, 0x00FF0000);
+    // }
+    //  for (int i = ((int)data->yintercept + ((int)data->ystep * 2) - 4); i < (int)data->yintercept + ((int)data->ystep * 2); i++)
+    // {
+    //     my_mlx_pixel_put(&state->img , (int)data->xintercept + ((int)data->xstep * 2), i, 0x00FF0000);
+    // }
 }
 
 void    raycaster(t_global_state *state)
@@ -250,13 +256,11 @@ void    raycaster(t_global_state *state)
     while (columnId < raysNumber)
     {
 
-        getHorzIntersection(getCorrectAngle(rayAngle), data, state);
-        // getVertIntersection(getCorrectAngle(rayAngle), data, state);
         //? Debugging purposes.
         // double x = state->player->initx + cos(rayAngle) * 400;
         // double y = state->player->inity + sin(rayAngle) * 400;
         // DDA(state->player->initx, state->player->inity, x, y, state);
-        // castRay(rayAngle, data, state);
+        castRay(rayAngle, data, state);
         rayAngle += FEILD_OF_VIEW_ANGLE / raysNumber;
         columnId += 1;
     }
