@@ -22,7 +22,8 @@
 #define RES_X 1080
 #define RES_Y 820
 #define SPACE_CLR 0x00FFFFFF
-#define WALL_CLR  0x002A0944
+// #define WALL_CLR  0x002A0944
+#define WALL_CLR  0x00000000
 #define ROT_ANGLE (M_PI / 2) // 90 deg
 #define moveSpeed 4
 #define rotationSpeed 4
@@ -41,10 +42,16 @@
 # define LEFT       1
 # define DOWN       2
 # define UP         3
+// Linux
 # define R_LEFT     123
 # define R_UP       126
 # define R_RIGHT    124
 # define R_DOWN     125
+// MAC
+// # define R_LEFT     123
+// # define R_UP       126
+// # define R_RIGHT    124
+// # define R_DOWN     125
 # define N 270
 # define S 90
 # define W 180
