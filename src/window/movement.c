@@ -50,8 +50,8 @@ void rerender_map (t_global_state *state)
 void rotate_player (int direction, t_global_state *state)
 {
     if (direction == LEFT)
-    state->player->v_angle += rotationSpeed;
-    else if (direction  == RIGHT)
     state->player->v_angle -= rotationSpeed;
+    else if (direction  == RIGHT)
+    state->player->v_angle += rotationSpeed;
     rerender_map (state);
 }

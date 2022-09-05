@@ -44,10 +44,10 @@ int rayFacingLeft(double rayAngle)
     return (0);
 }
 
-int checkCoordinatesWall(double x, double y, t_game_data *data)
+int checkCoordinatesWall(double x, double y, t_global_state *state)
 {
-    int X;
-    int Y;
+    double X;
+    double Y;
     // int i;
 
     // i = 0;
@@ -63,8 +63,11 @@ int checkCoordinatesWall(double x, double y, t_game_data *data)
     //     i++;
     // }
     // while (1);
-    if (data->map[Y][X] == '1')
+    // printf("%c\n", data->map[Y][])
+    if (!(X < state->grid->col && Y < state->grid->row))
         return (1);
+    if (state->data->map[(int)Y][(int)X] == '1')
+            return (1);
     return (0);
 }
 
@@ -149,7 +152,7 @@ void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global
         data->nextHorzTouchY -= 1;
     while (data->nextHorzTouchX >= 0 && data->nextHorzTouchX <= state->data->window_width && data->nextHorzTouchY >= 0 && data->nextHorzTouchY <= state->data->window_height)
     {
-        if (checkCoordinatesWall(data->nextHorzTouchX, data->nextHorzTouchY, state->data))
+        if (checkCoordinatesWall(data->nextHorzTouchX, data->nextHorzTouchY, state))
         {
             data->wallHorzIntesected = true;
             data->wallHorzHitX = data->nextHorzTouchX;
@@ -201,7 +204,7 @@ void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global
         data->nextVertTouchX -= 1;
     while (data->nextVertTouchX >= 0 && data->nextVertTouchX <= state->data->window_width && data->nextVertTouchY >= 0 && data->nextVertTouchY <= state->data->window_height)
     {
-        if (checkCoordinatesWall(data->nextVertTouchX, data->nextVertTouchY, state->data))
+        if (checkCoordinatesWall(data->nextVertTouchX, data->nextVertTouchY, state))
         {
             data->wallVertIntesected = true;
             data->wallVertHitX = data->nextVertTouchX;
@@ -210,7 +213,7 @@ void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global
             // {
             //     my_mlx_pixel_put(&state->img , i + 2 , (int)data->nextVertTouchY, 0x00FF0000);
             // }
-            DDA(state->player->initx, state->player->inity, data->wallVertHitX, data->wallVertHitY, state);
+            // DDA(state->player->initx, state->player->inity, data->wallVertHitX, data->wallVertHitY, state);
             break;
         }
         else
@@ -258,11 +261,11 @@ void    raycaster(t_global_state *state)
 
         //? Debugging purposes.
         // getHorzIntersection(getCorrectAngle(rayAngle), data, state);
-        getVertIntersection(getCorrectAngle(rayAngle), data, state);
+        // getVertIntersection(getCorrectAngle(rayAngle), data, state);
         // double x = state->player->initx + cos(rayAngle) * 50;
         // double y = state->player->inity + sin(rayAngle) * 50;
         // DDA(state->player->initx, state->player->inity, x, y, state);
-        // castRay(rayAngle, data, state);
+        castRay(rayAngle, data, state);
         rayAngle += FEILD_OF_VIEW_ANGLE / raysNumber;
         columnId += 1;
     }
