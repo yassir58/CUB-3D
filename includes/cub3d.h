@@ -148,8 +148,8 @@ typedef struct s_grid_data
 
 typedef struct s_player 
 {
-    int initx;
-    int inity;
+    double initx;
+    double inity;
     int x_cord;
     int y_cord;
     int radius;
@@ -243,6 +243,7 @@ void    raycaster(t_global_state *state);
 void    castRay(double rayAngle, t_intersection_data *data, t_global_state *state);
 double  getCorrectAgnle(double angle);
 double  calculateDistance(double x, double y, double x1, double y1);
-int checkCoordinatesWall(double x, double y, t_global_state *state);
+int     checkCoordinatesWall(double x, double y, t_global_state *state);
 int     get_angle_direction(double rayAngle);
+double  getCorrectAngle(double angle);
 #endif 

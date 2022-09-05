@@ -1,41 +1,74 @@
 #include "../../includes/cub3d.h"
 
-
 void move_player (int flag, t_global_state *state)
 {
-    int check;
+    double newPlayerX;
+    double newPlayerY;
+    int moveDirection;
+    int rotationDirection;
+    int moveStep;
 
-    check = 0;
+    rotationDirection = 0;
+    moveDirection = 0;
     if (flag == UP)
-    {
-        check  = check_for_wall (state->player->initx, 
-        (state->player->inity - state->player->radius) - moveSpeed, state);
-        if (state->player->inity - moveSpeed >= 0 && check)
-            state->player->inity -= moveSpeed;
-    }
+        moveDirection = 1;
     else if (flag == DOWN)
-    {
-        check = check_for_wall (state->player->initx, 
-        (state->player->inity + state->player->radius) + moveSpeed, state);
-        if (state->player->inity + moveSpeed <= RES_Y && check)
-            state->player->inity += moveSpeed;
-    }
-    else if (flag == LEFT)
-    {
-        check = check_for_wall ((state->player->initx - state->player->radius) - moveSpeed,
-        state->player->inity, state);
-        if (state->player->initx - moveSpeed >= 0 && check)
-            state->player->initx -= moveSpeed;
-    }
+        moveDirection = -1;
     else if (flag == RIGHT)
+        rotationDirection = 1;
+    else if (flag == LEFT)
+        rotationDirection = -1;
+    state->player->v_angle += rotationDirection * rotationSpeed;
+    if (state->player->v_angle < 0)
+        state->player->v_angle += 360;
+    else if (state->player->v_angle > 360)
+        state->player->v_angle = state->player->v_angle % 360;
+    moveStep = moveDirection * moveSpeed;
+    newPlayerX = state->player->initx + moveStep * cos(deg_to_radian(state->player->v_angle));
+    newPlayerY = state->player->inity + moveStep * sin(deg_to_radian(state->player->v_angle));
+    if (!checkCoordinatesWall(newPlayerX, newPlayerY, state))
     {
-        check= check_for_wall ((state->player->initx) + moveSpeed,
-        state->player->inity, state);
-        if (state->player->initx + moveSpeed <= RES_X && check)
-            state->player->initx += moveSpeed;
+        state->player->initx = newPlayerX;
+        state->player->inity = newPlayerY;
     }
     rerender_map (state);
 }
+
+// void move_player (int flag, t_global_state *state)
+// {
+//     int check;
+
+//     check = 0;
+//     if (flag == UP)
+//     {
+//         check  = check_for_wall (state->player->initx, 
+//         (state->player->inity - state->player->radius) - moveSpeed, state);
+//         if (state->player->inity - moveSpeed >= 0 && check)
+//             state->player->inity -= moveSpeed;
+//     }
+//     else if (flag == DOWN)
+//     {
+//         check = check_for_wall (state->player->initx, 
+//         (state->player->inity + state->player->radius) + moveSpeed, state);
+//         if (state->player->inity + moveSpeed <= RES_Y && check)
+//             state->player->inity += moveSpeed;
+//     }
+//     else if (flag == LEFT)
+//     {
+//         check = check_for_wall ((state->player->initx - state->player->radius) - moveSpeed,
+//         state->player->inity, state);
+//         if (state->player->initx - moveSpeed >= 0 && check)
+//             state->player->initx -= moveSpeed;
+//     }
+//     else if (flag == RIGHT)
+//     {
+//         check= check_for_wall ((state->player->initx) + moveSpeed,
+//         state->player->inity, state);
+//         if (state->player->initx + moveSpeed <= RES_X && check)
+//             state->player->initx += moveSpeed;
+//     }
+//     rerender_map (state);
+// }
 
 void rerender_map (t_global_state *state)
 {
@@ -47,11 +80,11 @@ void rerender_map (t_global_state *state)
 }
 
 
-void rotate_player (int direction, t_global_state *state)
-{
-    if (direction == LEFT)
-    state->player->v_angle -= rotationSpeed;
-    else if (direction  == RIGHT)
-    state->player->v_angle += rotationSpeed;
-    rerender_map (state);
-}
+// void rotate_player (int direction, t_global_state *state)
+// {
+//     if (direction == LEFT)
+//     state->player->v_angle -= rotationSpeed;
+//     else if (direction  == RIGHT)
+//     state->player->v_angle += rotationSpeed;
+//     rerender_map (state);
+// }
