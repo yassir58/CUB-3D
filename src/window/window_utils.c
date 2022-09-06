@@ -16,9 +16,9 @@ int	handle_keypress(int keycode, t_global_state *state)
         move_player(LEFT, state);
     else if (keycode == XK_RIGHT)
         move_player(RIGHT, state);
-    // else if (keycode == R_LEFT)
-    //     rotate_player (LEFT, state);
-    // else if (keycode == R_RIGHT)
-    //     rotate_player (RIGHT, state);
+    else if (keycode == R_LEFT)
+        move_player (L, state);
+    else if (keycode == R_RIGHT)
+        move_player(R, state);
     return (0);
 }

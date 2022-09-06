@@ -1,20 +1,20 @@
 #include "../../includes/cub3d.h"
 
 
-int get_angle_direction(double rayAngle)
-{
-    bool rayFacingDown = (rayAngle > 0 && rayAngle < M_PI);
-    bool rayFacingRight = (rayAngle > 0);
-    if (rayFacingDown)
-        return (RAY_DOWN);
-    else if (!rayFacingDown)
-        return (RAY_UP);
-    else if (rayFacingRight)
-        return (RAY_RIGHT);
-    else if (!rayFacingRight)
-        return (RAY_LEFT);
-    return (0);
-}
+// int get_angle_direction(double rayAngle)
+// {
+//     bool rayFacingDown = (rayAngle > 0 && rayAngle < M_PI);
+//     bool rayFacingRight = (rayAngle > 0);
+//     if (rayFacingDown)
+//         return (RAY_DOWN);
+//     else if (!rayFacingDown)
+//         return (RAY_UP);
+//     else if (rayFacingRight)
+//         return (RAY_RIGHT);
+//     else if (!rayFacingRight)
+//         return (RAY_LEFT);
+//     return (0);
+// }
 
 int rayFacingDown(double rayAngle)
 {

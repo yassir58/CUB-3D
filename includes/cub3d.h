@@ -63,15 +63,12 @@
 # define LEFT       1
 # define DOWN       2
 # define UP         3
+# define L 303
+# define R 302
 # define N 270
 # define S 90
 # define W 180
 # define E 360
-
-# define RAY_UP 1
-# define RAY_DOWN 2
-# define RAY_LEFT 3
-# define RAY_RIGHT 4
 
 #define WALL_CHARS "01NSWE "
 #define WALL_LINE "1 "

@@ -1,12 +1,19 @@
 #include "../../includes/cub3d.h"
 
+void    correctPlayerAngle(t_global_state *state)
+{
+    if (state->player->v_angle < 0)
+        state->player->v_angle += 360;
+    else if (state->player->v_angle > 360)
+        state->player->v_angle = state->player->v_angle % 360;
+}
+
 void move_player (int flag, t_global_state *state)
 {
     double newPlayerX;
     double newPlayerY;
     int moveDirection;
     int rotationDirection;
-    int moveStep;
 
     rotationDirection = 0;
     moveDirection = 0;
@@ -14,18 +21,14 @@ void move_player (int flag, t_global_state *state)
         moveDirection = 1;
     else if (flag == DOWN)
         moveDirection = -1;
-    else if (flag == RIGHT)
-        rotationDirection = 1;
-    else if (flag == LEFT)
+    else if (flag == L)
         rotationDirection = -1;
+    else if (flag == R)
+        rotationDirection = 1;
     state->player->v_angle += rotationDirection * rotationSpeed;
-    if (state->player->v_angle < 0)
-        state->player->v_angle += 360;
-    else if (state->player->v_angle > 360)
-        state->player->v_angle = state->player->v_angle % 360;
-    moveStep = moveDirection * moveSpeed;
-    newPlayerX = state->player->initx + moveStep * cos(deg_to_radian(state->player->v_angle));
-    newPlayerY = state->player->inity + moveStep * sin(deg_to_radian(state->player->v_angle));
+    correctPlayerAngle(state);
+    newPlayerX = state->player->initx + (moveDirection * moveSpeed) * cos(deg_to_radian(state->player->v_angle));
+    newPlayerY = state->player->inity + (moveDirection * moveSpeed) * sin(deg_to_radian(state->player->v_angle));
     if (!checkCoordinatesWall(newPlayerX, newPlayerY, state))
     {
         state->player->initx = newPlayerX;
