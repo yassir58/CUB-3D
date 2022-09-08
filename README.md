@@ -16,3 +16,4 @@ This project object is to improve our skills in game development we will be lear
 
 - Figure out a way to parse assets files even if they contain spaces.
 - Figure out a way to prevent the player from getting out when he's surrounded by two walls.
+- One of the bonuses could be the player is gathering some sort of a reward 
