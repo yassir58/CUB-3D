@@ -8,6 +8,7 @@ void    correctPlayerAngle(t_global_state *state)
         state->player->v_angle = state->player->v_angle % 360;
 }
 
+
 void move_player (int flag, t_global_state *state)
 {
     double newPlayerX;
@@ -21,6 +22,18 @@ void move_player (int flag, t_global_state *state)
         moveDirection = 1;
     else if (flag == DOWN)
         moveDirection = -1;
+    else if (flag == RIGHT)
+    {
+        state->player->initx -= moveSpeed * sin(deg_to_radian(state->player->v_angle));
+        state->player->inity += moveSpeed * cos(deg_to_radian(state->player->v_angle));
+        return (rerender_map(state));
+    }
+    else if (flag == LEFT)
+    {
+        state->player->initx += moveSpeed * sin(deg_to_radian(state->player->v_angle));
+        state->player->inity -= moveSpeed * cos(deg_to_radian(state->player->v_angle));
+        return (rerender_map(state));
+    }
     else if (flag == L)
         rotationDirection = -1;
     else if (flag == R)
