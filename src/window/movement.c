@@ -24,14 +24,24 @@ void move_player (int flag, t_global_state *state)
         moveDirection = -1;
     else if (flag == RIGHT)
     {
-        state->player->initx -= moveSpeed * sin(deg_to_radian(state->player->v_angle));
-        state->player->inity += moveSpeed * cos(deg_to_radian(state->player->v_angle));
+        newPlayerX = state->player->initx - moveSpeed * sin(deg_to_radian(state->player->v_angle));
+        newPlayerY = state->player->inity + moveSpeed * cos(deg_to_radian(state->player->v_angle));
+        if (!checkCoordinatesWall(newPlayerX, newPlayerY, state))
+        {
+            state->player->initx = newPlayerX;
+            state->player->inity = newPlayerY;
+        }
         return (rerender_map(state));
     }
     else if (flag == LEFT)
     {
-        state->player->initx += moveSpeed * sin(deg_to_radian(state->player->v_angle));
-        state->player->inity -= moveSpeed * cos(deg_to_radian(state->player->v_angle));
+        newPlayerX = state->player->initx + moveSpeed * sin(deg_to_radian(state->player->v_angle));
+        newPlayerY = state->player->inity - moveSpeed * cos(deg_to_radian(state->player->v_angle));
+        if (!checkCoordinatesWall(newPlayerX, newPlayerY, state))
+        {
+            state->player->initx = newPlayerX;
+            state->player->inity = newPlayerY;
+        }
         return (rerender_map(state));
     }
     else if (flag == L)

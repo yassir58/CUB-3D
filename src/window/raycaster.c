@@ -53,6 +53,8 @@ int checkCoordinatesWall(double x, double y, t_global_state *state)
     // i = 0;
 
     //! Here i should return 1 if x or y is out of boundes
+    // x += 1;
+    // y += 1;
     X = floor(x / TILE_SIZE);
     Y = floor(y / TILE_SIZE);
     // map = convert_lines_table(data->lines);

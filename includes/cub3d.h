@@ -30,28 +30,28 @@
 #define rotationSpeed 4
 
 // MAC keycodes
-# define XK_ESCAPE  53
-# define XK_LEFT    0
-# define XK_UP      13
-# define XK_RIGHT   2
-# define XK_DOWN    1
-# define R_LEFT     123
-# define R_UP       126
-# define R_RIGHT    124
-# define R_DOWN     125
+// # define XK_ESCAPE  53
+// # define XK_LEFT    0
+// # define XK_UP      13
+// # define XK_RIGHT   2
+// # define XK_DOWN    1
+// # define R_LEFT     123
+// # define R_UP       126
+// # define R_RIGHT    124
+// # define R_DOWN     125
 # define ROWS 14
 # define COLS 37
 
 // Linux keycodes
-// # define XK_ESCAPE  65307
-// # define XK_LEFT    97
-// # define XK_UP      119
-// # define XK_RIGHT   100
-// # define XK_DOWN    115
-// # define R_LEFT     65361
-// # define R_UP       65362
-// # define R_RIGHT    65363
-// # define R_DOWN     65364
+# define XK_ESCAPE  65307
+# define XK_LEFT    97
+# define XK_UP      119
+# define XK_RIGHT   100
+# define XK_DOWN    115
+# define R_LEFT     65361
+# define R_UP       65362
+# define R_RIGHT    65363
+# define R_DOWN     65364
 
 # define KEY_PRESS  2
 # define DESTROY_NOTIFY 17
