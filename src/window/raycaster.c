@@ -92,7 +92,7 @@ double getCorrectAngle(double angle)
     return (normalizedAngle);
 }
 
-void    castRay(double rayAngle, t_intersection_data *data, t_global_state *state)
+double    castRay(double rayAngle, t_intersection_data *data, t_global_state *state)
 {
     double horizontalDistance;
     double verticalDistance;
@@ -123,9 +123,9 @@ void    castRay(double rayAngle, t_intersection_data *data, t_global_state *stat
         data->wallHitX = data->wallVertHitX;
         data->wallHitY = data->wallVertHitY;
     }
-    (void)rayDistance;
     //TODO: Draw a line in the canvas using the wallHitX and wallHitY
     DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
+    return (rayDistance);
     // Here will be the code that will be responsible for casting one ray.
 }
 
@@ -247,10 +247,19 @@ void    raycaster(t_global_state *state)
     int raysNumber;
     double rayAngle;
     t_intersection_data *data;
+    double distance_to_pp;
+    double rayDistance;
+    double xindex;
+    double colHeight;
 
     columnId = 0;
+    colHeight = 0;
+    rayDistance = 0;
+    distance_to_pp = 0;
+    xindex = 0;
     raysNumber = state->data->window_width / RAY_THICKNESS;
     rayAngle = deg_to_radian(state->player->v_angle) - (FEILD_OF_VIEW_ANGLE / 2.0);
+    distance_to_pp = (state->data->window_width / 2)  / (tan(FEILD_OF_VIEW_ANGLE / 2.0));
     // printf("Number of rays: %d\n", raysNumber);
     // printf("Player angle: %f\n", deg_to_radian(state->player->v_angle));
     // printf("Ray angle •: %f\n", radian_to_deg(FEILD_OF_VIEW_ANGLE));
@@ -267,9 +276,14 @@ void    raycaster(t_global_state *state)
         // double x = state->player->initx + cos(rayAngle) * 50;
         // double y = state->player->inity + sin(rayAngle) * 50;
         // DDA(state->player->initx, state->player->inity, x, y, state);
-        castRay(rayAngle, data, state);
+        rayDistance =  castRay(rayAngle, data, state);
+        colHeight = (TILE_SIZE / rayDistance) * distance_to_pp;
+        // printf ("|colH : %f | RD : %f | DPP : %f \n", colHeight, rayDistance, distance_to_pp);
         rayAngle += FEILD_OF_VIEW_ANGLE / raysNumber;
         columnId += 1;
+        // draw_column (xindex, 0, 0x00ffffff,state,  colHeight);
+        //printf ("column height %f \n", colHeight);
+        xindex += RAY_THICKNESS;
     }
 }
 

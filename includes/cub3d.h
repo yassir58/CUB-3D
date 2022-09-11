@@ -17,8 +17,8 @@
 // Variables related to the ray caster.
 #define FOV 60
 #define FEILD_OF_VIEW_ANGLE ((FOV * (M_PI / 180)))
-#define TILE_SIZE 64
-#define RAY_THICKNESS 10
+#define TILE_SIZE 32
+#define RAY_THICKNESS 1
 
 #define RES_X 1080
 #define RES_Y 820
@@ -30,28 +30,28 @@
 #define rotationSpeed 4
 
 // MAC keycodes
-// # define XK_ESCAPE  53
-// # define XK_LEFT    0
-// # define XK_UP      13
-// # define XK_RIGHT   2
-// # define XK_DOWN    1
-// # define R_LEFT     123
-// # define R_UP       126
-// # define R_RIGHT    124
-// # define R_DOWN     125
+# define XK_ESCAPE  53
+# define XK_LEFT    0
+# define XK_UP      13
+# define XK_RIGHT   2
+# define XK_DOWN    1
+# define R_LEFT     123
+# define R_UP       126
+# define R_RIGHT    124
+# define R_DOWN     125
 # define ROWS 14
 # define COLS 37
 
 // Linux keycodes
-# define XK_ESCAPE  65307
-# define XK_LEFT    97
-# define XK_UP      119
-# define XK_RIGHT   100
-# define XK_DOWN    115
-# define R_LEFT     65361
-# define R_UP       65362
-# define R_RIGHT    65363
-# define R_DOWN     65364
+// # define XK_ESCAPE  65307
+// # define XK_LEFT    97
+// # define XK_UP      119
+// # define XK_RIGHT   100
+// # define XK_DOWN    115
+// # define R_LEFT     65361
+// # define R_UP       65362
+// # define R_RIGHT    65363
+// # define R_DOWN     65364
 
 # define KEY_PRESS  2
 # define DESTROY_NOTIFY 17
@@ -237,10 +237,11 @@ void    app_error(int code);
 void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global_state *state);
 void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global_state *state);
 void    raycaster(t_global_state *state);
-void    castRay(double rayAngle, t_intersection_data *data, t_global_state *state);
+double    castRay(double rayAngle, t_intersection_data *data, t_global_state *state);
 double  getCorrectAgnle(double angle);
 double  calculateDistance(double x, double y, double x1, double y1);
 int     checkCoordinatesWall(double x, double y, t_global_state *state);
 int     get_angle_direction(double rayAngle);
 double  getCorrectAngle(double angle);
+void    draw_column (int x, int y, int color, t_global_state *state, double colHeight);
 #endif 
