@@ -18,7 +18,7 @@
 #define FOV 60
 #define FEILD_OF_VIEW_ANGLE ((FOV * (M_PI / 180)))
 #define TILE_SIZE 64
-#define RAY_THICKNESS 1
+#define RAY_THICKNESS 10
 
 #define RES_X 1080
 #define RES_Y 820

@@ -125,11 +125,11 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
     }
     // printf("%f\n", rayAngle);
     // printf("%f\n", deg_to_radian(state->player->v_angle));
-    if (radian_to_deg(rayAngle) == state->player->v_angle)
-        data->projectPlaneDistance = rayDistance;
-    (void)rayDistance;
+    // if (radian_to_deg(rayAngle) == state->player->v_angle)
+    //     data->projectPlaneDistance = rayDistance;
+    // (void)rayDistance;
     //TODO: Draw a line in the canvas using the wallHitX and wallHitY
-    DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
+    // DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
     return (rayDistance);
     // Here will be the code that will be responsible for casting one ray.
 }
@@ -254,7 +254,7 @@ void    raycaster(t_global_state *state)
     t_intersection_data *data;
     double distance_to_pp;
     double rayDistance;
-    double xindex;
+    int xindex;
     double colHeight;
 
     columnId = 0;
@@ -262,16 +262,19 @@ void    raycaster(t_global_state *state)
     rayDistance = 0;
     distance_to_pp = 0;
     xindex = 0;
-    raysNumber = state->data->window_width / RAY_THICKNESS;
+    raysNumber = state->data->window_width / 1;
     rayAngle = deg_to_radian(state->player->v_angle) - (FEILD_OF_VIEW_ANGLE / 2.0);
     distance_to_pp = (state->data->window_width / 2)  / (tan(FEILD_OF_VIEW_ANGLE / 2.0));
     // printf("Number of rays: %d\n", raysNumber);
+
     // printf("Player angle: %f\n", deg_to_radian(state->player->v_angle));
     // printf("Ray angle •: %f\n", radian_to_deg(FEILD_OF_VIEW_ANGLE));
     // printf("Ray angle in rad: %f\n", FEILD_OF_VIEW_ANGLE);
     data = (t_intersection_data *)malloc(sizeof(t_intersection_data));
+    data->projectPlaneDistance = 0;
     if (!data)
         return ;
+    printf("Project plane: %f\n", data->projectPlaneDistance);
     while (columnId < raysNumber)
     {
 
@@ -282,15 +285,13 @@ void    raycaster(t_global_state *state)
         // double y = state->player->inity + sin(rayAngle) * 50;
         // DDA(state->player->initx, state->player->inity, x, y, state);
         rayDistance =  castRay(rayAngle, data, state);
+        printf("Ray distance: %f\n", rayDistance);
         colHeight = (TILE_SIZE / rayDistance) * distance_to_pp;
-        // printf ("|colH : %f | RD : %f | DPP : %f \n", colHeight, rayDistance, distance_to_pp);
+        printf("Ray distance: %f\n", rayDistance);
         rayAngle += FEILD_OF_VIEW_ANGLE / raysNumber;
         columnId += 1;
-        // draw_column (xindex, 0, 0x00ffffff,state,  colHeight);
-        //printf ("column height %f \n", colHeight);
-        xindex += RAY_THICKNESS;
+        draw_column (columnId * RAY_THICKNESS, ((state->data->window_height / 2) - (colHeight / 2)), 0x00ff0000,state, colHeight);
     }
-    printf("Project plane: %f\n", data->projectPlaneDistance);
 }
 
 

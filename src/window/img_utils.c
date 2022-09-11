@@ -53,10 +53,7 @@ void draw_column (int x, int y, int color, t_global_state *state, double colHeig
 	{
 		while (j < RAY_THICKNESS)
 		{
-			// if (i == 0 || j == 0 || (j == TILE_SIZE) || (i == TILE_SIZE))
-			// 	clr = 0x008ACB88;
-			// else
-				clr = color;
+			clr = color;
 			my_mlx_pixel_put (state , (x + j), (y + i), clr);
 			j++;
 		}
