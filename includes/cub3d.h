@@ -17,7 +17,7 @@
 // Variables related to the ray caster.
 #define FOV 60
 #define FEILD_OF_VIEW_ANGLE ((FOV * (M_PI / 180)))
-#define TILE_SIZE 32
+#define TILE_SIZE 64
 #define RAY_THICKNESS 1
 
 #define RES_X 1080
@@ -135,6 +135,7 @@ typedef struct s_intersection_data {
     double distanceVertical;
     bool wallHorzIntesected;
     bool wallVertIntesected;
+    double projectPlaneDistance;
 } t_intersection_data;
 
 typedef struct s_grid_data 
@@ -203,7 +204,7 @@ void    draw_player (int color, t_global_state *state);
 int     handle_keypress(int keycode, t_global_state *state);
 void    get_rotation_cords (int *x_2, int *y_2, double angle, t_global_state *state);
 double  deg_to_radian (int deg);
-double  radian_to_deg(double rad);
+int     radian_to_deg(double rad);
 void    DDA(int X0, int Y0, int X1, int Y1, t_global_state *state);
 void    rerender_map (t_global_state *state);
 void    rotate_player (int direction, t_global_state *state);

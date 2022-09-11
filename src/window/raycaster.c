@@ -123,6 +123,11 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
         data->wallHitX = data->wallVertHitX;
         data->wallHitY = data->wallVertHitY;
     }
+    // printf("%f\n", rayAngle);
+    // printf("%f\n", deg_to_radian(state->player->v_angle));
+    if (radian_to_deg(rayAngle) == state->player->v_angle)
+        data->projectPlaneDistance = rayDistance;
+    (void)rayDistance;
     //TODO: Draw a line in the canvas using the wallHitX and wallHitY
     DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
     return (rayDistance);
@@ -285,6 +290,7 @@ void    raycaster(t_global_state *state)
         //printf ("column height %f \n", colHeight);
         xindex += RAY_THICKNESS;
     }
+    printf("Project plane: %f\n", data->projectPlaneDistance);
 }
 
 
