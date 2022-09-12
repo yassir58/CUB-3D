@@ -294,10 +294,10 @@ void    raycaster(t_global_state *state)
         printf("col height: %f\n", colHeight);
         rayAngle += FEILD_OF_VIEW_ANGLE / raysNumber;
         columnId += 1;
-        if (colHeight <= state->data->window_height)
+        //if (colHeight <= state->data->window_height)
             draw_column (columnId * RAY_THICKNESS, ((state->data->window_height / 2) - (colHeight / 2)), 0x00ffffff,state, colHeight);
-        else
-            printf ("this will segfault \n");
+        // else
+        //     printf ("this will segfault \n");
     }
 }
 
