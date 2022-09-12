@@ -7,7 +7,8 @@ This project object is to improve our skills in game development we will be lear
 - [x] Parsing.
 - [x] Rendering the 2D map.
 - [x] Building the raycaster.
-- [ ] Rendering the wall projections.
+- [x] Rendering the wall projections.
+- [ ] Drawing Textures
 - [ ] Add event for the mouse movements.
  
 ## Modification:
