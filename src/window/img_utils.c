@@ -1,12 +1,15 @@
 #include "../../includes/cub3d.h"
 
 
-void	my_mlx_pixel_put(t_global_state *state, int x, int y, int color)
+void	my_mlx_pixel_put(t_global_state *state, int x, int y, int color, t_img *img)
 {
 	t_img *data;
 	char	*dst;
 
-	data = &state->img;
+	if (img == NULL)
+		data = &state->img;
+	else
+		data = img;
 	if ((x >= 0 && x <= state->data->window_width) && (y >= 0 && y <= state->data->window_height))
 	{
 		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
@@ -28,11 +31,8 @@ void draw_rect (int x, int y, int color, t_global_state *state)
 	{
 		while (j < TILE_SIZE)
 		{
-			// if (i == 0 || j == 0 || (j == TILE_SIZE) || (i == TILE_SIZE))
-			// 	clr = 0x008ACB88;
-			// else
-				clr = color;
-			my_mlx_pixel_put (state , (x + j), (y + i), clr);
+			clr = color;
+			my_mlx_pixel_put (state , (x + j), (y + i), clr, NULL);
 			j++;
 		}
 		j = 0;
@@ -54,7 +54,7 @@ void draw_column (int x, int y, int color, t_global_state *state, double colHeig
 		while (j < RAY_THICKNESS)
 		{
 			clr = color;
-			my_mlx_pixel_put (state , (x + j), (y + i), clr);
+			my_mlx_pixel_put (state , (x + j), (y + i), clr, &testing_img);
 			j++;
 		}
 		j = 0;
@@ -80,7 +80,7 @@ void draw_player (int color, t_global_state *state)
 			angle  =  i;
 			x1 = j * cos(angle * (M_PI / 180));
 			y1 = j * sin (angle * (M_PI / 180));
-			my_mlx_pixel_put (state , (state->player->initx + x1), (state->player->inity + y1), color);
+			my_mlx_pixel_put (state , (state->player->initx + x1), (state->player->inity + y1), color, NULL);
 			i += 0.1;
 		}
 		i = 0;

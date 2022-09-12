@@ -92,7 +92,7 @@ void DDA(int X0, int Y0, int X1, int Y1, t_global_state *state)
     float Y = Y0;
     for (int i = 0; i <= steps; i++)
     {
-        my_mlx_pixel_put (state, X, Y, 0x00FBDF07); // put pixel at (X,Y)
+        my_mlx_pixel_put (state, X, Y, 0x00FBDF07, NULL); // put pixel at (X,Y)
         X += Xinc;           // increment in x at each step
         Y += Yinc;           // increment in y at each step
         // delay(100);          // for visualization of line-
@@ -105,4 +105,49 @@ void get_rotation_cords (int *x_2, int *y_2, double angle, t_global_state *state
 {
     *x_2 = *x_2 + (cos (angle)  *  state->player->d_length);
     *y_2 = *y_2 + (sin (angle)  *  state->player->d_length);
+}
+
+
+void init_image (t_global_state *state)
+{
+    int i;
+    int j;
+
+    i = 0;
+    j = 0;
+    while (i < (state->data->window_height))
+    {
+        while (j < (state->data->window_width))
+        {
+            my_mlx_pixel_put (state, j, i, 0x00000000, &testing_img);
+            j++;
+        }
+        j = 0;
+        i++;
+    }
+}
+
+
+
+void color (t_global_state *state, int color, int start)
+{
+    int i;
+    int j;
+    int max;
+
+    i = start;
+    j = 0;
+    max = state->data->window_height;
+    if (start == 0)
+        max = state->data->window_height / 2;
+    while (i < max)
+    {
+        while (j < state->data->window_width)
+        {
+            my_mlx_pixel_put (state, j, i, color, &testing_img);
+            j++;
+        }
+        j = 0;
+        i++;
+    }
 }

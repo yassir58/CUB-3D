@@ -129,7 +129,7 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
     //     data->projectPlaneDistance = rayDistance;
     // (void)rayDistance;
     //TODO: Draw a line in the canvas using the wallHitX and wallHitY
-    // DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
+    DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
     return (rayDistance);
     // Here will be the code that will be responsible for casting one ray.
 }
@@ -274,7 +274,11 @@ void    raycaster(t_global_state *state)
     data->projectPlaneDistance = 0;
     if (!data)
         return ;
-    printf("Project plane: %f\n", data->projectPlaneDistance);
+    printf("Project plane dis: %f\n", distance_to_pp);
+    testing_img.img  = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_height);
+    testing_img.addr = mlx_get_data_addr (testing_img.img, &(testing_img.bits_per_pixel), &(testing_img.line_length), &(testing_img.endian));
+    color(state, 0x0016213E, state->data->window_height / 2);
+    color(state, 0x00C3F8FF, 0);
     while (columnId < raysNumber)
     {
 
@@ -287,10 +291,13 @@ void    raycaster(t_global_state *state)
         rayDistance =  castRay(rayAngle, data, state);
         printf("Ray distance: %f\n", rayDistance);
         colHeight = (TILE_SIZE / rayDistance) * distance_to_pp;
-        printf("Ray distance: %f\n", rayDistance);
+        printf("col height: %f\n", colHeight);
         rayAngle += FEILD_OF_VIEW_ANGLE / raysNumber;
         columnId += 1;
-        draw_column (columnId * RAY_THICKNESS, ((state->data->window_height / 2) - (colHeight / 2)), 0x00ff0000,state, colHeight);
+        if (colHeight <= state->data->window_height)
+            draw_column (columnId * RAY_THICKNESS, ((state->data->window_height / 2) - (colHeight / 2)), 0x00ffffff,state, colHeight);
+        else
+            printf ("this will segfault \n");
     }
 }
 

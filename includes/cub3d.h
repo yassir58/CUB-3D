@@ -14,11 +14,15 @@
 #include <mlx.h>
 
 
+
+//// testing winodw
+
+
 // Variables related to the ray caster.
 #define FOV 60
 #define FEILD_OF_VIEW_ANGLE ((FOV * (M_PI / 180)))
 #define TILE_SIZE 64
-#define RAY_THICKNESS 10
+#define RAY_THICKNESS 1
 
 #define RES_X 1080
 #define RES_Y 820
@@ -182,11 +186,15 @@ t_global_state g_data;
  * @param void
  * @return t_global_state* 
  */
+
+t_vars testing_window;
+t_img   testing_img;
+
 t_global_state *init_simulation_data(void);
 
 t_map_list *create_map_list (char *map);
 void    push_to_list(t_map_list **map, char *column);
-void	my_mlx_pixel_put(t_global_state *state, int x, int y, int color);
+void	my_mlx_pixel_put(t_global_state *state, int x, int y, int color, t_img *img);
 void    draw_rect (int x, int y, int color, t_global_state *state);
 void    calculate_grid(t_map_list *list, int *col, int *row);
 void    draw_grid (t_global_state *state);
@@ -208,7 +216,7 @@ int     radian_to_deg(double rad);
 void    DDA(int X0, int Y0, int X1, int Y1, t_global_state *state);
 void    rerender_map (t_global_state *state);
 void    rotate_player (int direction, t_global_state *state);
-
+void init_image (t_global_state *state);
 
 // Parse list related functions
 t_game_params	*new_params(char *key, char *value, int index);
@@ -234,7 +242,7 @@ void    validate_map(char **map, int map_size);
 void    app_error(int code);
 
 // Ray casting related functions
-
+void color (t_global_state *state, int color, int start);
 void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global_state *state);
 void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global_state *state);
 void    raycaster(t_global_state *state);
