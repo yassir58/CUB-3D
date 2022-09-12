@@ -10,7 +10,7 @@ void	my_mlx_pixel_put(t_global_state *state, int x, int y, int color, t_img *img
 		data = &state->img;
 	else
 		data = img;
-	if ((x >= 0 && x <= state->data->window_width) && (y >= 0 && y <= state->data->window_height))
+	if ((x >= 0 && x < state->data->window_width) && (y >= 0 && y < state->data->window_height))
 	{
 		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 		*(unsigned int*)dst = color;
