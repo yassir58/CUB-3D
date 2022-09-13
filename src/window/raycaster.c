@@ -119,12 +119,14 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
         verticalDistance = INT_MAX;
     if (verticalDistance > horizontalDistance)
     {
+        data->wasIntersectionVertical = false;
         rayDistance = horizontalDistance;
         data->wallHitX = data->wallHorzHitX;
         data->wallHitY = data->wallHorzHitY;
     }
     else
     {
+        data->wasIntersectionVertical = true;
         rayDistance = verticalDistance;
         data->wallHitX = data->wallVertHitX;
         data->wallHitY = data->wallVertHitY;
@@ -168,6 +170,8 @@ void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global
         if (checkCoordinatesWall(data->nextHorzTouchX, data->nextHorzTouchY, state))
         {
             data->wallHorzIntesected = true;
+            if (rayFacingUp(rayAngle))
+                data->nextHorzTouchY += 1;
             data->wallHorzHitX = data->nextHorzTouchX;
             data->wallHorzHitY = data->nextHorzTouchY;
             // DDA(state->player->initx, state->player->inity, data->wallHorzHitX, data->wallHorzHitY, state);
@@ -196,6 +200,7 @@ void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global
 
 void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global_state *state)
 {
+
     data->wallVertIntesected = false;
     data->xintercept = floor(state->player->initx / TILE_SIZE) * TILE_SIZE;
     if (rayFacingRight(rayAngle))
@@ -220,6 +225,8 @@ void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global
         if (checkCoordinatesWall(data->nextVertTouchX, data->nextVertTouchY, state))
         {
             data->wallVertIntesected = true;
+            if (rayFacingLeft(rayAngle))
+                data->nextVertTouchX += 1;
             data->wallVertHitX = data->nextVertTouchX;
             data->wallVertHitY = data->nextVertTouchY;
             // for (int i = ((int)data->nextVertTouchX - 4); i < (int)data->nextVertTouchX; i++)
@@ -269,7 +276,6 @@ void    raycaster(t_global_state *state)
     distance_to_pp = 0;
     raysNumber = state->data->window_width / 1;
     rayAngle = deg_to_radian(state->player->v_angle) - (FEILD_OF_VIEW_ANGLE / 2.0);
-    
     distance_to_pp = (state->data->window_width / 2)  / (tan(FEILD_OF_VIEW_ANGLE / 2.0));
     // printf("Number of rays: %d\n", raysNumber);
 

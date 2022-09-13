@@ -142,6 +142,7 @@ typedef struct s_intersection_data {
     double distanceVertical;
     bool wallHorzIntesected;
     bool wallVertIntesected;
+    bool wasIntersectionVertical;
     double projectPlaneDistance;
 } t_intersection_data;
 
