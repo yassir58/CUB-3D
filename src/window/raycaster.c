@@ -136,7 +136,7 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
     // (void)rayDistance;
     //TODO: Draw a line in the canvas using the wallHitX and wallHitY
     DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
-    return (rayDistance);
+    return (rayDistance * cos(deg_to_radian(state->player->v_angle) - rayAngle));
     // Here will be the code that will be responsible for casting one ray.
 }
 
@@ -260,7 +260,6 @@ void    raycaster(t_global_state *state)
     t_intersection_data *data;
     double distance_to_pp;
     double rayDistance;
-    int xindex;
     double colHeight;
    
 
@@ -268,9 +267,9 @@ void    raycaster(t_global_state *state)
     colHeight = 0;
     rayDistance = 0;
     distance_to_pp = 0;
-    xindex = 0;
     raysNumber = state->data->window_width / 1;
     rayAngle = deg_to_radian(state->player->v_angle) - (FEILD_OF_VIEW_ANGLE / 2.0);
+    
     distance_to_pp = (state->data->window_width / 2)  / (tan(FEILD_OF_VIEW_ANGLE / 2.0));
     // printf("Number of rays: %d\n", raysNumber);
 

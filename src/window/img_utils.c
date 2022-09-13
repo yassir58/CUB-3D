@@ -80,6 +80,7 @@ void draw_column (int x, int y, int color, t_global_state *state, double colHeig
 		j = 0;
 		i++;
 	}
+	(void)clr;
 }
 
 void draw_player (int color, t_global_state *state)
