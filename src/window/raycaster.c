@@ -104,9 +104,15 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
     getHorzIntersection(getCorrectAngle(rayAngle), data, state);
     getVertIntersection(getCorrectAngle(rayAngle), data, state);
     if (data->wallHorzIntesected)
+    {
         horizontalDistance = calculateDistance(state->player->initx, state->player->inity, data->wallHorzHitX, data->wallHorzHitY);
+        txtOffsetX =  fmod(data->wallHitX , TILE_SIZE);
+    }
     else
+    {
         horizontalDistance = INT_MAX;
+        txtOffsetX = fmod (data->wallHitY, TILE_SIZE);
+    }
     if (data->wallVertIntesected)
         verticalDistance = calculateDistance(state->player->initx, state->player->inity, data->wallVertHitX, data->wallVertHitY);
     else
@@ -256,6 +262,7 @@ void    raycaster(t_global_state *state)
     double rayDistance;
     int xindex;
     double colHeight;
+   
 
     columnId = 0;
     colHeight = 0;
@@ -289,15 +296,12 @@ void    raycaster(t_global_state *state)
         // double y = state->player->inity + sin(rayAngle) * 50;
         // DDA(state->player->initx, state->player->inity, x, y, state);
         rayDistance =  castRay(rayAngle, data, state);
-        printf("Ray distance: %f\n", rayDistance);
+        //printf("Ray distance: %f\n", rayDistance);
         colHeight = (TILE_SIZE / rayDistance) * distance_to_pp;
-        printf("col height: %f\n", colHeight);
+        //printf("col height: %f\n", colHeight);
         rayAngle += FEILD_OF_VIEW_ANGLE / raysNumber;
         columnId += 1;
-        //if (colHeight <= state->data->window_height)
-            draw_column (columnId * RAY_THICKNESS, ((state->data->window_height / 2) - (colHeight / 2)), 0x00ffffff,state, colHeight);
-        // else
-        //     printf ("this will segfault \n");
+        draw_column (columnId * RAY_THICKNESS, ((state->data->window_height / 2) - (colHeight / 2)), 0x00ffffff,state, colHeight);
     }
 }
 

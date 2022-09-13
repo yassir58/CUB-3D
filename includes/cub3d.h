@@ -15,8 +15,11 @@
 
 
 
-//// testing winodw
-
+//// testing 
+int txtOffsetX;
+int txtOffsetY;
+int h;
+int w;
 
 // Variables related to the ray caster.
 #define FOV 60
@@ -187,8 +190,9 @@ t_global_state g_data;
  * @return t_global_state* 
  */
 
-t_vars testing_window;
+t_vars  testing_window;
 t_img   testing_img;
+t_img texture_img;
 
 t_global_state *init_simulation_data(void);
 
@@ -216,8 +220,8 @@ int     radian_to_deg(double rad);
 void    DDA(int X0, int Y0, int X1, int Y1, t_global_state *state);
 void    rerender_map (t_global_state *state);
 void    rotate_player (int direction, t_global_state *state);
-void init_image (t_global_state *state);
-
+void    init_image (t_global_state *state);
+unsigned int get_pixel_color (int x, int y, t_img *img);
 // Parse list related functions
 t_game_params	*new_params(char *key, char *value, int index);
 t_map_line      *new_line(char *line);

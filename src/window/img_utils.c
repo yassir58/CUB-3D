@@ -18,6 +18,22 @@ void	my_mlx_pixel_put(t_global_state *state, int x, int y, int color, t_img *img
 }
 
 
+
+unsigned int get_pixel_color (int x, int y, t_img *img)
+{
+	t_img *data;
+	char *dst;
+
+	data = img;
+	dst = NULL;
+	if ((x >= 0 && x < w) && (y >= 0 && y < h))
+		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	else 
+		return (0);
+	return (*(unsigned int*)dst);
+}
+
+
 void draw_rect (int x, int y, int color, t_global_state *state)
 {
 	int i;
@@ -45,6 +61,7 @@ void draw_column (int x, int y, int color, t_global_state *state, double colHeig
 	int i;
 	int j;
 	int clr;
+	int texelClr = 0;
 
 	i = 0;
 	j = 0;
@@ -54,7 +71,10 @@ void draw_column (int x, int y, int color, t_global_state *state, double colHeig
 		while (j < RAY_THICKNESS)
 		{
 			clr = color;
-			my_mlx_pixel_put (state , (x + j), (y + i), clr, &testing_img);
+			txtOffsetY = i * (TILE_SIZE / colHeight);
+			texelClr = get_pixel_color (txtOffsetX, txtOffsetY, &texture_img);
+			// printf ("|txl clr %d x %d y %d \n|", texelClr, txtOffsetX, txtOffsetY);
+			my_mlx_pixel_put (state , (x + j), (y + i), texelClr, &testing_img);
 			j++;
 		}
 		j = 0;

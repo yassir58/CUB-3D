@@ -15,6 +15,10 @@ int main (int argc , char *argv[])
     init_window (map, state);
 
     /// testing
+
+    texture_img.img =  mlx_xpm_file_to_image (state->vars->mlx, "assets/quagmire.xpm", &w, &h);
+    printf ("w %d h %d \n", w, h);
+    texture_img.addr  = mlx_get_data_addr (texture_img.img, &(texture_img.bits_per_pixel), &(texture_img.line_length), &(texture_img.endian));
     testing_img.img = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_height);
     testing_img.addr = mlx_get_data_addr (testing_img.img, &(testing_img.bits_per_pixel), &(testing_img.line_length), &(testing_img.endian));
     draw_grid (state);
