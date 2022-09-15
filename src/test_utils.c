@@ -28,7 +28,7 @@ void draw_grid (t_global_state *state)
         draw_row (i, &j , &x, y, state);
         j = 0;
         x = 0;
-        y += tsize;
+        y += state->data->tileY;
         i++;
     }
 }
@@ -39,22 +39,20 @@ void draw_row (int i, int *j, int *x, int y, t_global_state *state)
     while (*j < state->grid->col)
     {  
         if (state->data->map[i][*j] == '1')
-            draw_rect (*x, y,WALL_CLR, state);
+            draw_rect (*x, y,0x00FF0155, state);
         else if (state->data->map[i][*j] == 'P')
         {
             draw_rect (*x, y, SPACE_CLR, state);
             if (state->player->initx == 0 && state->player->inity == 0)
             {
-                state->player->initx = *x + (tsize / 2);
-                state->player->inity = y + (tsize / 2);
+                state->player->initx = *x + (state->data->tileX / 2);
+                state->player->inity = y + (state->data->tileY / 2);
             }
             draw_player (0x00FF0000, state);
         }
         else if (state->data->map[i][*j] == '0')
             draw_rect (*x, y, SPACE_CLR, state);
-        else 
-             draw_rect (*x, y, 0x0FF0185, state);
-        *x += tsize;
+        *x += state->data->tileX;
         (*j)++;
     }
     
