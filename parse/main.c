@@ -67,6 +67,7 @@ int main(int argc, char **argv)
     data = (t_game_data *)malloc(sizeof(t_game_data));
     if (!data)
         return (0);
-	parse_map(argv[1], data);
+    if (argc > 1)
+	    parse_map(argv[1], data);
     return (0);
 }

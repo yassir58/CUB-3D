@@ -241,7 +241,7 @@ void            print_lines_list(t_map_line *list);
 void            print_params_list(t_game_params *list);
 // Map validation
 
-void    validate_map(char **map, int map_size);
+char    **validate_map(char **map, int map_size);
 
 // Error management
 
@@ -260,4 +260,5 @@ int     get_angle_direction(double rayAngle);
 double  getCorrectAngle(double angle);
 void    draw_column (int x, int y, int color, t_global_state *state, double colHeight);
 int     mouse_handle(int x, int y, void *param);
+char **get_key_value(char *str);
 #endif 

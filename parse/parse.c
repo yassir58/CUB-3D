@@ -94,12 +94,16 @@ int get_color(char *str)
     char **rgb;
     int color;
     
+    // printf("%s\n", str);
     rgb = ft_split(str, ',');
     color = 0;
     if (count_seperator(str, ',') == 2)
     {
         if (ft_atoi(rgb[0]) <= 255 && ft_atoi(rgb[1]) <= 255 && ft_atoi(rgb[2]) <= 255)
         {
+            // printf("Blue: %d\n",ft_atoi(rgb[0]));
+            // printf("Green: %d\n",ft_atoi(rgb[1]));
+            // printf("Red: %d\n",ft_atoi(rgb[2]));
             color = 65536 * ft_atoi(rgb[0]) + 256 * ft_atoi(rgb[1]) + ft_atoi(rgb[2]);
             return (color);
         }
@@ -155,11 +159,11 @@ void    add_params_to_list(char *line, t_game_params **params_list)
     int color;
     // 
     // TODO: I think that i should validate the key according to the attributes mentioned in the subject.
-    splitted = ft_split(line, ' ');
-    if (splitted[0] && splitted[1])
+    splitted = get_key_value(line);
+    if (ft_strlen(splitted[0]) && ft_strlen(splitted[1]))
     {
-        key = ft_strdup(splitted[0]);
-        value = ft_strdup(splitted[1]);
+        key = splitted[0];
+        value = splitted[1];
         if (!search_params_list(key, params_list))
         {
             if (check_identifier(key) == 2)
@@ -236,6 +240,7 @@ void    parse_map(char *path, t_game_data *data)
     if (fd < 0)
         app_error(5);
     get_lists(fd, data);
+    print_params_list(data->params);
     check_identifers_order(data->params);
     validate_map(convert_lines_table(data->lines), lines_number(data->lines));
     // open the map and send fd to the appropriate function so it can get the game params.
