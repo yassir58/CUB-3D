@@ -92,11 +92,9 @@ char    **validate_map(char **map, int map_size)
             validate_map_line(map[i], map[i - 1], map[i + 1]);
             i += 1;
         }
+        printf("The map is valid\n");
     }
     else
-    {
-        printf("Error: invalid map parse error: validtion function\n");
-        exit(1);
-    }
+       app_error(8);
     return (map);
 }

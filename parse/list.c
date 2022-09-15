@@ -106,7 +106,7 @@ void    print_params_list(t_game_params *list)
     tmp = list;
     while (tmp != NULL)
     {
-        printf("Key:%s Value:%s Index:%d\n", tmp->key ,tmp->value, tmp->index);
+        printf("Key:%s Value:%s\n", tmp->key ,tmp->value);
         tmp = tmp->next;
     }
 }

@@ -1,8 +1,8 @@
-NO ./assets/east_texture
+NO ./assets/east_textu re
 SO ./assets/north_texture
         WE ./assets/south_texture
    EA ./assets/west_texture
-F 220,100,0
+F 220,  100,  0
 C 225,30,0
 
 
