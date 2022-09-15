@@ -55,8 +55,8 @@ int checkCoordinatesWall(double x, double y, t_global_state *state)
     //! Here i should return 1 if x or y is out of boundes
     // x += 1;
     // y += 1;
-    X = floor(x / TILE_SIZE);
-    Y = floor(y / TILE_SIZE);
+    X = floor(x / tsize);
+    Y = floor(y / tsize);
     // map = convert_lines_table(data->lines);
     // printf("Before the segfault in convert function.\n");
     // while (i < string_table_number(data->map))
@@ -104,15 +104,9 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
     getHorzIntersection(getCorrectAngle(rayAngle), data, state);
     getVertIntersection(getCorrectAngle(rayAngle), data, state);
     if (data->wallHorzIntesected)
-    {
         horizontalDistance = calculateDistance(state->player->initx, state->player->inity, data->wallHorzHitX, data->wallHorzHitY);
-        txtOffsetX =  fmod(data->wallHitX , TILE_SIZE);
-    }
     else
-    {
         horizontalDistance = INT_MAX;
-        txtOffsetX = fmod (data->wallHitY, TILE_SIZE);
-    }
     if (data->wallVertIntesected)
         verticalDistance = calculateDistance(state->player->initx, state->player->inity, data->wallVertHitX, data->wallVertHitY);
     else
@@ -131,6 +125,11 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
         data->wallHitX = data->wallVertHitX;
         data->wallHitY = data->wallVertHitY;
     }
+
+    if (data->wasIntersectionVertical)
+         txtOffsetX =  fmod(data->wallHitY , w);
+    else
+         txtOffsetX =  fmod(data->wallHitX , w);
     // printf("%f\n", rayAngle);
     // printf("%f\n", deg_to_radian(state->player->v_angle));
     // if (radian_to_deg(rayAngle) == state->player->v_angle)
@@ -146,12 +145,12 @@ void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global
 {
 
     data->wallHorzIntesected = false;
-    data->yintercept = floor(state->player->inity / TILE_SIZE) * TILE_SIZE;
+    data->yintercept = floor(state->player->inity / tsize) * tsize;
     if (rayFacingDown(rayAngle))
-        data->yintercept += TILE_SIZE;
+        data->yintercept += tsize;
     data->xintercept = state->player->initx + ((data->yintercept - state->player->inity) / tan(rayAngle));
     
-    data->ystep = TILE_SIZE;
+    data->ystep = tsize;
     if (!rayFacingDown(rayAngle))
         data->ystep *= -1;
 
@@ -202,16 +201,16 @@ void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global
 {
 
     data->wallVertIntesected = false;
-    data->xintercept = floor(state->player->initx / TILE_SIZE) * TILE_SIZE;
+    data->xintercept = floor(state->player->initx / tsize) * tsize;
     if (rayFacingRight(rayAngle))
-        data->xintercept += TILE_SIZE;
+        data->xintercept += tsize;
     data->yintercept = state->player->inity + ((data->xintercept - state->player->initx) * tan(rayAngle));
     
-    data->xstep = TILE_SIZE;
+    data->xstep = tsize;
     if (rayFacingLeft(rayAngle))
         data->xstep *= -1;
 
-    data->ystep = TILE_SIZE * tan(rayAngle);
+    data->ystep = tsize * tan(rayAngle);
     if (rayFacingUp(rayAngle) && data->ystep > 0)
         data->ystep *= -1;
     if (rayFacingDown(rayAngle) && data->ystep < 0)
@@ -288,7 +287,7 @@ void    raycaster(t_global_state *state)
         return ;
     printf("Project plane dis: %f\n", distance_to_pp);
     testing_img.img  = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_height);
-    testing_img.addr = mlx_get_data_addr (testing_img.img, &(testing_img.bits_per_pixel), &(testing_img.line_length), &(testing_img.endian));
+    testing_img.addr = (int *)mlx_get_data_addr (testing_img.img, &(testing_img.bits_per_pixel), &(testing_img.line_length), &(testing_img.endian));
     color(state, 0x0016213E, state->data->window_height / 2);
     color(state, 0x00C3F8FF, 0);
     while (columnId < raysNumber)
@@ -302,11 +301,11 @@ void    raycaster(t_global_state *state)
         // DDA(state->player->initx, state->player->inity, x, y, state);
         rayDistance =  castRay(rayAngle, data, state);
         //printf("Ray distance: %f\n", rayDistance);
-        colHeight = (TILE_SIZE / rayDistance) * distance_to_pp;
+        colHeight = (tsize / rayDistance) * distance_to_pp;
         //printf("col height: %f\n", colHeight);
         rayAngle += FEILD_OF_VIEW_ANGLE / raysNumber;
+        draw_column (columnId * RAY_THICKNESS, ((state->data->window_height / 2) - (colHeight / 2)), 0x00ff0165,state, colHeight);
         columnId += 1;
-        draw_column (columnId * RAY_THICKNESS, ((state->data->window_height / 2) - (colHeight / 2)), 0x00ffffff,state, colHeight);
     }
 }
 

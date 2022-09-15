@@ -16,7 +16,7 @@ int position_in_map (int cord)
 {
     int n;
 
-    n = cord/TILE_SIZE;
+    n = cord/tsize;
     return (n);
 }
 

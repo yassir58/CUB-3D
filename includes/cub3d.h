@@ -20,15 +20,15 @@ int txtOffsetX;
 int txtOffsetY;
 int h;
 int w;
+int tsize;
 
 // Variables related to the ray caster.
 #define FOV 60
 #define FEILD_OF_VIEW_ANGLE ((FOV * (M_PI / 180)))
-#define TILE_SIZE 64
 #define RAY_THICKNESS 1
 
-#define RES_X 1080
-#define RES_Y 820
+#define RES_X 1200
+#define RES_Y 1200
 #define SPACE_CLR 0x00FFFFFF
 // #define WALL_CLR  0x002A0944
 #define WALL_CLR  0x00000000
@@ -97,7 +97,7 @@ typedef struct s_game_params
 
 typedef struct s_game_data
 {
-    int tile_size;
+    int tsize;
     int row_number;
     int col_number;
     int window_height;
@@ -111,7 +111,7 @@ typedef struct s_game_data
 
 typedef struct	s_img {
 	void	*img;
-	char	*addr;
+	int	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;

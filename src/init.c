@@ -22,12 +22,14 @@ void init_window (t_map_list *map, t_global_state *state)
     state->vars->mlx = mlx_init ();
     calculate_grid (map, &(state->grid->col), &(state->grid->row));
     init_player (state);
-    state->data->window_height = (state->grid->row * TILE_SIZE);
-    state->data->window_width = (state->grid->col * TILE_SIZE);
+    state->data->window_height = RES_Y;
+    state->data->window_width = RES_X;
+    printf ("tx %d ty %d \n", state->data->window_width / state->grid->col, state->data->window_height / state->grid->row);
+    tsize = state->data->window_width / state->grid->col;
     state->vars->mlx_win = mlx_new_window (state->vars->mlx, state->data->window_width * 2, state->data->window_height, "CUB3D");
     printf ("res_x %d res_y %d \n", state->data->window_width, state->data->window_height);
     state->img.img = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_width);
-    state->img.addr = mlx_get_data_addr (state->img.img, &(state->img.bits_per_pixel), &(state->img.line_length), &(state->img.endian));
+    state->img.addr = (int *)mlx_get_data_addr (state->img.img, &(state->img.bits_per_pixel), &(state->img.line_length), &(state->img.endian));
     state->data->map = get_map_vector (map, state);
 }
 
