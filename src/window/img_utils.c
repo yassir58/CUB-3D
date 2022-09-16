@@ -23,11 +23,14 @@ void draw_rect (int x, int y, int color, t_global_state *state)
 	i = 0;
 	j = 0;
 	clr = 0;
-	while (i < tsize)
+	while (i <= state->data->tileY)
 	{
-		while (j < tsize)
+		while (j <= state->data->tileX)
 		{
-			clr = color;
+			if (i == 0 || j == 0 || (j == state->data->tileX) || (i == state->data->tileY))
+				clr = 0x008ACB88;
+			else
+				clr = color;
 			my_mlx_pixel_put (state , (x + j), (y + i), clr, NULL);
 			j++;
 		}

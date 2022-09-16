@@ -101,8 +101,11 @@ typedef struct s_game_data
     int col_number;
     int window_height;
     int window_width;
+    int tileX;
+    int tileY;
     int floor;
     int ceil;
+    int prev_pos_mouse;
     char **map;
     t_map_line *lines;
     t_game_params *params;

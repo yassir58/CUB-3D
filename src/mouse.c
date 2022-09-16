@@ -2,10 +2,13 @@
 
 int mouse_handle(int x, int y, void *param)
 {
-    (void)param;
+    // t_global_state *state;
+    // int prevPos;
+
     (void)x;
     (void)y;
-    // printf("The current X:%d\n",x);
-    // printf("The current Y:%d\n",y);
+    (void)param;
+    // state = (t_global_state *)param;
+    // prevPos = state->data->prev_pos_mouse;
     return (0);
 }
