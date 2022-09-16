@@ -14,7 +14,6 @@
 #include <mlx.h>
 
 
-
 //// testing 
 int txtOffsetX;
 int txtOffsetY;
