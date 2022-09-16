@@ -26,6 +26,7 @@ int tsize;
 #define FEILD_OF_VIEW_ANGLE ((FOV * (M_PI / 180)))
 #define RAY_THICKNESS 1
 
+#define MINIMAP_CEL 10
 #define RES_X 1020
 #define RES_Y 820
 #define SPACE_CLR 0x00FFFFFF
@@ -37,6 +38,7 @@ int tsize;
 
 // MAC keycodes
 # define XK_ESCAPE  53
+# define LeaveNotify 17
 # define XK_LEFT    0
 # define XK_UP      13
 # define XK_RIGHT   2
@@ -155,10 +157,19 @@ typedef struct s_grid_data
     int row;
 } t_grid_data;
 
+typedef struct s_texture
+{
+    int     width;
+    int     height;
+    t_img img;
+} t_texture;
+
 typedef struct s_player 
 {
     double initx;
     double inity;
+    double minimap_x;
+    double minimap_y;
     int x_cord;
     int y_cord;
     int radius;
@@ -183,6 +194,11 @@ typedef struct s_global_state
     t_grid_data *grid;
     t_player *player;
     t_img img;
+    t_texture east_texture;
+    t_texture north_texture;
+    t_texture west_texture;
+    t_texture south_texture;
+    t_texture current;
 } t_global_state;
 
 t_global_state g_data;
@@ -196,10 +212,8 @@ t_global_state g_data;
 
 t_vars  testing_window;
 t_img   testing_img;
-t_img texture_img;
 
-t_global_state *init_simulation_data(void);
-
+t_global_state *init_simulation_data(t_map_list *map);
 t_map_list *create_map_list (char *map);
 void    push_to_list(t_map_list **map, char *column);
 void	my_mlx_pixel_put(t_global_state *state, int x, int y, int color, t_img *img);
@@ -208,7 +222,7 @@ void    calculate_grid(t_map_list *list, int *col, int *row);
 void    draw_grid (t_global_state *state);
 void    draw_row (int i, int *j, int *x, int y, t_global_state *state);
 void    parse_map(char *path, t_game_data *data);
-void    init_window (t_map_list *map, t_global_state *state);
+void    init_window (t_global_state *state);
 char    **get_map_vector (t_map_list *list, t_global_state *state);
 void    move_player (int flag, t_global_state *state);
 void    init_player (t_global_state *state);
@@ -263,4 +277,9 @@ double  getCorrectAngle(double angle);
 void    draw_column (int x, int y, int color, t_global_state *state, double colHeight);
 int     mouse_handle(int x, int y, void *param);
 char **get_key_value(char *str);
+void init_player_position (t_global_state *state);
+void minimap_position (t_global_state *state);
+int  handle_leave (t_global_state *state);
+void load_texture_images (t_global_state *state);
+void init_game (t_global_state *state);
 #endif 

@@ -128,14 +128,16 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
     double coff;
     if (data->wasIntersectionVertical)
     {
+        state->current = state->north_texture;
         coff = data->wallHitY / state->data->tileX - (int)(data->wallHitY / state->data->tileX);
-        txtOffsetX = (int) (coff * w);
+        txtOffsetX = (int) (coff * state->current.width);
         // fmod(data->wallHitY , h);
     }
     else
     {
+        state->current = state->east_texture;
         coff = data->wallHitX / state->data->tileX - (int)(data->wallHitX / state->data->tileX);
-        txtOffsetX = (int) (coff * h);
+        txtOffsetX = (int) (coff * state->current.height);
         //  txtOffsetX =  fmod(data->wallHitX , w);
     }
     // printf("%f\n", rayAngle);
@@ -144,7 +146,7 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
     //     data->projectPlaneDistance = rayDistance;
     // (void)rayDistance;
     //TODO: Draw a line in the canvas using the wallHitX and wallHitY
-    DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
+    //DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
     return (rayDistance * cos(deg_to_radian(state->player->v_angle) - rayAngle));
     // Here will be the code that will be responsible for casting one ray.
 }
