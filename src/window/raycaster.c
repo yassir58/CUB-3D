@@ -125,11 +125,19 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
         data->wallHitX = data->wallVertHitX;
         data->wallHitY = data->wallVertHitY;
     }
-
+    double coff;
     if (data->wasIntersectionVertical)
-         txtOffsetX =  fmod(data->wallHitY , w);
+    {
+        coff = data->wallHitY / state->data->tileX - (int)(data->wallHitY / state->data->tileX);
+        txtOffsetX = (int) (coff * w);
+        // fmod(data->wallHitY , h);
+    }
     else
-         txtOffsetX =  fmod(data->wallHitX , w);
+    {
+        coff = data->wallHitX / state->data->tileX - (int)(data->wallHitX / state->data->tileX);
+        txtOffsetX = (int) (coff * h);
+        //  txtOffsetX =  fmod(data->wallHitX , w);
+    }
     // printf("%f\n", rayAngle);
     // printf("%f\n", deg_to_radian(state->player->v_angle));
     // if (radian_to_deg(rayAngle) == state->player->v_angle)
@@ -294,6 +302,7 @@ void    raycaster(t_global_state *state)
     testing_img.addr = (int *)mlx_get_data_addr (testing_img.img, &(testing_img.bits_per_pixel), &(testing_img.line_length), &(testing_img.endian));
     color(state, 0x0016213E, state->data->window_height / 2);
     color(state, 0x00C3F8FF, 0);
+    printf ("|%d|\n", raysNumber);
     while (columnId < raysNumber)
     {
 

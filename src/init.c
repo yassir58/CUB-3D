@@ -26,7 +26,8 @@ void init_window (t_map_list *map, t_global_state *state)
     state->data->window_width = (RES_X);
     state->data->prev_pos_mouse = 0;
     state->data->tileX = state->data->window_width / state->grid->col;
-    state->data->tileY = state->data->window_height / state->grid->row;
+    // state->data->tileY = state->data->window_height / state->grid->row;
+    state->data->tileY = state->data->tileX; 
     state->vars->mlx_win = mlx_new_window (state->vars->mlx, state->data->window_width * 2, state->data->window_height, "CUB3D");
     printf ("res_x %d res_y %d \n", state->data->window_width, state->data->window_height);
     state->img.img = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_width);

@@ -13,7 +13,7 @@ int main (int argc , char *argv[])
     map = create_map_list (argv[1]);
     state = init_simulation_data();
     init_window (map, state);
-    texture_img.img =  mlx_xpm_file_to_image (state->vars->mlx, "assets/wall.xpm", &w, &h);
+    texture_img.img =  mlx_xpm_file_to_image (state->vars->mlx, "assets/eagle.xpm", &w, &h);
     printf ("w %d h %d \n", w, h);
     texture_img.addr  = (int *)mlx_get_data_addr (texture_img.img, &(texture_img.bits_per_pixel), &(texture_img.line_length), &(texture_img.endian));
     testing_img.img = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_height);

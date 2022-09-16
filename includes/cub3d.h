@@ -26,8 +26,8 @@ int tsize;
 #define FEILD_OF_VIEW_ANGLE ((FOV * (M_PI / 180)))
 #define RAY_THICKNESS 1
 
-#define RES_X 1200
-#define RES_Y 1200
+#define RES_X 1020
+#define RES_Y 820
 #define SPACE_CLR 0x00FFFFFF
 // #define WALL_CLR  0x002A0944
 #define WALL_CLR  0x00000000
