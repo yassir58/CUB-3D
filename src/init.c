@@ -128,6 +128,8 @@ void init_player_position (t_global_state *state)
 void init_game (t_global_state *state)
 {
     init_player_position (state);
+    // state->player->minimap_x = state->player->initx;
+    // state->player->minimap_y = state->player->inity;
     minimap_position (state);
     load_texture_images (state);
     /// load texture images

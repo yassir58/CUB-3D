@@ -28,7 +28,7 @@ void draw_grid (t_global_state *state)
         draw_row (i, &j , &x, y, state);
         j = 0;
         x = 0;
-        y += MINIMAP_CEL;
+        y += state->data->tileX;
         i++;
     }
 }
@@ -47,7 +47,7 @@ void draw_row (int i, int *j, int *x, int y, t_global_state *state)
         }
         else if (state->data->map[i][*j] == '0')
             draw_rect (*x, y, SPACE_CLR, state);
-        *x += MINIMAP_CEL;
+        *x += state->data->tileX;
         (*j)++;
     }
     
@@ -143,6 +143,78 @@ void color (t_global_state *state, int color, int start)
             j++;
         }
         j = 0;
+        i++;
+    }
+}
+
+
+
+void draw_minimap (t_global_state *state)
+{
+    int player_x;
+    int player_y;
+    int j = 0;
+    int y = 0;
+    int indx_x;
+    int indx_y;
+
+    player_x = position_in_map (state->player->initx, state);
+    player_y = position_in_map (state->player->inity, state);
+    state->img.img = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_width);
+    state->img.addr = (int *)mlx_get_data_addr (state->img.img, &(state->img.bits_per_pixel), &(state->img.line_length), &(state->img.endian));
+    indx_x = player_x - (MINIMAP_ROW / 2);
+    indx_y = player_y - (MINIMAP_CEL / 2);
+    printf ("test \n");
+    while (j < MINIMAP_ROW)
+    {
+        if ((indx_y + j >= 0 && indx_y + j < state->grid->row))
+            draw_minimap_row (player_x, player_y, y, state, indx_x, indx_y + j);
+        y += MINIMAP_CEL;
+        printf ("\n");
+        j++;
+    }
+    printf ("\n");
+}
+
+
+
+
+void render_minimap_cel (int x, int y, t_global_state *state, int elm)
+{
+    if (elm == 'P')
+    {
+        printf ("P");
+        draw_rect (x, y, 0x004512FF, state);
+    }
+    else if (elm == '0' ||elm == ' ')
+    {
+        printf ("0");
+        draw_rect (x, y, SPACE_CLR, state);
+    }
+    else
+    {
+        printf ("1");
+        draw_rect (x, y, 0x00FF0156, state);
+    }
+}
+
+
+void draw_minimap_row (int player_x, int player_y,int y, t_global_state *state, int indx_x , int indx_y)
+{
+    int i;
+    int x;
+
+    i = 0;
+    x = 0;
+    while (i < MINIMAP_ROW)
+    {
+        if (indx_x + i == player_x && indx_y == player_y)
+            render_minimap_cel (x, y,state, 'P');
+        else if ((indx_x + i >= 0 && indx_x + i < state->grid->col))
+            render_minimap_cel (x, y, state, state->data->map[indx_y][indx_x + i]);
+        else 
+            render_minimap_cel (x, y, state, ' ');
+            x += MINIMAP_CEL;
         i++;
     }
 }

@@ -280,9 +280,6 @@ void    raycaster(t_global_state *state)
     double rayDistance;
     double colHeight;
    
-
-    printf("TileX: %d\n", state->data->tileX);
-    printf("TileY: %d\n", state->data->tileY);
     columnId = 0;
     colHeight = 0;
     rayDistance = 0;
@@ -304,7 +301,6 @@ void    raycaster(t_global_state *state)
     testing_img.addr = (int *)mlx_get_data_addr (testing_img.img, &(testing_img.bits_per_pixel), &(testing_img.line_length), &(testing_img.endian));
     color(state, 0x0016213E, state->data->window_height / 2);
     color(state, 0x00C3F8FF, 0);
-    printf ("|%d|\n", raysNumber);
     while (columnId < raysNumber)
     {
 

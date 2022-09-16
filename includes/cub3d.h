@@ -27,6 +27,8 @@ int tsize;
 #define RAY_THICKNESS 1
 
 #define MINIMAP_CEL 10
+#define MINIMAP_ROW 20
+#define MINIMAP_RES 200
 #define RES_X 1020
 #define RES_Y 820
 #define SPACE_CLR 0x00FFFFFF
@@ -227,7 +229,6 @@ char    **get_map_vector (t_map_list *list, t_global_state *state);
 void    move_player (int flag, t_global_state *state);
 void    init_player (t_global_state *state);
 int     check_outside_map (int flag);
-int     position_in_map (int x);
 int     check_for_wall (int x, int y, t_global_state *state);
 void    draw_line (int x, int y, t_global_state *state);
 void    draw_player (int color, t_global_state *state);
@@ -282,4 +283,8 @@ void minimap_position (t_global_state *state);
 int  handle_leave (t_global_state *state);
 void load_texture_images (t_global_state *state);
 void init_game (t_global_state *state);
+void draw_minimap (t_global_state *state);
+int position_in_map (int cord, t_global_state *state);
+void render_minimap_cel (int x, int y, t_global_state *state, int elm);
+void draw_minimap_row (int player_x, int player_y,int y, t_global_state *state, int indx_x , int indx_y);
 #endif 

@@ -99,8 +99,9 @@ void move_player (int flag, t_global_state *state)
 void rerender_map (t_global_state *state)
 {
     mlx_clear_window (state->vars->mlx, state->vars->mlx_win);
-    draw_grid (state);
-    draw_player (0x00FF0000, state);
+    draw_minimap (state);
+    // draw_grid (state);
+    // draw_player (0x00FF0000, state);
     raycaster (state);
     mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, testing_img.img,state->data->window_width,0);
     mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, state->img.img, 0,0);

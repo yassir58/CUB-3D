@@ -5,18 +5,18 @@ int check_for_wall (int x, int y, t_global_state *state)
     int indx_x, indx_y;
 
     
-    indx_x = position_in_map (x);
-    indx_y = position_in_map (y);
+    indx_x = position_in_map (x, state);
+    indx_y = position_in_map (y, state);
     if (state->data->map[indx_y][indx_x] != '1')
         return (1);
     return (0);
 }
 
-int position_in_map (int cord)
+int position_in_map (int cord, t_global_state *state)
 {
     int n;
 
-    n = cord/tsize;
+    n = cord/state->data->tileX;;
     return (n);
 }
 

@@ -30,7 +30,7 @@ void draw_rect (int x, int y, int color, t_global_state *state)
 			if (i == 0 || j == 0 || (j == MINIMAP_CEL) || (i == MINIMAP_CEL))
 				clr = 0x008ACB88;
 			else
-				clr = color;
+			clr = color;
 			my_mlx_pixel_put (state , (x + j), (y + i), clr, NULL);
 			j++;
 		}
@@ -66,8 +66,8 @@ void draw_player (int color, t_global_state *state)
 
 	i = 0.0, angle = 0.0, x1 = 0.0, y1 = 0.0 , j = 0.0;
 
-	state->player->d_x = state->player->minimap_x;
-	state->player->d_y = state->player->minimap_y;
+	state->player->d_x = (MINIMAP_RES / 2);
+	state->player->d_y = (MINIMAP_RES / 2);
 	while (j <= state->player->radius)
 	{
 		while (i < 360)
@@ -75,7 +75,7 @@ void draw_player (int color, t_global_state *state)
 			angle  =  i;
 			x1 = j * cos(angle * (M_PI / 180));
 			y1 = j * sin (angle * (M_PI / 180));
-			my_mlx_pixel_put (state , (state->player->minimap_x + x1), (state->player->minimap_y + y1), color, NULL);
+			my_mlx_pixel_put (state , ((MINIMAP_RES / 2) + x1), ((MINIMAP_RES / 2) + y1), color, NULL);
 			i += 0.1;
 		}
 		i = 0;
