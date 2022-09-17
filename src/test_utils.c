@@ -28,7 +28,7 @@ void draw_grid (t_global_state *state)
         draw_row (i, &j , &x, y, state);
         j = 0;
         x = 0;
-        y += state->data->tileX;
+        y += state->data->tileY;
         i++;
     }
 }
@@ -182,11 +182,11 @@ void draw_minimap (t_global_state *state)
 void render_minimap_cel (int x, int y, t_global_state *state, int elm)
 {
     if (elm == 'p')
-        draw_rect (x, y, 0x004512FF, state);
+    draw_minirect (x, y, 0x004512FF, state);
     else if (elm == '0' ||elm == ' ' || elm =='P')
-        draw_rect (x, y, SPACE_CLR, state);
+    draw_minirect (x, y, SPACE_CLR, state);
     else
-        draw_rect (x, y, 0x00FF0156, state);
+    draw_minirect (x, y, 0x00FF0156, state);
 }
 
 
@@ -222,7 +222,7 @@ void draw_minimap_wall (int y, t_global_state *state, int indx_x)
         if ((indx_x + i >= 0 && indx_x + i < state->grid->col))
             render_minimap_cel (x, y, state, '0');
         else
-            draw_rect (x, y, SPACE_CLR, state);
+            draw_minirect (x, y, SPACE_CLR, state);
         x += MINIMAP_CEL;
         i++;
     }
