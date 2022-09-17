@@ -62,9 +62,9 @@
 
 int main(int argc, char **argv)
 {
-    t_game_data *data;
+    t_global_state *data;
 
-    data = (t_game_data *)malloc(sizeof(t_game_data));
+    data = (t_global_state *)malloc(sizeof(t_global_state));
     if (!data)
         return (0);
     if (argc > 1)

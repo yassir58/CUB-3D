@@ -230,7 +230,7 @@ void    get_lists(int fd, t_game_data *data)
     // !Should close the fd here to not leak file descriptors.
 }
 
-void    parse_map(char *path, t_game_data *data)
+void    parse_map(char *path, t_global_state *state)
 {
     int fd;
     char **map;
@@ -239,9 +239,12 @@ void    parse_map(char *path, t_game_data *data)
     fd = open(path, O_RDONLY);
     if (fd < 0)
         app_error(5);
-    get_lists(fd, data);
-    print_params_list(data->params);
-    check_identifers_order(data->params);
-    validate_map(convert_lines_table(data->lines), lines_number(data->lines));
+    state->data = (t_game_data *)malloc(sizeof(t_game_data));
+    if (!state->data)
+        return ;
+    get_lists(fd, state->data);
+    print_params_list(state->data->params);
+    check_identifers_order(state->data->params);
+    validate_map(convert_lines_table(state->data->lines), lines_number(state->data->lines), state);
     // open the map and send fd to the appropriate function so it can get the game params.
 }
