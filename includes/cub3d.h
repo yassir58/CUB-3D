@@ -29,8 +29,8 @@ int tsize;
 #define MINIMAP_CEL 10
 #define MINIMAP_ROW 20
 #define MINIMAP_RES 200
-#define RES_X 1020
-#define RES_Y 820
+#define RES_X 800
+#define RES_Y 600
 #define SPACE_CLR 0x00FFFFFF
 // #define WALL_CLR  0x002A0944
 #define WALL_CLR  0x00000000
@@ -287,4 +287,5 @@ void draw_minimap (t_global_state *state);
 int position_in_map (int cord, t_global_state *state);
 void render_minimap_cel (int x, int y, t_global_state *state, int elm);
 void draw_minimap_row (int player_x, int player_y,int y, t_global_state *state, int indx_x , int indx_y);
+void draw_minimap_wall (int y, t_global_state *state, int indx_x);
 #endif 
