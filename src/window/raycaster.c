@@ -132,12 +132,15 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
     }
     else
     {
+        // state->current = state->east_texture;
+        // coff = data->wallHitX / state->data->tileX - (int)(data->wallHitX / state->data->tileX);
+        // txtOffsetX = (int) (coff * state->current.height);
         state->current = state->east_texture;
         data->coff = data->wallHitX / state->data->tileX - (int)(data->wallHitX / state->data->tileX);
         data->txtOffsetX = (int) (data->coff * state->current.height);
         //  txtOffsetX =  fmod(data->wallHitX , w);
     }
-    //DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
+    // DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
     return (data->rayDistance * cos(deg_to_radian(state->player->v_angle) - rayAngle));
 }
 

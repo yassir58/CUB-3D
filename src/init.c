@@ -22,7 +22,12 @@ t_global_state *init_simulation_data(t_map_list *map)
     data->data->window_width = (RES_X);
     data->data->prev_pos_mouse = 0;
     data->data->tileX = data->data->window_width / data->grid->col;
-    data->data->tileY = data->data->tileX; 
+    data->data->tileY = data->data->window_height / data->grid->row;
+
+    if (data->data->tileX < data->data->tileY)
+        data->data->tileY = data->data->tileX;
+    else
+        data->data->tileX = data->data->tileY;
     return (data);
 }
 
