@@ -89,14 +89,35 @@ int count_seperator(char *str, char c)
 
 // Formulat to convert rgb to int: rgb = 65536 * r + 256 * g + b;
 
+void    validate_color_number(char **table)
+{
+    int i;
+    int j;
+    
+    i = 0;
+    while (table[i])
+    {
+        j = 0;
+        while (table[i][j])
+        {
+            if (ft_isdigit(table[i][j]) || table[i][j] == ' ')
+                j++;
+            else
+                app_error(3);
+        }
+        i += 1;
+    }
+}
+
 int get_color(char *str)
 {
     char **rgb;
     int color;
     
     // printf("%s\n", str);
-    rgb = ft_split(str, ',');
     color = 0;
+    rgb = ft_split(str, ',');
+    validate_color_number(rgb);
     if (count_seperator(str, ',') == 2)
     {
         if (ft_atoi(rgb[0]) <= 255 && ft_atoi(rgb[1]) <= 255 && ft_atoi(rgb[2]) <= 255)
