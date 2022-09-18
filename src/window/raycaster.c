@@ -86,8 +86,9 @@ double getCorrectAngle(double angle)
     double normalizedAngle;
 
     normalizedAngle = 0;
-    normalizedAngle = fmod(angle, (M_PI * 2));
-    if (angle < 0)
+    if (angle >= 0)
+        normalizedAngle = fmod(angle, (M_PI * 2));
+    else
         normalizedAngle = angle + (M_PI * 2);
     return (normalizedAngle);
 }
@@ -101,8 +102,8 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
     horizontalDistance = 0.0;
     verticalDistance = 0.0;
     rayDistance = 0.0;
-    getHorzIntersection(getCorrectAngle(rayAngle), data, state);
-    getVertIntersection(getCorrectAngle(rayAngle), data, state);
+    getHorzIntersection(rayAngle, data, state);
+    getVertIntersection(rayAngle, data, state);
     if (data->wallHorzIntesected)
         horizontalDistance = calculateDistance(state->player->initx, state->player->inity, data->wallHorzHitX, data->wallHorzHitY);
     else
@@ -128,31 +129,35 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
     double coff;
     if (data->wasIntersectionVertical)
     {
-        // state->current = state->north_texture;
+        
         // coff = data->wallHitY / state->data->tileX - (int)(data->wallHitY / state->data->tileX);
         // txtOffsetX = (int) (coff * state->current.width);
-         state->current = state->north_texture;
+		if (rayFacingLeft(rayAngle))
+            state->current = state->west_texture;
+		else
+			state->current = state->east_texture;
         coff = data->wallHitY / state->data->tileX - (int)(data->wallHitY / state->data->tileX);
         txtOffsetX = (int) (coff * state->current.width);
-        // fmod(data->wallHitY , h);
     }
     else
     {
-        // state->current = state->east_texture;
         // coff = data->wallHitX / state->data->tileX - (int)(data->wallHitX / state->data->tileX);
         // txtOffsetX = (int) (coff * state->current.height);
-        state->current = state->east_texture;
+		if (rayFacingUp(rayAngle))
+        	state->current = state->north_texture;
+		else
+			state->current = state->south_texture;
         coff = data->wallHitX / state->data->tileX - (int)(data->wallHitX / state->data->tileX);
         txtOffsetX = (int) (coff * state->current.height);
-        //  txtOffsetX =  fmod(data->wallHitX , w);
     }
+   
     // printf("%f\n", rayAngle);
     // printf("%f\n", deg_to_radian(state->player->v_angle));
     // if (radian_to_deg(rayAngle) == state->player->v_angle)
     //     data->projectPlaneDistance = rayDistance;
     // (void)rayDistance;
     //TODO: Draw a line in the canvas using the wallHitX and wallHitY
-    DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
+    //DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
     return (rayDistance * cos(deg_to_radian(state->player->v_angle) - rayAngle));
     // Here will be the code that will be responsible for casting one ray.
 }
@@ -302,28 +307,27 @@ void    raycaster(t_global_state *state)
     data->projectPlaneDistance = 0;
     if (!data)
         return ;
-    printf("Project plane dis: %f\n", distance_to_pp);
-    testing_img.img  = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_height);
-    testing_img.addr = (int *)mlx_get_data_addr (testing_img.img, &(testing_img.bits_per_pixel), &(testing_img.line_length), &(testing_img.endian));
-    color(state, 0x0016213E, state->data->window_height / 2);
-    color(state, 0x00C3F8FF, 0);
+    color(state, 0x00535962, state->data->window_height / 2);
+    color(state, 0x00C1EFFF, 0);
     while (columnId < raysNumber)
     {
-
-        //? Debugging purposes.
+        // printf ("%d \n", radian_to_deg (rayAngle));
+        // //? Debugging purposes.
         // getHorzIntersection(getCorrectAngle(rayAngle), data, state);
         // getVertIntersection(getCorrectAngle(rayAngle), data, state);
         // double x = state->player->initx + cos(rayAngle) * 50;
         // double y = state->player->inity + sin(rayAngle) * 50;
         // DDA(state->player->initx, state->player->inity, x, y, state);
-        rayDistance =  castRay(rayAngle, data, state);
+        
+        rayDistance =  castRay(getCorrectAngle(rayAngle), data, state);
         //printf("Ray distance: %f\n", rayDistance);
         colHeight = (state->data->tileY / rayDistance) * distance_to_pp;
         //printf("col height: %f\n", colHeight);
+        draw_column (columnId * RAY_THICKNESS, ((state->data->window_height / 2) - (colHeight / 2)), state, colHeight);
         rayAngle += FEILD_OF_VIEW_ANGLE / raysNumber;
-        draw_column (columnId * RAY_THICKNESS, ((state->data->window_height / 2) - (colHeight / 2)), 0x00ff0165,state, colHeight);
         columnId += 1;
     }
+    draw_minimap (state);
 }
 
 

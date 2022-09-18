@@ -33,9 +33,13 @@ t_global_state *init_simulation_data(t_map_list *map)
 void init_window (t_global_state *state)
 {
     state->vars->mlx = mlx_init ();
-    state->vars->mlx_win = mlx_new_window (state->vars->mlx, state->data->window_width * 2, state->data->window_height, "CUB3D");
-    state->img.img = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_width);
+    state->vars->mlx_win = mlx_new_window (state->vars->mlx, state->data->window_width, state->data->window_height, "CUB3D");
+    state->img.img = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_height);
     state->img.addr = (int *)mlx_get_data_addr (state->img.img, &(state->img.bits_per_pixel), &(state->img.line_length), &(state->img.endian));
+    // testing
+
+    // testing_img.img = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_height);
+    // testing_img.addr = (int *)mlx_get_data_addr (testing_img.img, &(testing_img.bits_per_pixel), &(testing_img.line_length), &(testing_img.endian));
 }
 
 char **get_map_vector (t_map_list *list, t_global_state *state)

@@ -27,9 +27,9 @@ void draw_minirect (int x, int y, int color, t_global_state *state)
 	{
 		while (j <= MINIMAP_CEL)
 		{
-			if (i == 0 || j == 0 || (j == MINIMAP_CEL) || (i == MINIMAP_CEL))
-				clr = 0x008ACB88;
-			else
+			// if (i == 0 || j == 0 || (j == MINIMAP_CEL) || (i == MINIMAP_CEL))
+			// 	clr = 0x008ACB88;
+			// else
 			clr = color;
 			my_mlx_pixel_put (state , (x + j), (y + i), clr, NULL);
 			j++;
@@ -55,7 +55,7 @@ void draw_rect (int x, int y, int color, t_global_state *state)
 				clr = 0x008ACB88;
 			else
 			clr = color;
-			my_mlx_pixel_put (state , (x + j), (y + i), clr, NULL);
+			my_mlx_pixel_put (state , (x + j), (y + i), clr, &testing_img);
 			j++;
 		}
 		j = 0;
@@ -63,7 +63,7 @@ void draw_rect (int x, int y, int color, t_global_state *state)
 	}
 }
 
-void draw_column (int x, int y, int color, t_global_state *state, double colHeight)
+void draw_column (int x, int y, t_global_state *state, double colHeight)
 {
 	int start;
 	int end;
@@ -75,10 +75,9 @@ void draw_column (int x, int y, int color, t_global_state *state, double colHeig
 	{
 		txtOffsetY = (start - y) * (state->current.height / colHeight);
 		texelClr = state->current.img.addr[(state->current.width * txtOffsetY) + txtOffsetX];
-		my_mlx_pixel_put (state , x, start, texelClr, &testing_img);
+		my_mlx_pixel_put (state , x, start, texelClr, NULL);
 		start++;
 	}
-	(void)color;
 }
 
 void draw_player (int color, t_global_state *state)
@@ -99,7 +98,7 @@ void draw_player (int color, t_global_state *state)
 			angle  =  i;
 			x1 = j * cos(angle * (M_PI / 180));
 			y1 = j * sin (angle * (M_PI / 180));
-			my_mlx_pixel_put (state , (state->player->initx + x1), (state->player->inity + y1), color, NULL);
+			my_mlx_pixel_put (state , (state->player->initx + x1), (state->player->inity + y1), color, &testing_img);
 			i += 0.1;
 		}
 		i = 0;
