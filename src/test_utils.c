@@ -87,7 +87,7 @@ void DDA(int X0, int Y0, int X1, int Y1, t_global_state *state)
     float Y = Y0;
     for (int i = 0; i <= steps; i++)
     {
-        my_mlx_pixel_put (state, X, Y, 0x00FBDF07, NULL); // put pixel at (X,Y)
+        my_mlx_pixel_put (state, X, Y, 0x00FBDF07, &testing_img); // put pixel at (X,Y)
         X += Xinc;           // increment in x at each step
         Y += Yinc;           // increment in y at each step
         // delay(100);          // for visualization of line-
@@ -100,26 +100,6 @@ void get_rotation_cords (int *x_2, int *y_2, double angle, t_global_state *state
 {
     *x_2 = *x_2 + (cos (angle)  *  state->player->d_length);
     *y_2 = *y_2 + (sin (angle)  *  state->player->d_length);
-}
-
-
-void init_image (t_global_state *state)
-{
-    int i;
-    int j;
-
-    i = 0;
-    j = 0;
-    while (i < (state->data->window_height))
-    {
-        while (j < (state->data->window_width))
-        {
-            my_mlx_pixel_put (state, j, i, 0x00000000, &testing_img);
-            j++;
-        }
-        j = 0;
-        i++;
-    }
 }
 
 
@@ -139,7 +119,7 @@ void color (t_global_state *state, int color, int start)
     {
         while (j < state->data->window_width)
         {
-            my_mlx_pixel_put (state, j, i, color, &testing_img);
+            my_mlx_pixel_put (state, j, i, color, NULL);
             j++;
         }
         j = 0;
@@ -160,10 +140,8 @@ void draw_minimap (t_global_state *state)
 
     player_x = position_in_map (state->player->initx, state);
     player_y = position_in_map (state->player->inity, state);
-    state->img.img = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_width);
-    state->img.addr = (int *)mlx_get_data_addr (state->img.img, &(state->img.bits_per_pixel), &(state->img.line_length), &(state->img.endian));
-    indx_x = player_x - (MINIMAP_ROW / 2);
-    indx_y = player_y - (MINIMAP_CEL / 2);
+    indx_x = player_x - ((MINIMAP_ROW / 2));
+    indx_y = player_y - (MINIMAP_ROW / 2);
     while (j < MINIMAP_ROW)
     {
         if ((indx_y + j >= 0 && indx_y + j < state->grid->row))
@@ -181,11 +159,11 @@ void draw_minimap (t_global_state *state)
 void render_minimap_cel (int x, int y, t_global_state *state, int elm)
 {
     if (elm == 'p')
-    draw_minirect (x, y, 0x004512FF, state);
-    else if (elm == '0' ||elm == ' ' || elm =='P')
-    draw_minirect (x, y, SPACE_CLR, state);
-    else
     draw_minirect (x, y, 0x00FF0156, state);
+    else if (elm == '0' ||elm == ' ' || elm =='P')
+    draw_minirect (x, y, 0x00000000, state);
+    else
+    draw_minirect (x, y, 0x00FFF80A, state);
 }
 
 
@@ -221,7 +199,7 @@ void draw_minimap_wall (int y, t_global_state *state, int indx_x)
         if ((indx_x + i >= 0 && indx_x + i < state->grid->col))
             render_minimap_cel (x, y, state, '0');
         else
-            draw_minirect (x, y, SPACE_CLR, state);
+            draw_minirect (x, y, 0x00000000, state);
         x += MINIMAP_CEL;
         i++;
     }

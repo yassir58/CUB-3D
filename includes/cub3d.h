@@ -21,17 +21,17 @@
 #define FEILD_OF_VIEW_ANGLE ((FOV * (M_PI / 180)))
 #define RAY_THICKNESS 1
 
-#define MINIMAP_CEL 10
-#define MINIMAP_ROW 30
-#define MINIMAP_RES 300
+#define MINIMAP_CEL 5
+#define MINIMAP_ROW 40
+#define MINIMAP_RES 200
 #define RES_X 1000
-#define RES_Y 1000
+#define RES_Y 800
 #define SPACE_CLR 0x00FFFFFF
 // #define WALL_CLR  0x002A0944
 #define WALL_CLR  0x00000000
 #define ROT_ANGLE (M_PI / 2) // 90 deg
-#define moveSpeed 4
-#define rotationSpeed 3
+#define moveSpeed 6
+#define rotationSpeed 4
 
 // MAC keycodes
 # define XK_ESCAPE  53
@@ -215,7 +215,7 @@ t_global_state g_data;
 
 t_vars  testing_window;
 t_img   testing_img;
-
+double r_a;
 t_global_state *init_simulation_data(t_map_list *map);
 t_map_list *create_map_list (char *map);
 void    push_to_list(t_map_list **map, char *column);
@@ -280,7 +280,7 @@ double  calculateDistance(double x, double y, double x1, double y1);
 int     checkCoordinatesWall(double x, double y, t_global_state *state);
 int     get_angle_direction(double rayAngle);
 double  getCorrectAngle(double angle);
-void    draw_column (int x, int y, int color, t_global_state *state, double colHeight);
+void    draw_column (int x, int y, t_global_state *state, double colHeight);
 int     mouse_handle(int x, int y, void *param);
 char **get_key_value(char *str);
 char *strip_whitespaces(char *str);
@@ -295,4 +295,8 @@ void render_minimap_cel (int x, int y, t_global_state *state, int elm);
 void draw_minimap_row (int player_x, int player_y,int y, t_global_state *state, int indx_x , int indx_y);
 void draw_minimap_wall (int y, t_global_state *state, int indx_x);
 void draw_minirect (int x, int y, int color, t_global_state *state);
+int rayFacingDown(double rayAngle);
+int rayFacingRight(double rayAngle);
+int rayFacingUp(double rayAngle);
+int rayFacingLeft(double rayAngle);
 #endif 
