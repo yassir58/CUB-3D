@@ -89,7 +89,6 @@ typedef struct s_game_params
 {
     char *key;
     char *value;
-    int index;
     struct s_game_params *next;
 } t_game_params;
 
@@ -244,7 +243,7 @@ void    rotate_player (int direction, t_global_state *state);
 void    init_image (t_global_state *state);
 unsigned int get_pixel_color (int x, int y, t_img *img);
 // Parse list related functions
-t_game_params	*new_params(char *key, char *value, int index);
+t_game_params	*new_params(char *key, char *value);
 t_map_line      *new_line(char *line);
 int             search_params_list(char *key, t_game_params **list);
 int             lines_number(t_map_line *list);
@@ -258,6 +257,7 @@ char            *advanced_get_next_line(int fd, int status);
 // Printing lists
 void            print_lines_list(t_map_line *list);
 void            print_params_list(t_game_params *list);
+int	            game_param_size(t_game_params *lst);
 // Map validation
 
 char    **validate_map(char **map, int map_size, t_global_state *state);
@@ -283,6 +283,7 @@ double  getCorrectAngle(double angle);
 void    draw_column (int x, int y, int color, t_global_state *state, double colHeight);
 int     mouse_handle(int x, int y, void *param);
 char **get_key_value(char *str);
+char *strip_whitespaces(char *str);
 void init_player_position (t_global_state *state);
 void minimap_position (t_global_state *state);
 int  handle_leave (t_global_state *state);

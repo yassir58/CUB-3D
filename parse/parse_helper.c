@@ -41,5 +41,6 @@ char *strip_whitespaces(char *str)
 	while (str[end] && str[end] == ' ')
 		end--;
 	clean = ft_substr(str, start, end - start + 1);
+	free(str);
 	return (clean);
 }
