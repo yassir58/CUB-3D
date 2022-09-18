@@ -15,11 +15,6 @@
 
 
 //// testing 
-int txtOffsetX;
-int txtOffsetY;
-int h;
-int w;
-int tsize;
 
 // Variables related to the ray caster.
 #define FOV 60
@@ -110,6 +105,7 @@ typedef struct s_game_data
     int floor;
     int ceil;
     int prev_pos_mouse;
+    char playerDirection;
     char **map;
     t_map_line *lines;
     t_game_params *params;
@@ -151,6 +147,11 @@ typedef struct s_intersection_data {
     bool wallVertIntesected;
     bool wasIntersectionVertical;
     double projectPlaneDistance;
+    double horizontalDistance;
+    double verticalDistance;
+    double coff;
+    double rayDistance;
+    int txtOffsetX;
 } t_intersection_data;
 
 typedef struct s_grid_data 
@@ -195,6 +196,7 @@ typedef struct s_global_state
     t_game_data *data;
     t_grid_data *grid;
     t_player *player;
+    t_intersection_data *cast;
     t_img img;
     t_texture east_texture;
     t_texture north_texture;
@@ -223,7 +225,7 @@ void    draw_rect (int x, int y, int color, t_global_state *state);
 void    calculate_grid(t_map_list *list, int *col, int *row);
 void    draw_grid (t_global_state *state);
 void    draw_row (int i, int *j, int *x, int y, t_global_state *state);
-void    parse_map(char *path, t_game_data *data);
+void    parse_map(char *path, t_global_state *state);
 void    init_window (t_global_state *state);
 char    **get_map_vector (t_map_list *list, t_global_state *state);
 void    move_player (int flag, t_global_state *state);
@@ -258,7 +260,10 @@ void            print_lines_list(t_map_line *list);
 void            print_params_list(t_game_params *list);
 // Map validation
 
-char    **validate_map(char **map, int map_size);
+char    **validate_map(char **map, int map_size, t_global_state *state);
+// Extension validation
+
+void    validate_extension(char *path, char *ext);
 
 // Error management
 

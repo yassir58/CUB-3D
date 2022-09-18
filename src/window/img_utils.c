@@ -68,13 +68,14 @@ void draw_column (int x, int y, t_global_state *state, double colHeight)
 	int start;
 	int end;
 	int texelClr;
+	int txtOffsetY;
 
 	start = y;
 	end = colHeight;
 	while (end--)
 	{
 		txtOffsetY = (start - y) * (state->current.height / colHeight);
-		texelClr = state->current.img.addr[(state->current.width * txtOffsetY) + txtOffsetX];
+		texelClr = state->current.img.addr[(state->current.width * txtOffsetY) + state->cast->txtOffsetX];
 		my_mlx_pixel_put (state , x, start, texelClr, NULL);
 		start++;
 	}

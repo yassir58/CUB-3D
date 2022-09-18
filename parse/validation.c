@@ -39,7 +39,7 @@ int validate_map_hor_walls(char **map, int size)
     return (1);
 }
 
-void validate_player_occurrence(char **map)
+void validate_player_occurrence(char **map, t_game_data *data)
 {
     bool player;
     int i;
@@ -53,7 +53,10 @@ void validate_player_occurrence(char **map)
         while (map[i][j] != '\0')
         {
             if (ft_strchr(PLAYER_CHARS, map[i][j]) && !player)
+            {
+                data->playerDirection = map[i][j];
                 player = true;
+            }
             else if (ft_strchr(PLAYER_CHARS, map[i][j]) && player)
                 app_error(9);
             j++;
@@ -71,7 +74,7 @@ void validate_player_position(char *line)
         app_error(7);
 }
 
-char    **validate_map(char **map, int map_size)
+char    **validate_map(char **map, int map_size, t_global_state *state)
 {
     int i;
     
@@ -85,7 +88,7 @@ char    **validate_map(char **map, int map_size)
     //      ?- Check that the player only exit once in the map.
     if (validate_map_hor_walls(map, map_size))
     {
-        validate_player_occurrence(map);
+        validate_player_occurrence(map, state->data);
         while (i < map_size - 1)
         {
             validate_player_position(map[i]);
@@ -93,6 +96,7 @@ char    **validate_map(char **map, int map_size)
             i += 1;
         }
         printf("The map is valid\n");
+        printf("The player is looking at: %c\n", state->data->playerDirection);
     }
     else
        app_error(8);

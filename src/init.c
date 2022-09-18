@@ -12,7 +12,8 @@ t_global_state *init_simulation_data(t_map_list *map)
     data->grid = (t_grid_data *)malloc(sizeof(t_grid_data));
     data->player = (t_player *)malloc(sizeof(t_player));
     data->vars = (t_vars *)malloc(sizeof(t_vars));
-    if (!data->data || !data->grid || !data->player || !data->vars)
+    data->cast = (t_intersection_data *)malloc(sizeof(t_intersection_data));
+    if (!data->data || !data->grid || !data->player || !data->vars || !data->cast)
         return (NULL);
     calculate_grid (map, &(data->grid->col), &(data->grid->row));
     init_player (data);
@@ -22,7 +23,7 @@ t_global_state *init_simulation_data(t_map_list *map)
     data->data->prev_pos_mouse = 0;
     data->data->tileX = data->data->window_width / data->grid->col;
     data->data->tileY = data->data->window_height / data->grid->row;
-
+    data->data->prev_pos_mouse = data->data->window_width / 2;
     if (data->data->tileX < data->data->tileY)
         data->data->tileY = data->data->tileX;
     else

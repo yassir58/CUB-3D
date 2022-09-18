@@ -10,7 +10,7 @@ void    app_error(int code)
     else if (code == 3)
         printf("Error: map colors are incorrect.\n");
     else if (code == 4)
-        printf("Error: invalid map extension.\n");
+        printf("Error: invalid map or texture extension.\n");
     else if (code == 5)
         printf("Error: could not open file.\n");
     else if (code == 6)
@@ -29,7 +29,7 @@ void    app_error(int code)
 // !TODO: 
 //     + Validate the map extension.
 //     + Check that every texture file exits if its not return an error.
-//     + Check the order of the elements according to the map
+//     + Validate the order only of the texture informations.
 
 int check_identifier(char *id)
 {
@@ -89,14 +89,35 @@ int count_seperator(char *str, char c)
 
 // Formulat to convert rgb to int: rgb = 65536 * r + 256 * g + b;
 
+void    validate_color_number(char **table)
+{
+    int i;
+    int j;
+    
+    i = 0;
+    while (table[i])
+    {
+        j = 0;
+        while (table[i][j])
+        {
+            if (ft_isdigit(table[i][j]) || table[i][j] == ' ')
+                j++;
+            else
+                app_error(3);
+        }
+        i += 1;
+    }
+}
+
 int get_color(char *str)
 {
     char **rgb;
     int color;
     
     // printf("%s\n", str);
-    rgb = ft_split(str, ',');
     color = 0;
+    rgb = ft_split(str, ',');
+    validate_color_number(rgb);
     if (count_seperator(str, ',') == 2)
     {
         if (ft_atoi(rgb[0]) <= 255 && ft_atoi(rgb[1]) <= 255 && ft_atoi(rgb[2]) <= 255)
@@ -145,6 +166,7 @@ void    check_path(char *path)
 {
     int fd;
 
+    validate_extension(path, ".xpm");
     fd = open(path, O_RDONLY);
     close(fd);
     if (fd < 0)
@@ -157,8 +179,6 @@ void    add_params_to_list(char *line, t_game_params **params_list)
     char *key;
     char *value;
     int color;
-    // 
-    // TODO: I think that i should validate the key according to the attributes mentioned in the subject.
     splitted = get_key_value(line);
     if (ft_strlen(splitted[0]) && ft_strlen(splitted[1]))
     {
@@ -168,10 +188,10 @@ void    add_params_to_list(char *line, t_game_params **params_list)
         {
             if (check_identifier(key) == 2)
             {
-                //! Memory Leak.
                 color = get_color(value);
                 if (color == -1)
                     app_error(3);
+                free(value);
                 value = ft_itoa(color);
             }
             else if (check_identifier(key) == 1)
@@ -195,12 +215,12 @@ int number_of_el(char **table)
     return (i);
 }
 
-void    validate_extension(char *path)
+void    validate_extension(char *path, char *ext)
 {
     int size;
 
     size = ft_strlen(path) - 4;
-    if (strcmp(".cub",path + size))
+    if (strcmp(ext, path + size))
         app_error(4);
 }
 
@@ -216,6 +236,7 @@ void    get_lists(int fd, t_game_data *data)
     while (!check_map_line(line))
     {
         add_params_to_list(line, &params_list);
+        free(line);
         line = advanced_get_next_line(fd, 0);
     }
     while (check_map_line(line))
@@ -230,18 +251,22 @@ void    get_lists(int fd, t_game_data *data)
     // !Should close the fd here to not leak file descriptors.
 }
 
-void    parse_map(char *path, t_game_data *data)
+void    parse_map(char *path, t_global_state *state)
 {
     int fd;
     char **map;
 
-    validate_extension(path);
+    // !Should calculate how many items are in the game params.
+    validate_extension(path, ".cub");
     fd = open(path, O_RDONLY);
     if (fd < 0)
         app_error(5);
-    get_lists(fd, data);
-    print_params_list(data->params);
-    check_identifers_order(data->params);
-    validate_map(convert_lines_table(data->lines), lines_number(data->lines));
+    state->data = (t_game_data *)malloc(sizeof(t_game_data));
+    if (!state->data)
+        return ;
+    get_lists(fd, state->data);
+    print_params_list(state->data->params);
+    check_identifers_order(state->data->params);
+    validate_map(convert_lines_table(state->data->lines), lines_number(state->data->lines), state);
     // open the map and send fd to the appropriate function so it can get the game params.
 }
