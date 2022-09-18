@@ -261,6 +261,9 @@ void            print_params_list(t_game_params *list);
 // Map validation
 
 char    **validate_map(char **map, int map_size, t_global_state *state);
+// Extension validation
+
+void    validate_extension(char *path, char *ext);
 
 // Error management
 

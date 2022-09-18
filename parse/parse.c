@@ -10,7 +10,7 @@ void    app_error(int code)
     else if (code == 3)
         printf("Error: map colors are incorrect.\n");
     else if (code == 4)
-        printf("Error: invalid map extension.\n");
+        printf("Error: invalid map or texture extension.\n");
     else if (code == 5)
         printf("Error: could not open file.\n");
     else if (code == 6)
@@ -29,7 +29,7 @@ void    app_error(int code)
 // !TODO: 
 //     + Validate the map extension.
 //     + Check that every texture file exits if its not return an error.
-//     + Check the order of the elements according to the map
+//     + Validate the order only of the texture informations.
 
 int check_identifier(char *id)
 {
@@ -166,6 +166,7 @@ void    check_path(char *path)
 {
     int fd;
 
+    validate_extension(path, ".xpm");
     fd = open(path, O_RDONLY);
     close(fd);
     if (fd < 0)
@@ -189,10 +190,10 @@ void    add_params_to_list(char *line, t_game_params **params_list)
         {
             if (check_identifier(key) == 2)
             {
-                //! Memory Leak.
                 color = get_color(value);
                 if (color == -1)
                     app_error(3);
+                free(value);
                 value = ft_itoa(color);
             }
             else if (check_identifier(key) == 1)
@@ -216,12 +217,12 @@ int number_of_el(char **table)
     return (i);
 }
 
-void    validate_extension(char *path)
+void    validate_extension(char *path, char *ext)
 {
     int size;
 
     size = ft_strlen(path) - 4;
-    if (strcmp(".cub",path + size))
+    if (strcmp(ext, path + size))
         app_error(4);
 }
 
@@ -237,6 +238,7 @@ void    get_lists(int fd, t_game_data *data)
     while (!check_map_line(line))
     {
         add_params_to_list(line, &params_list);
+        free(line);
         line = advanced_get_next_line(fd, 0);
     }
     while (check_map_line(line))
@@ -256,7 +258,7 @@ void    parse_map(char *path, t_global_state *state)
     int fd;
     char **map;
 
-    validate_extension(path);
+    validate_extension(path, ".cub");
     fd = open(path, O_RDONLY);
     if (fd < 0)
         app_error(5);
