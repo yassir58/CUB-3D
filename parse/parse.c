@@ -179,8 +179,6 @@ void    add_params_to_list(char *line, t_game_params **params_list)
     char *key;
     char *value;
     int color;
-    // 
-    // TODO: I think that i should validate the key according to the attributes mentioned in the subject.
     splitted = get_key_value(line);
     if (ft_strlen(splitted[0]) && ft_strlen(splitted[1]))
     {
@@ -258,6 +256,7 @@ void    parse_map(char *path, t_global_state *state)
     int fd;
     char **map;
 
+    // !Should calculate how many items are in the game params.
     validate_extension(path, ".cub");
     fd = open(path, O_RDONLY);
     if (fd < 0)

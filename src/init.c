@@ -23,7 +23,7 @@ t_global_state *init_simulation_data(t_map_list *map)
     data->data->prev_pos_mouse = 0;
     data->data->tileX = data->data->window_width / data->grid->col;
     data->data->tileY = data->data->window_height / data->grid->row;
-
+    data->data->prev_pos_mouse = data->data->window_width / 2;
     if (data->data->tileX < data->data->tileY)
         data->data->tileY = data->data->tileX;
     else

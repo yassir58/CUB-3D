@@ -164,7 +164,6 @@ void draw_minimap (t_global_state *state)
     state->img.addr = (int *)mlx_get_data_addr (state->img.img, &(state->img.bits_per_pixel), &(state->img.line_length), &(state->img.endian));
     indx_x = player_x - (MINIMAP_ROW / 2);
     indx_y = player_y - (MINIMAP_CEL / 2);
-    printf ("test \n");
     while (j < MINIMAP_ROW)
     {
         if ((indx_y + j >= 0 && indx_y + j < state->grid->row))

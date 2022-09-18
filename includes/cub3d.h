@@ -31,7 +31,7 @@
 #define WALL_CLR  0x00000000
 #define ROT_ANGLE (M_PI / 2) // 90 deg
 #define moveSpeed 4
-#define rotationSpeed 4
+#define rotationSpeed 3
 
 // MAC keycodes
 # define XK_ESCAPE  53
