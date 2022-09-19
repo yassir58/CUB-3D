@@ -24,9 +24,9 @@ void move_player (int flag, t_global_state *state)
         moveDirection = -1;
     else if (flag == RIGHT)
     {
-        newPlayerX = state->player->initx - moveSpeed * sin(deg_to_radian(state->player->v_angle));
-        newPlayerY = state->player->inity + moveSpeed * cos(deg_to_radian(state->player->v_angle));
-        if (!checkCoordinatesWall(newPlayerX, newPlayerY, state))
+        newPlayerX = state->player->initx - state->player->moveSpeed * sin(deg_to_radian(state->player->v_angle));
+        newPlayerY = state->player->inity + state->player->moveSpeed * cos(deg_to_radian(state->player->v_angle));
+        if (!checkCoordinatesWallTest(newPlayerX, newPlayerY, state, flag))
         {
             state->player->initx = newPlayerX;
             state->player->inity = newPlayerY;
@@ -35,9 +35,9 @@ void move_player (int flag, t_global_state *state)
     }
     else if (flag == LEFT)
     {
-        newPlayerX = state->player->initx + moveSpeed * sin(deg_to_radian(state->player->v_angle));
-        newPlayerY = state->player->inity - moveSpeed * cos(deg_to_radian(state->player->v_angle));
-        if (!checkCoordinatesWall(newPlayerX, newPlayerY, state))
+        newPlayerX = state->player->initx + state->player->moveSpeed * sin(deg_to_radian(state->player->v_angle));
+        newPlayerY = state->player->inity - state->player->moveSpeed * cos(deg_to_radian(state->player->v_angle));
+        if (!checkCoordinatesWallTest(newPlayerX, newPlayerY, state, flag))
         {
             state->player->initx = newPlayerX;
             state->player->inity = newPlayerY;
@@ -50,9 +50,9 @@ void move_player (int flag, t_global_state *state)
         rotationDirection = 1;
     state->player->v_angle += rotationDirection * rotationSpeed;
     correctPlayerAngle(state);
-    newPlayerX = state->player->initx + (moveDirection * moveSpeed) * cos(deg_to_radian(state->player->v_angle));
-    newPlayerY = state->player->inity + (moveDirection * moveSpeed) * sin(deg_to_radian(state->player->v_angle));
-    if (!checkCoordinatesWall(newPlayerX, newPlayerY, state))
+    newPlayerX = state->player->initx + (moveDirection * state->player->moveSpeed) * cos(deg_to_radian(state->player->v_angle));
+    newPlayerY = state->player->inity + (moveDirection * state->player->moveSpeed) * sin(deg_to_radian(state->player->v_angle));
+    if (!checkCoordinatesWallTest(newPlayerX, newPlayerY, state, flag))
     {
         state->player->initx = newPlayerX;
         state->player->inity = newPlayerY;
@@ -68,30 +68,30 @@ void move_player (int flag, t_global_state *state)
 //     if (flag == UP)
 //     {
 //         check  = check_for_wall (state->player->initx, 
-//         (state->player->inity - state->player->radius) - moveSpeed, state);
-//         if (state->player->inity - moveSpeed >= 0 && check)
-//             state->player->inity -= moveSpeed;
+//         (state->player->inity - state->player->radius) - state->player->moveSpeed, state);
+//         if (state->player->inity - state->player->moveSpeed >= 0 && check)
+//             state->player->inity -= state->player->moveSpeed;
 //     }
 //     else if (flag == DOWN)
 //     {
 //         check = check_for_wall (state->player->initx, 
-//         (state->player->inity + state->player->radius) + moveSpeed, state);
-//         if (state->player->inity + moveSpeed <= RES_Y && check)
-//             state->player->inity += moveSpeed;
+//         (state->player->inity + state->player->radius) + state->player->moveSpeed, state);
+//         if (state->player->inity + state->player->state->player->moveSpeed <= RES_Y && check)
+//             state->player->inity += state->player->moveSpeed;
 //     }
 //     else if (flag == LEFT)
 //     {
-//         check = check_for_wall ((state->player->initx - state->player->radius) - moveSpeed,
+//         check = check_for_wall ((state->player->initx - state->player->radius) - state->player->moveSpeed,
 //         state->player->inity, state);
-//         if (state->player->initx - moveSpeed >= 0 && check)
-//             state->player->initx -= moveSpeed;
+//         if (state->player->initx - state->player->moveSpeed >= 0 && check)
+//             state->player->initx -= state->player->moveSpeed;
 //     }
 //     else if (flag == RIGHT)
 //     {
-//         check= check_for_wall ((state->player->initx) + moveSpeed,
+//         check= check_for_wall ((state->player->initx) + state->player->moveSpeed,
 //         state->player->inity, state);
-//         if (state->player->initx + moveSpeed <= RES_X && check)
-//             state->player->initx += moveSpeed;
+//         if (state->player->initx + state->player->moveSpeed <= RES_X && check)
+//             state->player->initx += state->player->moveSpeed;
 //     }
 //     rerender_map (state);
 // }
@@ -105,6 +105,13 @@ void rerender_map (t_global_state *state)
     mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, state->img.img, 0,0);
 }
 
+void rerender_sprite (t_global_state *state, t_texture sprite)
+{
+    mlx_clear_window (state->vars->mlx, state->vars->mlx_win);
+    raycaster (state);
+    mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, state->img.img, 0,0);
+    mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, sprite.img.img, state->data->window_width - sprite.width, state->data->window_height -  sprite.height);
+}
 
 // void rotate_player (int direction, t_global_state *state)
 // {

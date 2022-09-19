@@ -30,7 +30,6 @@
 // #define WALL_CLR  0x002A0944
 #define WALL_CLR  0x00000000
 #define ROT_ANGLE (M_PI / 2) // 90 deg
-#define moveSpeed 6
 #define rotationSpeed 4
 
 // MAC keycodes
@@ -44,6 +43,7 @@
 # define R_UP       126
 # define R_RIGHT    124
 # define R_DOWN     125
+# define SHOOT 15
 
 # define ROWS 14
 # define COLS 37
@@ -151,6 +151,7 @@ typedef struct s_intersection_data {
     double coff;
     double rayDistance;
     int txtOffsetX;
+    int distanceToWall;
 } t_intersection_data;
 
 typedef struct s_grid_data 
@@ -181,6 +182,7 @@ typedef struct s_player
     int d_y;
     int d_length;
     int v_angle;
+    int moveSpeed;
 } t_player;
 
 typedef struct s_vars 
@@ -188,6 +190,16 @@ typedef struct s_vars
     void *mlx;
     void *mlx_win;
 } t_vars;
+
+typedef struct s_sprites
+{
+    t_texture pistol1;
+    t_texture pistol2;
+    t_texture pistol3;
+    t_texture pistol4;
+    t_texture pistol5;
+    t_texture shotgun1;
+} t_sprites;
 
 typedef struct s_global_state
 {
@@ -202,7 +214,12 @@ typedef struct s_global_state
     t_texture west_texture;
     t_texture south_texture;
     t_texture current;
+    t_sprites *sprites;
+    t_texture current_sprite;
 } t_global_state;
+
+
+
 
 t_global_state g_data;
 
@@ -303,9 +320,8 @@ int rayFacingDown(double rayAngle);
 int rayFacingRight(double rayAngle);
 int rayFacingUp(double rayAngle);
 int rayFacingLeft(double rayAngle);
-
-// Leaks check
-
-void check_leaks();
-
+void init_sprites (t_global_state *state);
+void handle_sprite (t_global_state *state);
+void rerender_sprite (t_global_state *state, t_texture sprite);
+int checkCoordinatesWallTest(double x, double y, t_global_state *state, int flag);
 #endif 

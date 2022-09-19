@@ -91,6 +91,7 @@ void init_player (t_global_state *state)
     state->player->d_y = 0;
     state->player->d_length = 50;
     state->player->v_angle = get_angle(state->data->playerDirection);
+    state->player->moveSpeed = 4;
 }
 
 void minimap_position (t_global_state *state)
@@ -168,4 +169,21 @@ void load_texture_images (t_global_state *state)
     state->west_texture.img.addr  = (int *)mlx_get_data_addr (state->west_texture.img.img, &(state->west_texture.img.bits_per_pixel), &(state->west_texture.img.line_length), &(state->west_texture.img.endian));  
     state->east_texture.img.img =  mlx_xpm_file_to_image (state->vars->mlx, "assets/east.xpm", &state->east_texture.width, &state->east_texture.height);
     state->east_texture.img.addr  = (int *)mlx_get_data_addr (state->east_texture.img.img, &(state->east_texture.img.bits_per_pixel), &(state->east_texture.img.line_length), &(state->east_texture.img.endian));
+}
+
+
+void init_sprites (t_global_state *state)
+{
+    state->sprites->pistol1.img.img = mlx_xpm_file_to_image (state->vars->mlx, "assets/pistol1.xpm", &state->sprites->pistol1.width, &state->sprites->pistol1.height);
+    state->sprites->pistol1.img.addr = (int *)mlx_get_data_addr (state->sprites->pistol1.img.img, &(state->sprites->pistol1.img.bits_per_pixel), &(state->sprites->pistol1.img.line_length), &(state->sprites->pistol1.img.endian));
+    state->sprites->pistol2.img.img = mlx_xpm_file_to_image (state->vars->mlx, "assets/pistol2.xpm", &state->sprites->pistol2.width, &state->sprites->pistol2.height);
+    state->sprites->pistol2.img.addr = (int *)mlx_get_data_addr (state->sprites->pistol2.img.img, &(state->sprites->pistol2.img.bits_per_pixel), &(state->sprites->pistol2.img.line_length), &(state->sprites->pistol2.img.endian));
+    state->sprites->pistol3.img.img = mlx_xpm_file_to_image (state->vars->mlx, "assets/pistol3.xpm", &state->sprites->pistol3.width, &state->sprites->pistol3.height);
+    state->sprites->pistol3.img.addr = (int *)mlx_get_data_addr (state->sprites->pistol3.img.img, &(state->sprites->pistol3.img.bits_per_pixel), &(state->sprites->pistol3.img.line_length), &(state->sprites->pistol3.img.endian));
+    state->sprites->pistol4.img.img = mlx_xpm_file_to_image (state->vars->mlx, "assets/pistol4.xpm", &state->sprites->pistol4.width, &state->sprites->pistol4.height);
+    state->sprites->pistol4.img.addr = (int *)mlx_get_data_addr (state->sprites->pistol4.img.img, &(state->sprites->pistol4.img.bits_per_pixel), &(state->sprites->pistol4.img.line_length), &(state->sprites->pistol4.img.endian));
+    state->sprites->pistol5.img.img = mlx_xpm_file_to_image (state->vars->mlx, "assets/pistol5.xpm", &state->sprites->pistol5.width, &state->sprites->pistol5.height);
+    state->sprites->pistol5.img.addr = (int *)mlx_get_data_addr (state->sprites->pistol5.img.img, &(state->sprites->pistol5.img.bits_per_pixel), &(state->sprites->pistol5.img.line_length), &(state->sprites->pistol5.img.endian));
+    state->sprites->shotgun1.img.img = mlx_xpm_file_to_image (state->vars->mlx, "assets/shotgun1.xpm", &state->sprites->shotgun1.width, &state->sprites->shotgun1.height);
+    state->sprites->shotgun1.img.addr = (int *)mlx_get_data_addr (state->sprites->shotgun1.img.img, &(state->sprites->shotgun1.img.bits_per_pixel), &(state->sprites->shotgun1.img.line_length), &(state->sprites->shotgun1.img.endian));
 }
