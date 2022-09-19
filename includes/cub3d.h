@@ -299,4 +299,9 @@ int rayFacingDown(double rayAngle);
 int rayFacingRight(double rayAngle);
 int rayFacingUp(double rayAngle);
 int rayFacingLeft(double rayAngle);
+
+// Leaks check
+
+void check_leaks();
+
 #endif 

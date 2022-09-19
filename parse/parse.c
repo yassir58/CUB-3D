@@ -155,13 +155,14 @@ void    check_path(char *path)
         app_error(5);
 }
 
-void    add_params_to_list(char *line, t_game_params **params_list)
+void   add_params_to_list(char *line, t_game_params **params_list)
 {
     char **splitted;
     char *key;
     char *value;
     int color;
     splitted = get_key_value(line);
+    while (1);
     if (ft_strlen(splitted[0]) && ft_strlen(splitted[1]))
     {
         key = strip_whitespaces(splitted[0]);
@@ -218,16 +219,13 @@ void    get_lists(int fd, t_game_data *data)
     params_list = NULL;
     lines_list = NULL;
     line = advanced_get_next_line(fd, 0);
-    while (!check_map_line(line) && i < 3)
+    while (1);
+    while (!check_map_line(line))
     {
         add_params_to_list(line, &params_list);
-        print_params_list(params_list);
         free(line);
         line = advanced_get_next_line(fd, 0);
-        while (1);
-        i++;
     }
-    while (1);
     while (check_map_line(line))
     {
         add_line(&lines_list, new_line(line));
