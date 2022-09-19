@@ -21,8 +21,10 @@ void    app_error(int code)
         printf("Error: invalid map structure.\n");
     else if (code == 9)
         printf("Error: player exists in multiple places.\n");
-     else if (code == 10)
+    else if (code == 10)
         printf("Error: player does not exist.\n");
+    else if (code == 11)
+        printf("Error: missing identifiers.\n");
     exit(1);
 }
 
@@ -38,37 +40,6 @@ int check_identifier(char *id)
     else if (!ft_strcmp(id, "F") || !ft_strcmp(id, "C"))
         return (2);
     return (0);
-}
-
-int get_identifer_number(char *id)
-{
-    if (!ft_strcmp(id, "NO"))
-        return (1);
-    else if (!ft_strcmp(id, "SO"))
-        return (2);
-    else if (!ft_strcmp(id, "WE"))
-        return (3);
-    else if (!ft_strcmp(id, "EA"))
-        return (4);
-    else if (!ft_strcmp(id, "F"))
-        return (5);
-    else if (!ft_strcmp(id, "C"))
-        return (6);
-    return (0);
-}
-
-void check_identifers_order(t_game_params *params)
-{
-    t_game_params *tmp;
-
-    tmp = params;
-    while (tmp->next != NULL)
-    {
-        if (tmp->index < tmp->next->index)
-            tmp = tmp->next;
-        else
-            app_error(6);
-    }
 }
 
 int count_seperator(char *str, char c)
@@ -109,6 +80,16 @@ void    validate_color_number(char **table)
     }
 }
 
+void    free_table(char **table)
+{
+    int i;
+    
+    i = 0;
+    while (table[i])
+        free(table[i++]);
+    free(table);
+}
+
 int get_color(char *str)
 {
     char **rgb;
@@ -126,6 +107,7 @@ int get_color(char *str)
             // printf("Green: %d\n",ft_atoi(rgb[1]));
             // printf("Red: %d\n",ft_atoi(rgb[2]));
             color = 65536 * ft_atoi(rgb[0]) + 256 * ft_atoi(rgb[1]) + ft_atoi(rgb[2]);
+            free_table(rgb);
             return (color);
         }
         else
@@ -173,17 +155,18 @@ void    check_path(char *path)
         app_error(5);
 }
 
-void    add_params_to_list(char *line, t_game_params **params_list)
+void   add_params_to_list(char *line, t_game_params **params_list)
 {
     char **splitted;
     char *key;
     char *value;
     int color;
     splitted = get_key_value(line);
+    while (1);
     if (ft_strlen(splitted[0]) && ft_strlen(splitted[1]))
     {
-        key = splitted[0];
-        value = splitted[1];
+        key = strip_whitespaces(splitted[0]);
+        value = strip_whitespaces(splitted[1]);
         if (!search_params_list(key, params_list))
         {
             if (check_identifier(key) == 2)
@@ -198,7 +181,7 @@ void    add_params_to_list(char *line, t_game_params **params_list)
                 check_path(value);
             else
                 app_error(6);
-            add_param(params_list, new_params(key, value, get_identifer_number(key)));
+            add_param(params_list, new_params(key, value));
         }
         else
             app_error(3);
@@ -229,10 +212,14 @@ void    get_lists(int fd, t_game_data *data)
     char *line;
     t_game_params *params_list;
     t_map_line *lines_list;
+    int i;
+
+    i = 0;
 
     params_list = NULL;
     lines_list = NULL;
     line = advanced_get_next_line(fd, 0);
+    while (1);
     while (!check_map_line(line))
     {
         add_params_to_list(line, &params_list);
@@ -265,8 +252,9 @@ void    parse_map(char *path, t_global_state *state)
     if (!state->data)
         return ;
     get_lists(fd, state->data);
+    if (game_param_size(state->data->params) != 6)
+        app_error(11);
     print_params_list(state->data->params);
-    check_identifers_order(state->data->params);
     validate_map(convert_lines_table(state->data->lines), lines_number(state->data->lines), state);
     // open the map and send fd to the appropriate function so it can get the game params.
 }

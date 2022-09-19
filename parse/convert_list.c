@@ -15,7 +15,6 @@ char **convert_lines_table(t_map_line *list)
         return (NULL);
     while (tmp != NULL)
     {
-        //! Possible leak
         lines_table[i++] = ft_strdup(tmp->line);
         tmp = tmp->next;
     }

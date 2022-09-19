@@ -9,7 +9,7 @@ char **get_key_value(char *str)
 
     i = 0;
     j = 0;
-    keys = (char **)malloc(sizeof(char *) * 2);
+    keys = (char **)malloc(sizeof(char *) * 3);
     if (!keys)
         return (NULL);
     while (str[i] && str[i] == ' ')
@@ -25,6 +25,7 @@ char **get_key_value(char *str)
 	while (str[i] && str[i] == ' ')
 		i++;
     keys[1] = ft_strdup(str + i - 1);
+	keys[2] = NULL;
     return (keys);
 }
 
@@ -41,5 +42,6 @@ char *strip_whitespaces(char *str)
 	while (str[end] && str[end] == ' ')
 		end--;
 	clean = ft_substr(str, start, end - start + 1);
+	free(str);
 	return (clean);
 }
