@@ -1,5 +1,19 @@
 #include "../includes/cub3d.h"
 
+int wall_line(char *line)
+{
+    int i;
+
+    i = 0;
+    while (line[i])
+    {
+        if (!strchr(WALL_LINE, line[i]))
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
 char **get_key_value(char *str)
 {
     char **keys;

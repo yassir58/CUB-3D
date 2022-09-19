@@ -1,18 +1,23 @@
 #include "../includes/cub3d.h"
 
 
-void calculate_grid (t_map_list *list, int *col, int *row)
+void calculate_grid (char **map, int *col, int *row)
 {
- 
-    t_map_list *temp;
+   
+   int i;
+   int tmp;
 
-    temp = list;
-    *col = ft_strlen (temp->column) - 1;
+    i = 0;
+    tmp = 0;
+    *col = 0;
     *row = 0;
-    while (temp)
+    while (map[i])
     {
+        tmp = ft_strlen (map[i]) - 1;
+        if (tmp > *col)
+            *col = tmp;
         (*row)++;
-        temp = temp->next;
+        i++;
     }
 }
 

@@ -22,12 +22,28 @@ char **convert_lines_table(t_map_line *list)
     return (lines_table);
 }
 
-int string_table_number(char **table)
+int number_of_el(char **table)
 {
     int i;
 
     i = 0;
-    while (table[i])
+    while (table[i] != NULL)
         i++;
     return (i);
+}
+
+int count_seperator(char *str, char c)
+{
+    int count;
+    int i;
+
+    i = 0;
+    count = 0;
+    while (str[i])
+    {
+        if (str[i] == c)
+            count += 1;
+        i++;
+    }
+    return (count);
 }

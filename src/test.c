@@ -7,11 +7,10 @@
 int main (int argc , char *argv[])
 {
     (void)argc;
-    t_map_list *map;
+    // t_map_list *map;
     t_global_state *state;
    
-    map = create_map_list (argv[1]);
-    state = init_simulation_data(map);
+    state = init_simulation_data(argv);
     init_window (state);
     init_game (state);
     // draw_grid (state);

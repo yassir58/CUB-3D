@@ -216,12 +216,12 @@ t_global_state g_data;
 t_vars  testing_window;
 t_img   testing_img;
 double r_a;
-t_global_state *init_simulation_data(t_map_list *map);
+t_global_state *init_simulation_data();
 t_map_list *create_map_list (char *map);
 void    push_to_list(t_map_list **map, char *column);
 void	my_mlx_pixel_put(t_global_state *state, int x, int y, int color, t_img *img);
 void    draw_rect (int x, int y, int color, t_global_state *state);
-void    calculate_grid(t_map_list *list, int *col, int *row);
+void calculate_grid (char **map, int *col, int *row);
 void    draw_grid (t_global_state *state);
 void    draw_row (int i, int *j, int *x, int y, t_global_state *state);
 void    parse_map(char *path, t_global_state *state);
@@ -262,9 +262,13 @@ int	            game_param_size(t_game_params *lst);
 
 char    **validate_map(char **map, int map_size, t_global_state *state);
 // Extension validation
-
+void    check_path(char *path);
 void    validate_extension(char *path, char *ext);
-
+int count_seperator(char *str, char c);
+int get_color(char *str);
+void    free_table(char **table);
+int check_identifier(char *id);
+int wall_line(char *line);
 // Error management
 
 void    app_error(int code);
