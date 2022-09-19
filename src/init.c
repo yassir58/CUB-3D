@@ -79,6 +79,7 @@ void init_player (t_global_state *state)
     state->player->d_y = 0;
     state->player->d_length = 50;
     state->player->v_angle = E;
+    state->player->moveSpeed = 4;
 }
 
 void minimap_position (t_global_state *state)

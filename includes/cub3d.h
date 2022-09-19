@@ -30,7 +30,6 @@
 // #define WALL_CLR  0x002A0944
 #define WALL_CLR  0x00000000
 #define ROT_ANGLE (M_PI / 2) // 90 deg
-#define moveSpeed 6
 #define rotationSpeed 4
 
 // MAC keycodes
@@ -153,6 +152,7 @@ typedef struct s_intersection_data {
     double coff;
     double rayDistance;
     int txtOffsetX;
+    int distanceToWall;
 } t_intersection_data;
 
 typedef struct s_grid_data 
@@ -183,6 +183,7 @@ typedef struct s_player
     int d_y;
     int d_length;
     int v_angle;
+    int moveSpeed;
 } t_player;
 
 typedef struct s_vars 
@@ -317,4 +318,5 @@ int rayFacingLeft(double rayAngle);
 void init_sprites (t_global_state *state);
 void handle_sprite (t_global_state *state);
 void rerender_sprite (t_global_state *state, t_texture sprite);
+int checkCoordinatesWallTest(double x, double y, t_global_state *state, int flag);
 #endif 

@@ -13,9 +13,9 @@ int mouse_handle(int x, int y, void *param)
          prevPos = state->data->prev_pos_mouse;
         calculatedPos = x - prevPos;
         if (calculatedPos < 0)
-            state->player->v_angle -= 2;
+            state->player->v_angle -= 1;
         else
-            state->player->v_angle += 2;
+            state->player->v_angle += 1;
         state->data->prev_pos_mouse = x;
         rerender_map(state);
     }
