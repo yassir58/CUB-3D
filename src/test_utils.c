@@ -5,12 +5,17 @@ void calculate_grid (t_map_list *list, int *col, int *row)
 {
  
     t_map_list *temp;
+    int tmp;
 
     temp = list;
-    *col = ft_strlen (temp->column) - 1;
     *row = 0;
+    *col = 0;
+    tmp = 0;
     while (temp)
     {
+        tmp = ft_strlen (temp->column) - 1;
+        if (tmp > *col)
+            *col = tmp;
         (*row)++;
         temp = temp->next;
     }

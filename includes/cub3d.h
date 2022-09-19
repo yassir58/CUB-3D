@@ -44,6 +44,7 @@
 # define R_UP       126
 # define R_RIGHT    124
 # define R_DOWN     125
+# define SHOOT 15
 
 # define ROWS 14
 # define COLS 37
@@ -190,6 +191,16 @@ typedef struct s_vars
     void *mlx_win;
 } t_vars;
 
+typedef struct s_sprites
+{
+    t_texture pistol1;
+    t_texture pistol2;
+    t_texture pistol3;
+    t_texture pistol4;
+    t_texture pistol5;
+    t_texture shotgun1;
+} t_sprites;
+
 typedef struct s_global_state
 {
     t_vars *vars;
@@ -203,7 +214,12 @@ typedef struct s_global_state
     t_texture west_texture;
     t_texture south_texture;
     t_texture current;
+    t_sprites *sprites;
+    t_texture current_sprite;
 } t_global_state;
+
+
+
 
 t_global_state g_data;
 
@@ -298,4 +314,7 @@ int rayFacingDown(double rayAngle);
 int rayFacingRight(double rayAngle);
 int rayFacingUp(double rayAngle);
 int rayFacingLeft(double rayAngle);
+void init_sprites (t_global_state *state);
+void handle_sprite (t_global_state *state);
+void rerender_sprite (t_global_state *state, t_texture sprite);
 #endif 
