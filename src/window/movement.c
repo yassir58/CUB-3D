@@ -99,18 +99,10 @@ void move_player (int flag, t_global_state *state)
 void rerender_map (t_global_state *state)
 {
     mlx_clear_window (state->vars->mlx, state->vars->mlx_win);
-    // draw_grid (state);
-    // draw_player (0x00FF0145,state);
     raycaster (state);
+    draw_gun_pointer (0xFF0000, state);
     mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, state->img.img, 0,0);
-}
-
-void rerender_sprite (t_global_state *state, t_texture sprite)
-{
-    mlx_clear_window (state->vars->mlx, state->vars->mlx_win);
-    raycaster (state);
-    mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, state->img.img, 0,0);
-    mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, sprite.img.img, state->data->window_width - sprite.width, state->data->window_height -  sprite.height);
+    mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, state->current_sprite.img.img, (state->data->window_width) - state->current_sprite.width, state->data->window_height -  state->current_sprite.height);
 }
 
 // void rotate_player (int direction, t_global_state *state)

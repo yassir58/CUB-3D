@@ -92,7 +92,7 @@ void DDA(int X0, int Y0, int X1, int Y1, t_global_state *state)
     float Y = Y0;
     for (int i = 0; i <= steps; i++)
     {
-        my_mlx_pixel_put (state, X, Y, 0x00FBDF07, &testing_img); // put pixel at (X,Y)
+        my_mlx_pixel_put (state, X, Y, 0x00FBDF07, NULL); // put pixel at (X,Y)
         X += Xinc;           // increment in x at each step
         Y += Yinc;           // increment in y at each step
         // delay(100);          // for visualization of line-

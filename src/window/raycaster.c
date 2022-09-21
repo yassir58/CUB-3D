@@ -342,8 +342,6 @@ void    raycaster(t_global_state *state)
     // printf("Ray angle in rad: %f\n", FEILD_OF_VIEW_ANGLE);
     state->cast->projectPlaneDistance = (state->data->window_width / 2)  / (tan(FEILD_OF_VIEW_ANGLE / 2.0));
     printf ("%f \n", state->cast->projectPlaneDistance);
-    testing_img.img  = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_height);
-    testing_img.addr = (int *)mlx_get_data_addr (testing_img.img, &(testing_img.bits_per_pixel), &(testing_img.line_length), &(testing_img.endian));
     color(state, 0x0016213E, state->data->window_height / 2);
     color(state, 0x00C3F8FF, 0);
     while (columnId < raysNumber)
@@ -368,8 +366,6 @@ void    raycaster(t_global_state *state)
     }
     draw_minimap (state);
 }
-
-
 //?DONE: Create Cast ray function that will cast only one ray based on 
 //?DONE: Create a function that will calculate the distance between two dots
 //?DONE: Create a function that will round the angle

@@ -44,6 +44,7 @@
 # define R_RIGHT    124
 # define R_DOWN     125
 # define SHOOT 15
+# define RELEAOD 17
 
 # define ROWS 14
 # define COLS 37
@@ -167,6 +168,7 @@ typedef struct s_texture
     t_img img;
 } t_texture;
 
+
 typedef struct s_player 
 {
     double initx;
@@ -191,15 +193,7 @@ typedef struct s_vars
     void *mlx_win;
 } t_vars;
 
-typedef struct s_sprites
-{
-    t_texture pistol1;
-    t_texture pistol2;
-    t_texture pistol3;
-    t_texture pistol4;
-    t_texture pistol5;
-    t_texture shotgun1;
-} t_sprites;
+
 
 typedef struct s_global_state
 {
@@ -214,8 +208,11 @@ typedef struct s_global_state
     t_texture west_texture;
     t_texture south_texture;
     t_texture current;
-    t_sprites *sprites;
+    t_texture *sprites;
+    t_texture *releaod_sprites;
     t_texture current_sprite;
+    int trigger;
+    int releaod;
 } t_global_state;
 
 
@@ -316,8 +313,12 @@ int rayFacingDown(double rayAngle);
 int rayFacingRight(double rayAngle);
 int rayFacingUp(double rayAngle);
 int rayFacingLeft(double rayAngle);
-void init_sprites (t_global_state *state);
-void handle_sprite (t_global_state *state);
+void init_shoot_sprites (t_global_state *state);
+int handle_sprite (t_global_state *state);
 void rerender_sprite (t_global_state *state, t_texture sprite);
 int checkCoordinatesWallTest(double x, double y, t_global_state *state, int flag);
+void draw_gun_pointer (int color, t_global_state *state);
+void init_releaod_sprites (t_global_state *state);
+int handle_shoot_sprite (t_global_state *state);
+void play_sound (int flag);
 #endif 
