@@ -8,16 +8,13 @@ int mouse_handle(int x, int y, void *param)
 
     (void)y;
     state = (t_global_state *)param;
-    if (x > 0 && x <= RES_X && y > 0 && y <= RES_Y)
-    {
-        prevPos = state->data->prev_pos_mouse;
-        calculatedPos = x - prevPos;
-        if (calculatedPos < 0)
-            state->player->v_angle -= 1;
-        else
-            state->player->v_angle += 1;
-        state->data->prev_pos_mouse = x;
-        rerender_map(state);
-    }
+    prevPos = state->data->prev_pos_mouse;
+    calculatedPos = x - prevPos;
+    if (calculatedPos < 0)
+        state->player->v_angle -= 2;
+    else
+        state->player->v_angle += 2;
+    rerender_map(state);
+    state->data->prev_pos_mouse = x;
     return (0);
 }

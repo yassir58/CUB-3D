@@ -18,7 +18,7 @@
 
 // Variables related to the ray caster.
 #define FOV 60
-#define FEILD_OF_VIEW_ANGLE ((FOV * (M_PI / 180)))
+#define FOV_ANGLE ((FOV * (M_PI / 180)))
 #define RAY_THICKNESS 1
 
 #define MINIMAP_CEL 5
@@ -140,21 +140,21 @@ typedef struct s_intersection_data {
     double wallVertHitY;
     double nextHorzTouchX;
     double nextHorzTouchY;
-    double nextVertTouchX;
-    double nextVertTouchY;
+    double next_vert_touchx;
+    double next_vert_touchy;
     double distanceHorizontal;
     double distanceVertical;
     bool wallHorzIntesected;
-    bool wallVertIntesected;
+    bool wall_vert_intesected;
     bool wasIntersectionVertical;
-    double projectPlaneDistance;
+    double pp_distance;
     double horizontalDistance;
     double verticalDistance;
     double coff;
     double rayDistance;
     int txtOffsetX;
-    int distanceToWall;
-} t_intersection_data;
+    int distance_to_wall;
+} t_raycast;
 
 typedef struct s_grid_data 
 {
@@ -209,7 +209,7 @@ typedef struct s_global_state
     t_game_data *data;
     t_grid_data *grid;
     t_player *player;
-    t_intersection_data *cast;
+    t_raycast *cast;
     t_img img;
     t_texture east_texture;
     t_texture north_texture;
@@ -295,15 +295,15 @@ void    print_map(char **map);
 
 // Ray casting related functions
 void color (t_global_state *state, int color, int start);
-void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global_state *state);
-void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global_state *state);
+void    horz_ray(double ray_angle, t_raycast *data, t_global_state *state);
+void    vert_ray(double ray_angle, t_raycast *data, t_global_state *state);
 void    raycaster(t_global_state *state);
-double    castRay(double rayAngle, t_intersection_data *data, t_global_state *state);
+double    castRay(double ray_angle, t_raycast *data, t_global_state *state);
 double  getCorrectAgnle(double angle);
 double  calculateDistance(double x, double y, double x1, double y1);
 int     checkCoordinatesWall(double x, double y, t_global_state *state);
-int     get_angle_direction(double rayAngle);
-double  getCorrectAngle(double angle);
+int     get_angle_direction(double ray_angle);
+double  get_correct_angle(double angle);
 void    draw_column (int x, int y, t_global_state *state, double colHeight);
 int     mouse_handle(int x, int y, void *param);
 char **get_key_value(char *str);
@@ -319,10 +319,10 @@ void render_minimap_cel (int x, int y, t_global_state *state, int elm);
 void draw_minimap_row (int player_x, int player_y,int y, t_global_state *state, int indx_x , int indx_y);
 void draw_minimap_wall (int y, t_global_state *state, int indx_x);
 void draw_minirect (int x, int y, int color, t_global_state *state);
-int rayFacingDown(double rayAngle);
-int rayFacingRight(double rayAngle);
-int rayFacingUp(double rayAngle);
-int rayFacingLeft(double rayAngle);
+int ray_facing_down(double ray_angle);
+int ray_facing_right(double ray_angle);
+int ray_facing_up(double ray_angle);
+int ray_facing_left(double ray_angle);
 void init_sprites (t_global_state *state);
 void handle_sprite (t_global_state *state);
 void rerender_sprite (t_global_state *state, t_texture sprite);

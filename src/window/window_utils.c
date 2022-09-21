@@ -3,7 +3,6 @@
 
 int	handle_keypress(int keycode, t_global_state *state)
 {
-
     if (keycode == XK_ESCAPE)
     {
         mlx_destroy_window(state->vars->mlx, state->vars->mlx_win);

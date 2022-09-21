@@ -1,7 +1,8 @@
 
-SRCS= src/test.c src/lib/gnl/get_next_line.c src/window/img_utils.c src/window/raycaster.c src/test_utils.c \
+SRCS= src/test.c src/lib/gnl/get_next_line.c src/window/img_utils.c src/test_utils.c \
 src/window/window_utils.c src/init.c src/window/movement.c src/window/movement_utils.c src/math_utils.c src/mouse.c \
-parse/convert_list.c parse/error.c parse/gnl.c parse/list.c parse/list_helper.c parse/parse.c parse/parse_helper.c parse/utils.c parse/validation.c
+parse/convert_list.c parse/error.c parse/gnl.c parse/list.c parse/list_helper.c parse/parse.c parse/parse_helper.c parse/utils.c parse/validation.c \
+src/raycaster/angle_utils.c src/raycaster/raycaster.c src/raycaster/wall_collision.c
 OBJS= $(SRCS:.c=.o)
 FLAGS= -Wall -Wextra -Werror
 LIB= -lmlx -framework OpenGL -framework AppKit
