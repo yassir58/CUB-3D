@@ -20,7 +20,6 @@ t_global_state *init_simulation_data(char **argv)
     init_player (state);
     state->data->window_height = (RES_Y);
     state->data->window_width = (RES_X);
-    state->data->prev_pos_mouse = 0;
     state->data->tileX = state->data->window_width / state->grid->col;
     state->data->tileY = state->data->window_height / state->grid->row;
     state->data->prev_pos_mouse = state->data->window_width / 2;

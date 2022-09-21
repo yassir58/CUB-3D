@@ -1,21 +1,5 @@
 #include "../../includes/cub3d.h"
 
-
-// int get_angle_direction(double rayAngle)
-// {
-//     bool rayFacingDown = (rayAngle > 0 && rayAngle < M_PI);
-//     bool rayFacingRight = (rayAngle > 0);
-//     if (rayFacingDown)
-//         return (RAY_DOWN);
-//     else if (!rayFacingDown)
-//         return (RAY_UP);
-//     else if (rayFacingRight)
-//         return (RAY_RIGHT);
-//     else if (!rayFacingRight)
-//         return (RAY_LEFT);
-//     return (0);
-// }
-
 int rayFacingDown(double rayAngle)
 {
     if (rayAngle > 0 && rayAngle < M_PI)
@@ -48,24 +32,9 @@ int checkCoordinatesWall(double x, double y, t_global_state *state)
 {
     double X;
     double Y;
-    // int i;
 
-    // i = 0;
-
-    //! Here i should return 1 if x or y is out of boundes
-    // x += 1;
-    // y += 1;
     X = floor(x / state->data->tileX);
     Y = floor(y / state->data->tileY);
-    // map = convert_lines_table(data->lines);
-    // printf("Before the segfault in convert function.\n");
-    // while (i < string_table_number(data->map))
-    // {
-    //     printf("%s", data->map[i]);
-    //     i++;
-    // }
-    // while (1);
-    // printf("%c\n", data->map[Y][])
     if (!(X < state->grid->col && Y < state->grid->row))
         return (1);
     if (state->data->map[(int)Y][(int)X] == '1')
@@ -77,39 +46,17 @@ int checkCoordinatesWallTest(double x, double y, t_global_state *state, int flag
 {
     double X;
     double Y;
-    // int i;
+    int moveSpeed;
 
-    // i = 0;
-
-    //! Here i should return 1 if x or y is out of boundes
-    // x += 1;
-    // y += 1;
+    moveSpeed = state->player->moveSpeed;
     X = floor(x / state->data->tileX);
     Y = floor(y / state->data->tileY);
-    // map = convert_lines_table(data->lines);
-    // printf("Before the segfault in convert function.\n");
-    // while (i < string_table_number(data->map))
-    // {
-    //     printf("%s", data->map[i]);
-    //     i++;
-    // }
-    // while (1);
-    // printf("%c\n", data->map[Y][])
-    // printf ("|col %d  row %d  X %d  Y %d| \n", state->grid->col, state->grid->row, (int)X, (int)Y);
-    printf("Distance to wall: %d\n", state->cast->distanceToWall);
-    if (flag == UP)
-    {
-        if (state->cast->distanceToWall - state->player->moveSpeed  < 14)
+    if (flag == UP && state->cast->distanceToWall - moveSpeed  < 14)
             return (1);
-    }
-    else if (flag == DOWN)
-    {
-        if (state->cast->distanceToWall + state->player->moveSpeed < 14)
+    else if (flag == DOWN && state->cast->distanceToWall + moveSpeed < 14)
             return (1);
-    }
     if (!(X > 0 && X < state->grid->col && Y > 0 && Y < state->grid->row))
         return (1);
-    printf ("|%d|\n", state->player->v_angle);
     if (state->data->map[(int)Y][(int)X] == '1')
             return (1);
     return (0);
@@ -169,21 +116,15 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
     }
     if (data->wasIntersectionVertical)
     {
-        
-        // coff = data->wallHitY / state->data->tileX - (int)(data->wallHitY / state->data->tileX);
-        // txtOffsetX = (int) (coff * state->current.width);
 		if (rayFacingLeft(rayAngle))
             state->current = state->west_texture;
 		else
 			state->current = state->east_texture;
         data->coff = data->wallHitY / state->data->tileX - (int)(data->wallHitY / state->data->tileX);
         data->txtOffsetX = (int)(data->coff * state->current.width);
-        // fmod(data->wallHitY , h);
     }
     else
     {
-        // coff = data->wallHitX / state->data->tileX - (int)(data->wallHitX / state->data->tileX);
-        // txtOffsetX = (int) (coff * state->current.height);
 		if (rayFacingUp(rayAngle))
         	state->current = state->north_texture;
 		else
@@ -191,16 +132,7 @@ double    castRay(double rayAngle, t_intersection_data *data, t_global_state *st
         data->coff = data->wallHitX / state->data->tileX - (int)(data->wallHitX / state->data->tileX);
         data->txtOffsetX = (int) (data->coff * state->current.height);
     }
-   
-    // printf("%f\n", rayAngle);
-    // printf("%f\n", deg_to_radian(state->player->v_angle));
-    // if (radian_to_deg(rayAngle) == state->player->v_angle)
-    //     data->projectPlaneDistance = rayDistance;
-    // (void)rayDistance;
-    //TODO: Draw a line in the canvas using the wallHitX and wallHitY
-    //DDA(state->player->initx, state->player->inity, data->wallHitX, data->wallHitY, state);
     return (data->rayDistance * cos(deg_to_radian(state->player->v_angle) - rayAngle));
-    // Here will be the code that will be responsible for casting one ray.
 }
 
 void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global_state *state)
@@ -236,7 +168,6 @@ void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global
                 data->nextHorzTouchY += 1;
             data->wallHorzHitX = data->nextHorzTouchX;
             data->wallHorzHitY = data->nextHorzTouchY;
-            // DDA(state->player->initx, state->player->inity, data->wallHorzHitX, data->wallHorzHitY, state);
             break;
         }
         else
@@ -245,19 +176,6 @@ void    getHorzIntersection(double rayAngle, t_intersection_data *data, t_global
             data->nextHorzTouchY += data->ystep;
         }
     }
-
-    // for (int i = ((int)data->xintercept - 4); i < (int)data->xintercept; i++)
-    // {
-    //     my_mlx_pixel_put(state , i , (int)data->yintercept, 0x00FF0000, NULL);
-    // }
-    // for (int i = ((int)data->xintercept + data->xstep - 4); i < (int)data->xintercept + data->xstep; i++)
-    // {
-    //     my_mlx_pixel_put(&state->img , i , (int)data->yintercept + data->ystep, 0x00FF0000);
-    // }
-    // for (int i = ((int)data->xintercept + (data->xstep * 2) - 4); i < (int)data->xintercept + (data->xstep * 2); i++)
-    // {
-    //     my_mlx_pixel_put(&state->img , i , (int)data->yintercept + (data->ystep * 2), 0x00FF0000);
-    // }
 }
 
 void    getVertIntersection(double rayAngle, t_intersection_data *data, t_global_state *state)
@@ -341,12 +259,12 @@ void    raycaster(t_global_state *state)
     // printf("Ray angle •: %f\n", deg_to_radian(state->player->v_angle) - FEILD_OF_VIEW_ANGLE);
     // printf("Ray angle in rad: %f\n", FEILD_OF_VIEW_ANGLE);
     state->cast->projectPlaneDistance = (state->data->window_width / 2)  / (tan(FEILD_OF_VIEW_ANGLE / 2.0));
-    printf ("%f \n", state->cast->projectPlaneDistance);
+    // printf ("%f \n", state->cast->projectPlaneDistance);
     testing_img.img  = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_height);
     testing_img.addr = (int *)mlx_get_data_addr (testing_img.img, &(testing_img.bits_per_pixel), &(testing_img.line_length), &(testing_img.endian));
     color(state, 0x0016213E, state->data->window_height / 2);
     color(state, 0x00C3F8FF, 0);
-    while (columnId < raysNumber)
+    while (columnId < RES_X)
     {
         // printf ("%d \n", radian_to_deg (rayAngle));
         // //? Debugging purposes.
@@ -357,13 +275,13 @@ void    raycaster(t_global_state *state)
         // DDA(state->player->initx, state->player->inity, x, y, state);
         
         rayDistance =  castRay(getCorrectAngle(rayAngle), state->cast, state);
-        if (columnId == raysNumber / 2)
+        if (columnId == RES_X_2)
             state->cast->distanceToWall = rayDistance;
         //printf("Ray distance: %f\n", rayDistance);
         colHeight = (state->data->tileY / rayDistance) * state->cast->projectPlaneDistance;
         //printf("col height: %f\n", colHeight);
-        draw_column (columnId * RAY_THICKNESS, ((state->data->window_height / 2) - (colHeight / 2)), state, colHeight);
-        rayAngle += FEILD_OF_VIEW_ANGLE / raysNumber;
+        draw_column (columnId, ((RES_Y_2) - (colHeight / 2)), state, colHeight);
+        rayAngle += FEILD_OF_VIEW_ANGLE / RES_X;
         columnId += 1;
     }
     draw_minimap (state);

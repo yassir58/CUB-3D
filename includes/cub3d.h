@@ -26,6 +26,8 @@
 #define MINIMAP_RES 200
 #define RES_X 1000
 #define RES_Y 800
+#define RES_X_2 500
+#define RES_Y_2 400
 #define SPACE_CLR 0x00FFFFFF
 // #define WALL_CLR  0x002A0944
 #define WALL_CLR  0x00000000
@@ -233,7 +235,7 @@ t_global_state g_data;
 t_vars  testing_window;
 t_img   testing_img;
 double r_a;
-t_global_state *init_simulation_data();
+t_global_state *init_simulation_data(char **argv);
 t_map_list *create_map_list (char *map);
 void    push_to_list(t_map_list **map, char *column);
 void	my_mlx_pixel_put(t_global_state *state, int x, int y, int color, t_img *img);
@@ -289,6 +291,7 @@ int wall_line(char *line);
 // Error management
 
 void    app_error(int code);
+void    print_map(char **map);
 
 // Ray casting related functions
 void color (t_global_state *state, int color, int start);

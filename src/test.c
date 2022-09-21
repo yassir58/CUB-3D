@@ -16,7 +16,7 @@ int main (int argc , char *argv[])
     // draw_grid (state);
     // draw_player (0x00FF0145,state);
     raycaster(state);
-    init_sprites (state);
+    // init_sprites (state);
     mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, state->img.img, 0,0);
     // state->current_sprite = state->sprites->pistol1;
     // mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, state->sprites->pistol1.img.img, state->data->window_width - state->sprites->pistol1.width, state->data->window_height -  state->sprites->pistol1.height);

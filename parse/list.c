@@ -59,26 +59,26 @@ void	add_line(t_map_line **lst, t_map_line *new)
 	last_node->next = new;
 }
 
-// void    print_params_list(t_game_params *list)
-// {
-//     t_game_params *tmp;
+void    print_params_list(t_game_params *list)
+{
+    t_game_params *tmp;
 
-//     tmp = list;
-//     while (tmp != NULL)
-//     {
-//         printf("Key:|%s| Value:|%s|\n", tmp->key ,tmp->value);
-//         tmp = tmp->next;
-//     }
-// }
+    tmp = list;
+    while (tmp != NULL)
+    {
+        printf("Key:|%s| Value:|%s|\n", tmp->key ,tmp->value);
+        tmp = tmp->next;
+    }
+}
 
-// void    print_lines_list(t_map_line *list)
-// {
-//     t_map_line *tmp;
+void    print_lines_list(t_map_line *list)
+{
+    t_map_line *tmp;
 
-//     tmp = list;
-//     while (tmp != NULL)
-//     {
-//         printf("%s\n", tmp->line);
-//         tmp = tmp->next;
-//     }
-// }
+    tmp = list;
+    while (tmp != NULL)
+    {
+        printf("%s\n", tmp->line);
+        tmp = tmp->next;
+    }
+}
