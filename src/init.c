@@ -36,10 +36,6 @@ void init_window (t_global_state *state)
     state->vars->mlx_win = mlx_new_window (state->vars->mlx, state->data->window_width, state->data->window_height, "CUB3D");
     state->img.img = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_height);
     state->img.addr = (int *)mlx_get_data_addr (state->img.img, &(state->img.bits_per_pixel), &(state->img.line_length), &(state->img.endian));
-    // testing
-
-    // testing_img.img = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_height);
-    // testing_img.addr = (int *)mlx_get_data_addr (testing_img.img, &(testing_img.bits_per_pixel), &(testing_img.line_length), &(testing_img.endian));
 }
 
 char **get_map_vector (t_map_list *list, t_global_state *state)
@@ -151,11 +147,8 @@ void init_player_position (t_global_state *state)
 void init_game (t_global_state *state)
 {
     init_player_position (state);
-    // state->player->minimap_x = state->player->initx;
-    // state->player->minimap_y = state->player->inity;
     minimap_position (state);
     load_texture_images (state);
-    /// load texture images
 }
 
 void load_texture_images (t_global_state *state)
@@ -171,18 +164,49 @@ void load_texture_images (t_global_state *state)
 }
 
 
-void init_sprites (t_global_state *state)
+void init_shoot_sprites (t_global_state *state)
 {
-    state->sprites->pistol1.img.img = mlx_xpm_file_to_image (state->vars->mlx, "assets/pistol1.xpm", &state->sprites->pistol1.width, &state->sprites->pistol1.height);
-    state->sprites->pistol1.img.addr = (int *)mlx_get_data_addr (state->sprites->pistol1.img.img, &(state->sprites->pistol1.img.bits_per_pixel), &(state->sprites->pistol1.img.line_length), &(state->sprites->pistol1.img.endian));
-    state->sprites->pistol2.img.img = mlx_xpm_file_to_image (state->vars->mlx, "assets/pistol2.xpm", &state->sprites->pistol2.width, &state->sprites->pistol2.height);
-    state->sprites->pistol2.img.addr = (int *)mlx_get_data_addr (state->sprites->pistol2.img.img, &(state->sprites->pistol2.img.bits_per_pixel), &(state->sprites->pistol2.img.line_length), &(state->sprites->pistol2.img.endian));
-    state->sprites->pistol3.img.img = mlx_xpm_file_to_image (state->vars->mlx, "assets/pistol3.xpm", &state->sprites->pistol3.width, &state->sprites->pistol3.height);
-    state->sprites->pistol3.img.addr = (int *)mlx_get_data_addr (state->sprites->pistol3.img.img, &(state->sprites->pistol3.img.bits_per_pixel), &(state->sprites->pistol3.img.line_length), &(state->sprites->pistol3.img.endian));
-    state->sprites->pistol4.img.img = mlx_xpm_file_to_image (state->vars->mlx, "assets/pistol4.xpm", &state->sprites->pistol4.width, &state->sprites->pistol4.height);
-    state->sprites->pistol4.img.addr = (int *)mlx_get_data_addr (state->sprites->pistol4.img.img, &(state->sprites->pistol4.img.bits_per_pixel), &(state->sprites->pistol4.img.line_length), &(state->sprites->pistol4.img.endian));
-    state->sprites->pistol5.img.img = mlx_xpm_file_to_image (state->vars->mlx, "assets/pistol5.xpm", &state->sprites->pistol5.width, &state->sprites->pistol5.height);
-    state->sprites->pistol5.img.addr = (int *)mlx_get_data_addr (state->sprites->pistol5.img.img, &(state->sprites->pistol5.img.bits_per_pixel), &(state->sprites->pistol5.img.line_length), &(state->sprites->pistol5.img.endian));
-    state->sprites->shotgun1.img.img = mlx_xpm_file_to_image (state->vars->mlx, "assets/shotgun1.xpm", &state->sprites->shotgun1.width, &state->sprites->shotgun1.height);
-    state->sprites->shotgun1.img.addr = (int *)mlx_get_data_addr (state->sprites->shotgun1.img.img, &(state->sprites->shotgun1.img.bits_per_pixel), &(state->sprites->shotgun1.img.line_length), &(state->sprites->shotgun1.img.endian));
+    state->sprites = malloc (sizeof (t_texture) * 15); 
+
+    state->sprites[0].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr1.xpm", &state->sprites[0].width, &state->sprites[0].height);
+    state->sprites[0].img.addr = (int *)mlx_get_data_addr (state->sprites[0].img.img, &state->sprites[0].img.bits_per_pixel, &state->sprites[0].img.line_length, &state->sprites[0].img.endian);
+    state->sprites[1].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr2.xpm", &state->sprites[1].width, &state->sprites[1].height);
+    state->sprites[1].img.addr = (int *)mlx_get_data_addr (state->sprites[1].img.img, &state->sprites[1].img.bits_per_pixel, &state->sprites[1].img.line_length, &state->sprites[1].img.endian);
+    state->sprites[2].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr3.xpm", &state->sprites[2].width, &state->sprites[2].height);
+    state->sprites[2].img.addr = (int *)mlx_get_data_addr (state->sprites[2].img.img, &state->sprites[2].img.bits_per_pixel, &state->sprites[2].img.line_length, &state->sprites[2].img.endian);
+    state->sprites[3].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr4.xpm", &state->sprites[3].width, &state->sprites[3].height);
+    state->sprites[3].img.addr = (int *)mlx_get_data_addr (state->sprites[3].img.img, &state->sprites[3].img.bits_per_pixel, &state->sprites[3].img.line_length, &state->sprites[3].img.endian);
+    state->sprites[4].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr5.xpm", &state->sprites[4].width, &state->sprites[4].height);
+    state->sprites[4].img.addr = (int *)mlx_get_data_addr (state->sprites[4].img.img, &state->sprites[4].img.bits_per_pixel, &state->sprites[4].img.line_length, &state->sprites[4].img.endian);
+    state->sprites[5].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr6.xpm", &state->sprites[5].width, &state->sprites[5].height);
+    state->sprites[5].img.addr = (int *)mlx_get_data_addr (state->sprites[5].img.img, &state->sprites[5].img.bits_per_pixel, &state->sprites[5].img.line_length, &state->sprites[5].img.endian);
+    state->sprites[6].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr7.xpm", &state->sprites[6].width, &state->sprites[6].height);
+    state->sprites[6].img.addr = (int *)mlx_get_data_addr (state->sprites[6].img.img, &state->sprites[6].img.bits_per_pixel, &state->sprites[6].img.line_length, &state->sprites[6].img.endian);
+}
+
+void init_releaod_sprites (t_global_state *state)
+{
+    state->releaod_sprites = malloc (sizeof (t_texture) * 15); 
+
+
+    state->releaod_sprites[0].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr8.xpm", &state->releaod_sprites[0].width, &state->releaod_sprites[0].height);
+    state->releaod_sprites[0].img.addr = (int *)mlx_get_data_addr (state->releaod_sprites[0].img.img, &state->releaod_sprites[0].img.bits_per_pixel, &state->releaod_sprites[0].img.line_length, &state->releaod_sprites[0].img.endian);
+    state->releaod_sprites[1].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr9.xpm", &state->releaod_sprites[1].width, &state->releaod_sprites[1].height);
+    state->releaod_sprites[1].img.addr = (int *)mlx_get_data_addr (state->releaod_sprites[1].img.img, &state->releaod_sprites[1].img.bits_per_pixel, &state->releaod_sprites[1].img.line_length, &state->releaod_sprites[1].img.endian);
+    state->releaod_sprites[2].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr10.xpm", &state->releaod_sprites[2].width, &state->releaod_sprites[2].height);
+    state->releaod_sprites[2].img.addr = (int *)mlx_get_data_addr (state->releaod_sprites[2].img.img, &state->releaod_sprites[2].img.bits_per_pixel, &state->releaod_sprites[2].img.line_length, &state->releaod_sprites[2].img.endian);
+    state->releaod_sprites[3].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr11.xpm", &state->releaod_sprites[3].width, &state->releaod_sprites[3].height);
+    state->releaod_sprites[3].img.addr = (int *)mlx_get_data_addr (state->releaod_sprites[3].img.img, &state->releaod_sprites[3].img.bits_per_pixel, &state->releaod_sprites[3].img.line_length, &state->releaod_sprites[3].img.endian);
+    state->releaod_sprites[4].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr12.xpm", &state->releaod_sprites[4].width, &state->releaod_sprites[4].height);
+    state->releaod_sprites[4].img.addr = (int *)mlx_get_data_addr (state->releaod_sprites[4].img.img, &state->releaod_sprites[4].img.bits_per_pixel, &state->releaod_sprites[4].img.line_length, &state->releaod_sprites[4].img.endian);
+    state->releaod_sprites[5].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr13.xpm", &state->releaod_sprites[5].width, &state->releaod_sprites[5].height);
+    state->releaod_sprites[5].img.addr = (int *)mlx_get_data_addr (state->releaod_sprites[5].img.img, &state->releaod_sprites[5].img.bits_per_pixel, &state->releaod_sprites[5].img.line_length, &state->releaod_sprites[5].img.endian);
+    state->releaod_sprites[6].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr14.xpm", &state->releaod_sprites[6].width, &state->releaod_sprites[6].height);
+    state->releaod_sprites[6].img.addr = (int *)mlx_get_data_addr (state->releaod_sprites[6].img.img, &state->releaod_sprites[6].img.bits_per_pixel, &state->releaod_sprites[6].img.line_length, &state->releaod_sprites[6].img.endian);
+    state->releaod_sprites[7].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr15.xpm", &state->releaod_sprites[7].width, &state->releaod_sprites[7].height);
+    state->releaod_sprites[7].img.addr = (int *)mlx_get_data_addr (state->releaod_sprites[7].img.img, &state->releaod_sprites[7].img.bits_per_pixel, &state->releaod_sprites[7].img.line_length, &state->releaod_sprites[7].img.endian);
+    state->releaod_sprites[8].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr16.xpm", &state->releaod_sprites[8].width, &state->releaod_sprites[8].height);
+    state->releaod_sprites[8].img.addr = (int *)mlx_get_data_addr (state->releaod_sprites[8].img.img, &state->releaod_sprites[8].img.bits_per_pixel, &state->releaod_sprites[8].img.line_length, &state->releaod_sprites[8].img.endian);
+    state->releaod_sprites[9].img.img = mlx_xpm_file_to_image (state->vars->mlx, "frames/fr17.xpm", &state->releaod_sprites[9].width, &state->releaod_sprites[9].height);
+    state->releaod_sprites[9].img.addr = (int *)mlx_get_data_addr (state->releaod_sprites[9].img.img, &state->releaod_sprites[9].img.bits_per_pixel, &state->releaod_sprites[9].img.line_length, &state->releaod_sprites[9].img.endian);
 }

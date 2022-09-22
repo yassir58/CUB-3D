@@ -46,6 +46,7 @@
 # define R_RIGHT    124
 # define R_DOWN     125
 # define SHOOT 15
+# define RELEAOD 17
 
 # define ROWS 14
 # define COLS 37
@@ -169,6 +170,7 @@ typedef struct s_texture
     t_img img;
 } t_texture;
 
+
 typedef struct s_player 
 {
     double initx;
@@ -193,15 +195,7 @@ typedef struct s_vars
     void *mlx_win;
 } t_vars;
 
-typedef struct s_sprites
-{
-    t_texture pistol1;
-    t_texture pistol2;
-    t_texture pistol3;
-    t_texture pistol4;
-    t_texture pistol5;
-    t_texture shotgun1;
-} t_sprites;
+
 
 typedef struct s_global_state
 {
@@ -216,8 +210,17 @@ typedef struct s_global_state
     t_texture west_texture;
     t_texture south_texture;
     t_texture current;
-    t_sprites *sprites;
+    t_texture *sprites;
+    t_texture *releaod_sprites;
     t_texture current_sprite;
+    int trigger;
+    int releaod;
+    int move_left;
+    int move_right;
+    int move_up;
+    int move_down;
+    int rotate_left;
+    int rotate_right;
 } t_global_state;
 
 
@@ -319,12 +322,18 @@ void render_minimap_cel (int x, int y, t_global_state *state, int elm);
 void draw_minimap_row (int player_x, int player_y,int y, t_global_state *state, int indx_x , int indx_y);
 void draw_minimap_wall (int y, t_global_state *state, int indx_x);
 void draw_minirect (int x, int y, int color, t_global_state *state);
+void init_shoot_sprites (t_global_state *state);
 int ray_facing_down(double ray_angle);
 int ray_facing_right(double ray_angle);
 int ray_facing_up(double ray_angle);
 int ray_facing_left(double ray_angle);
-void init_sprites (t_global_state *state);
 void handle_sprite (t_global_state *state);
 void rerender_sprite (t_global_state *state, t_texture sprite);
 int checkCoordinatesWallTest(double x, double y, t_global_state *state, int flag);
+void draw_gun_pointer (int color, t_global_state *state);
+void init_releaod_sprites (t_global_state *state);
+int handle_shoot_sprite (t_global_state *state);
+void play_sound (int flag);
+int handle_events (t_global_state *state);
+int handle_keyup  (int keycode, t_global_state *state);
 #endif 
