@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:18:06 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/22 13:29:31 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/22 15:22:52 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	check_identifier(char *id)
 {
-	if (!ft_strcmp(id, "NO") || !ft_strcmp(id, "SO") || !ft_strcmp(id, "WE") || !ft_strcmp(id, "EA"))
+	if (!ft_strcmp(id, "NO") || !ft_strcmp(id, "SO") || !ft_strcmp(id, "WE") || \
+	!ft_strcmp(id, "EA"))
 		return (1);
 	else if (!ft_strcmp(id, "F") || !ft_strcmp(id, "C"))
 		return (2);
@@ -66,7 +67,7 @@ int	get_color(char *str)
 {
 	char	**rgb;
 	int		color;
-	
+
 	color = 0;
 	rgb = ft_split(str, ',');
 	validate_color_number(rgb);
