@@ -1,6 +1,5 @@
 #include "../../includes/cub3d.h"
 
-
 void	my_mlx_pixel_put(t_global_state *state, int x, int y, int color, t_img *img)
 {
 	t_img *data;
@@ -12,7 +11,6 @@ void	my_mlx_pixel_put(t_global_state *state, int x, int y, int color, t_img *img
 	if ((x >= 0 && x < state->data->window_width) && (y >= 0 && y < state->data->window_height))
 		data->addr[(state->data->window_width * y) + x] = color;
 }
-
 
 void draw_minirect (int x, int y, int color, t_global_state *state)
 {
@@ -27,9 +25,6 @@ void draw_minirect (int x, int y, int color, t_global_state *state)
 	{
 		while (j <= MINIMAP_CEL)
 		{
-			// if (i == 0 || j == 0 || (j == MINIMAP_CEL) || (i == MINIMAP_CEL))
-			// 	clr = 0x008ACB88;
-			// else
 			clr = color;
 			my_mlx_pixel_put (state , (x + j), (y + i), clr, NULL);
 			j++;

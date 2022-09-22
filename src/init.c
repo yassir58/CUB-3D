@@ -1,34 +1,34 @@
 #include "../includes/cub3d.h"
 
 
-t_global_state *init_simulation_data(t_map_list *map)
+t_global_state *init_simulation_data(char **argv)
 {
-    t_global_state *data;
+    t_global_state *state;
 
-    data = (t_global_state *)malloc(sizeof(t_global_state));
-    if (!data)
+    state = (t_global_state *)malloc(sizeof(t_global_state));
+    if (!state)
         return (NULL);
-    data->data = (t_game_data *)malloc(sizeof(t_game_data));
-    data->grid = (t_grid_data *)malloc(sizeof(t_grid_data));
-    data->player = (t_player *)malloc(sizeof(t_player));
-    data->vars = (t_vars *)malloc(sizeof(t_vars));
-    data->cast = (t_intersection_data *)malloc(sizeof(t_intersection_data));
-    if (!data->data || !data->grid || !data->player || !data->vars || !data->cast)
+    state->data = (t_game_data *)malloc(sizeof(t_game_data));
+    state->grid = (t_grid_data *)malloc(sizeof(t_grid_data));
+    state->player = (t_player *)malloc(sizeof(t_player));
+    state->vars = (t_vars *)malloc(sizeof(t_vars));
+    state->cast = (t_intersection_data *)malloc(sizeof(t_intersection_data));
+    if (!state->data || !state->grid || !state->player || !state->vars || !state->cast)
         return (NULL);
-    calculate_grid (map, &(data->grid->col), &(data->grid->row));
-    init_player (data);
-    data->data->map = get_map_vector (map, data);
-    data->data->window_height = (RES_Y);
-    data->data->window_width = (RES_X);
-    data->data->prev_pos_mouse = 0;
-    data->data->tileX = data->data->window_width / data->grid->col;
-    data->data->tileY = data->data->window_height / data->grid->row;
-    data->data->prev_pos_mouse = data->data->window_width / 2;
-    if (data->data->tileX < data->data->tileY)
-        data->data->tileY = data->data->tileX;
+    parse_map(argv[1], state);
+    calculate_grid (state->data->map, &(state->grid->col), &(state->grid->row));
+    init_player (state);
+    state->data->window_height = (RES_Y);
+    state->data->window_width = (RES_X);
+    state->data->prev_pos_mouse = 0;
+    state->data->tileX = state->data->window_width / state->grid->col;
+    state->data->tileY = state->data->window_height / state->grid->row;
+    state->data->prev_pos_mouse = state->data->window_width / 2;
+    if (state->data->tileX < state->data->tileY)
+        state->data->tileY = state->data->tileX;
     else
-        data->data->tileX = data->data->tileY;
-    return (data);
+        state->data->tileX = state->data->tileY;
+    return (state);
 }
 
 void init_window (t_global_state *state)
@@ -60,6 +60,19 @@ char **get_map_vector (t_map_list *list, t_global_state *state)
     return (map_vector);
 }
 
+int get_angle(char direction)
+{
+    if (direction == 'N')
+        return (270);
+    else if (direction == 'S')
+        return (90);
+    else if (direction == 'E')
+        return (360);
+    else if (direction == 'W')
+        return (180);
+    else
+        return (90);
+}
 
 void init_player (t_global_state *state)
 {
@@ -73,7 +86,7 @@ void init_player (t_global_state *state)
     state->player->d_x = 0;
     state->player->d_y = 0;
     state->player->d_length = 50;
-    state->player->v_angle = E;
+    state->player->v_angle = get_angle(state->data->playerDirection);
     state->player->moveSpeed = 4;
 }
 
@@ -89,7 +102,7 @@ void minimap_position (t_global_state *state)
     {
         while (j < state->grid->col)
         {
-            if (state->data->map[i][j] == 'P')
+            if (state->data->map[i][j] == state->data->playerDirection)
             {
                 state->player->minimap_x = x + (MINIMAP_CEL / 2);
                 state->player->minimap_y = y + (MINIMAP_CEL / 2);
@@ -116,7 +129,7 @@ void init_player_position (t_global_state *state)
     {
         while (j < state->grid->col)
         {
-            if (state->data->map[i][j] == 'P')
+            if (state->data->map[i][j] == state->data->playerDirection)
             {
                 state->player->initx = x + (state->data->tileX / 2);
                 state->player->inity = y + (state->data->tileY / 2);
@@ -135,11 +148,8 @@ void init_player_position (t_global_state *state)
 void init_game (t_global_state *state)
 {
     init_player_position (state);
-    // state->player->minimap_x = state->player->initx;
-    // state->player->minimap_y = state->player->inity;
     minimap_position (state);
     load_texture_images (state);
-    /// load texture images
 }
 
 void load_texture_images (t_global_state *state)

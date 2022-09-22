@@ -20,7 +20,6 @@ int position_in_map (int cord, t_global_state *state)
     return (n);
 }
 
-
 void get_player_position (int *row, int *col, t_global_state *state)
 {
     int i;

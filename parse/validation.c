@@ -1,20 +1,5 @@
 #include "../includes/cub3d.h"
 
-int wall_line(char *line)
-{
-    int i;
-
-    i = 0;
-    while (line[i])
-    {
-        if (!strchr(WALL_LINE, line[i]))
-            return (0);
-        i++;
-    }
-    return (1);
-}
-
-
 int validate_map_line(char *line, char *prevline, char *nextline)
 {
     int i;
@@ -79,13 +64,6 @@ char    **validate_map(char **map, int map_size, t_global_state *state)
     int i;
     
     i = 1;
-    //  !Call the validate extension function here.
-    //  ?This function will be reponsible for validating the the map.
-    //  ?Validation:
-    //      ?- The first line of the map cannot be a player so as the last line
-    //      ?- The first character in everyline cannot be the player
-    //      ?- The characters that are above or next to 0 should not be a space and that should take care of the map validation.
-    //      ?- Check that the player only exit once in the map.
     if (validate_map_hor_walls(map, map_size))
     {
         validate_player_occurrence(map, state->data);
@@ -95,8 +73,6 @@ char    **validate_map(char **map, int map_size, t_global_state *state)
             validate_map_line(map[i], map[i - 1], map[i + 1]);
             i += 1;
         }
-        printf("The map is valid\n");
-        printf("The player is looking at: %c\n", state->data->playerDirection);
     }
     else
        app_error(8);

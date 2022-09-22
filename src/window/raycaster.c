@@ -93,18 +93,19 @@ int checkCoordinatesWallTest(double x, double y, t_global_state *state, int flag
     //     printf("%s", data->map[i]);
     //     i++;
     // }
+    (void)flag;
     // while (1);
     // printf("%c\n", data->map[Y][])
     // printf ("|col %d  row %d  X %d  Y %d| \n", state->grid->col, state->grid->row, (int)X, (int)Y);
     printf("Distance to wall: %d\n", state->cast->distanceToWall);
     if (flag == UP)
     {
-        if (state->cast->distanceToWall - state->player->moveSpeed  < 14)
+        if (state->cast->distanceToWall - state->player->moveSpeed  < 2)
             return (1);
     }
     else if (flag == DOWN)
     {
-        if (state->cast->distanceToWall + state->player->moveSpeed < 14)
+        if (state->cast->distanceToWall + state->player->moveSpeed < 2)
             return (1);
     }
     if (!(X > 0 && X < state->grid->col && Y > 0 && Y < state->grid->row))
