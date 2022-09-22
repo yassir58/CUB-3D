@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 
 t_global_state *init_simulation_data(char **argv)
@@ -17,12 +17,13 @@ t_global_state *init_simulation_data(char **argv)
         return (NULL);
     parse_map(argv[1], state);
     calculate_grid (state->data->map, &(state->grid->col), &(state->grid->row));
-    init_player (state);
     state->data->window_height = (RES_Y);
     state->data->window_width = (RES_X);
     state->data->tileX = state->data->window_width / state->grid->col;
     state->data->tileY = state->data->window_height / state->grid->row;
     state->data->prev_pos_mouse = state->data->window_width / 2;
+    state->speed_factor = state->data->window_width /  (state->grid->col * state->grid->row);
+    init_player (state);
     if (state->data->tileX < state->data->tileY)
         state->data->tileY = state->data->tileX;
     else
@@ -86,7 +87,10 @@ void init_player (t_global_state *state)
     state->player->d_y = 0;
     state->player->d_length = 50;
     state->player->v_angle = get_angle(state->data->playerDirection);
-    state->player->moveSpeed = 4;
+    if (state->speed_factor == 0)
+        state->player->moveSpeed = 1;
+    else
+        state->player->moveSpeed = 4;
 }
 
 void minimap_position (t_global_state *state)
@@ -153,16 +157,38 @@ void init_game (t_global_state *state)
 
 void load_texture_images (t_global_state *state)
 {
-    state->north_texture.img.img =  mlx_xpm_file_to_image (state->vars->mlx, "assets/north.xpm", &state->north_texture.width, &state->north_texture.height);
-    state->north_texture.img.addr  = (int *)mlx_get_data_addr (state->north_texture.img.img, &(state->north_texture.img.bits_per_pixel), &(state->north_texture.img.line_length), &(state->north_texture.img.endian));   
-    state->south_texture.img.img =  mlx_xpm_file_to_image (state->vars->mlx, "assets/south.xpm", &state->south_texture.width, &state->south_texture.height);
-    state->south_texture.img.addr  = (int *)mlx_get_data_addr (state->south_texture.img.img, &(state->south_texture.img.bits_per_pixel), &(state->south_texture.img.line_length), &(state->south_texture.img.endian));  
-    state->west_texture.img.img =  mlx_xpm_file_to_image (state->vars->mlx, "assets/west.xpm", &state->west_texture.width, &state->west_texture.height);
-    state->west_texture.img.addr  = (int *)mlx_get_data_addr (state->west_texture.img.img, &(state->west_texture.img.bits_per_pixel), &(state->west_texture.img.line_length), &(state->west_texture.img.endian));  
-    state->east_texture.img.img =  mlx_xpm_file_to_image (state->vars->mlx, "assets/east.xpm", &state->east_texture.width, &state->east_texture.height);
-    state->east_texture.img.addr  = (int *)mlx_get_data_addr (state->east_texture.img.img, &(state->east_texture.img.bits_per_pixel), &(state->east_texture.img.line_length), &(state->east_texture.img.endian));
-}
+    t_game_params *tmp;
 
+    tmp = state->data->params;
+    while (tmp)
+    {
+        if (!ft_strcmp (tmp->key, "NO"))
+        {
+            state->north_texture.img.img =  mlx_xpm_file_to_image (state->vars->mlx, tmp->value, &state->north_texture.width, &state->north_texture.height);
+            state->north_texture.img.addr  = (int *)mlx_get_data_addr (state->north_texture.img.img, &(state->north_texture.img.bits_per_pixel), &(state->north_texture.img.line_length), &(state->north_texture.img.endian));
+        }
+        else if (!ft_strcmp (tmp->key, "SO"))
+        {
+            state->south_texture.img.img =  mlx_xpm_file_to_image (state->vars->mlx, tmp->value, &state->south_texture.width, &state->south_texture.height);
+            state->south_texture.img.addr  = (int *)mlx_get_data_addr (state->south_texture.img.img, &(state->south_texture.img.bits_per_pixel), &(state->south_texture.img.line_length), &(state->south_texture.img.endian));  
+        }
+        else if (!ft_strcmp (tmp->key, "WE"))
+        {
+            state->west_texture.img.img =  mlx_xpm_file_to_image (state->vars->mlx, tmp->value, &state->west_texture.width, &state->west_texture.height);
+            state->west_texture.img.addr  = (int *)mlx_get_data_addr (state->west_texture.img.img, &(state->west_texture.img.bits_per_pixel), &(state->west_texture.img.line_length), &(state->west_texture.img.endian));  
+        }
+        else if (!ft_strcmp (tmp->key, "EA"))
+        {
+            state->east_texture.img.img =  mlx_xpm_file_to_image (state->vars->mlx, tmp->value, &state->east_texture.width, &state->east_texture.height);
+            state->east_texture.img.addr  = (int *)mlx_get_data_addr (state->east_texture.img.img, &(state->east_texture.img.bits_per_pixel), &(state->east_texture.img.line_length), &(state->east_texture.img.endian));
+        }
+        else if (!ft_strcmp (tmp->key, "C"))
+            state->data->ceil = ft_atoi (tmp->value);
+        else if (!ft_strcmp (tmp->key, "F"))
+            state->data->floor = ft_atoi (tmp->value);
+        tmp = tmp->next;
+    }
+}
 
 void init_shoot_sprites (t_global_state *state)
 {

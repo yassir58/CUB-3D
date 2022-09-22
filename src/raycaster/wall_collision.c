@@ -25,9 +25,9 @@ int checkCoordinatesWallTest(double x, double y, t_global_state *state, int flag
     moveSpeed = state->player->moveSpeed;
     X = floor(x / state->data->tileX);
     Y = floor(y / state->data->tileY);
-    if (flag == UP && state->cast->distance_to_wall - moveSpeed  < 14)
+    if (flag == UP && state->cast->distance_to_wall - moveSpeed  < 2)
             return (1);
-    else if (flag == DOWN && state->cast->distance_to_wall + moveSpeed < 14)
+    else if (flag == DOWN && state->cast->distance_to_wall + moveSpeed < 2)
             return (1);
     if (!(X > 0 && X < state->grid->col && Y > 0 && Y < state->grid->row))
         return (1);

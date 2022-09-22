@@ -10,8 +10,6 @@ int main (int argc , char *argv[])
     state = init_simulation_data(argv);
     init_window (state);
     init_game (state);
-    // draw_grid (state);
-    // draw_player (0x00FF0145,state);
     raycaster(state);
     init_shoot_sprites (state);
     init_releaod_sprites (state);

@@ -1,9 +1,13 @@
 
-SRCS= src/test.c src/lib/gnl/get_next_line.c src/window/img_utils.c src/test_utils.c \
-src/window/window_utils.c src/init.c src/window/movement.c src/window/movement_utils.c src/math_utils.c src/mouse.c \
-parse/convert_list.c parse/error.c parse/gnl.c parse/list.c parse/list_helper.c parse/parse.c parse/parse_helper.c parse/utils.c parse/validation.c \
-src/raycaster/angle_utils.c src/raycaster/raycaster.c src/raycaster/wall_collision.c
-OBJS= $(SRCS:.c=.o)
+SRCS= ./src/parse/convert_list.c ./src/parse/error.c ./src/parse/gnl.c\
+./src/parse/list.c ./src/parse/list_helper.c \
+./src/parse/parse.c ./src/parse/parse_helper.c ./src/parse/utils.c ./src/parse/validation.c\
+./src/raycaster/angle_utils.c ./src/raycaster/raycaster.c ./src/raycaster/wall_collision.c\
+./src/utils/draw_utils.c ./src/utils/init.c ./src/utils/utils.c\
+./src/window/events.c ./src/window/img_utils.c ./src/window/movement.c ./src/window/movement_utils.c ./src/window/window_utils.c
+BONUS = $(SRCS) main_bonus.c
+MANDATORY= $(SRCS) ./src/main.c
+OBJS= $(MANDATORY:.c=.o)
 FLAGS= -Wall -Wextra -Werror
 LIB= -lmlx -framework OpenGL -framework AppKit
 # LIB= -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz
@@ -13,20 +17,19 @@ NAME=cub3d
 CC=gcc
 
 %.o: %.c $(HEADER)
-	@$(CC) $(FLAGS) -Imlx -c $< -o $@
+	$(CC) $(FLAGS) -Imlx -c $< -o $@
+
 # @$(CC) $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 $(NAME):$(OBJS)
 	@cd src/lib/libft && make && cd ../../..
-	@$(CC) $(FLAGS) $(OBJS) $(MYLIB) $(LIB) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) $(MYLIB) $(LIB) -o $(NAME)
 
 all:$(NAME)
 
 
 clean: 
-	cd src/lib/libft && make clean && cd ../../..
 	rm $(OBJS)
 
 fclean: clean 
-	cd src/lib/libft && make fclean && cd ../../..
 	rm $(NAME)

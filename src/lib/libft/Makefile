@@ -10,7 +10,6 @@
 #                                                                              #
 # **************************************************************************** #
 
-
 NAME=libft.a
 CC=gcc
 CFLAGS= -Wall -Wextra -Werror
@@ -32,7 +31,7 @@ HEADER = libft.h
 $(NAME): $(OBJ) $(HEADER) 
 		ar -rc $(NAME) $(OBJ)
 %.o: %.c
-		$(CC) $(CFLAGS) -c $<
+		@$(CC) $(CFLAGS) -c $<
 all: $(NAME)
 
 bonus: $(BONUS_OBJ) $(HEADER)

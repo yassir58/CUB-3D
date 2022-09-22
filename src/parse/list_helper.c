@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 t_game_params	*new_params(char *key, char *value)
 {

@@ -180,8 +180,8 @@ void    raycaster(t_global_state *state)
     ray_distance = 0;
     ray_angle = deg_to_radian(state->player->v_angle) - (FOV_ANGLE / 2.0);
     state->cast->pp_distance = (RES_X_2)  / (tan(FOV_ANGLE / 2.0));
-    color(state, 0x0016213E, RES_Y_2);
-    color(state, 0x00C3F8FF, 0);
+    color(state, state->data->floor, RES_Y_2);
+    color(state, state->data->ceil, 0);
     while (column_id < RES_X)
     {
         ray_distance =  cast_ray(get_correct_angle(ray_angle), state->cast, state);

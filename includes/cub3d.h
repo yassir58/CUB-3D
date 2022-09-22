@@ -115,7 +115,7 @@ typedef struct s_game_data
 
 typedef struct	s_img {
 	void	*img;
-	int	*addr;
+	int	    *addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
@@ -221,6 +221,7 @@ typedef struct s_global_state
     int move_down;
     int rotate_left;
     int rotate_right;
+    int speed_factor;
 } t_global_state;
 
 
@@ -336,4 +337,6 @@ int handle_shoot_sprite (t_global_state *state);
 void play_sound (int flag);
 int handle_events (t_global_state *state);
 int handle_keyup  (int keycode, t_global_state *state);
+void init_hooks (t_global_state *state);
+
 #endif 

@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/cub3d.h"
 
 int validate_map_line(char *line, char *prevline, char *nextline)
 {
