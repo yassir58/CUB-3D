@@ -32,6 +32,18 @@ int number_of_el(char **table)
     return (i);
 }
 
+void    print_map(char **map)
+{
+    int i;
+
+    i = 0;
+    while (i < number_of_el(map))
+    {
+        printf("%s\n", map[i]);
+        i++;
+    }
+}
+
 int count_seperator(char *str, char c)
 {
     int count;

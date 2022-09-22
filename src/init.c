@@ -12,7 +12,7 @@ t_global_state *init_simulation_data(char **argv)
     state->grid = (t_grid_data *)malloc(sizeof(t_grid_data));
     state->player = (t_player *)malloc(sizeof(t_player));
     state->vars = (t_vars *)malloc(sizeof(t_vars));
-    state->cast = (t_intersection_data *)malloc(sizeof(t_intersection_data));
+    state->cast = (t_raycast *)malloc(sizeof(t_raycast));
     if (!state->data || !state->grid || !state->player || !state->vars || !state->cast)
         return (NULL);
     parse_map(argv[1], state);
@@ -20,7 +20,6 @@ t_global_state *init_simulation_data(char **argv)
     init_player (state);
     state->data->window_height = (RES_Y);
     state->data->window_width = (RES_X);
-    state->data->prev_pos_mouse = 0;
     state->data->tileX = state->data->window_width / state->grid->col;
     state->data->tileY = state->data->window_height / state->grid->row;
     state->data->prev_pos_mouse = state->data->window_width / 2;
