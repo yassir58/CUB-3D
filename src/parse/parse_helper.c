@@ -1,53 +1,65 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_helper.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/22 13:17:55 by ochoumou          #+#    #+#             */
+/*   Updated: 2022/09/22 13:23:44 by ochoumou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
-int wall_line(char *line)
+int	wall_line(char *line)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (line[i])
-    {
-        if (!strchr(WALL_LINE, line[i]))
-            return (0);
-        i++;
-    }
-    return (1);
+	i = 0;
+	while (line[i])
+	{
+		if (!strchr(WALL_LINE, line[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
-char **get_key_value(char *str)
+char	**get_key_value(char *str)
 {
-    char **keys;
-    int i;
-    int j;
-	int saved;
+	char	**keys;
+	int		i;
+	int		j;
+	int		saved;
 
-    i = 0;
-    j = 0;
-    keys = (char **)malloc(sizeof(char *) * 3);
-    if (!keys)
-        return (NULL);
-    while (str[i] && str[i] == ' ')
-        i++;
+	i = 0;
+	j = 0;
+	keys = (char **)malloc(sizeof(char *) * 3);
+	if (!keys)
+		return (NULL);
+	while (str[i] && str[i] == ' ')
+		i++;
 	saved = i;
-    while (str[i] && str[i] != ' ')
+	while (str[i] && str[i] != ' ')
 	{
-		i++;	
+		i++;
 		j++;
 	}
-    keys[0] = ft_substr(str, saved, j);
+	keys[0] = ft_substr(str, saved, j);
 	i += j;
 	while (str[i] && str[i] == ' ')
 		i++;
-    keys[1] = ft_strdup(str + i - 1);
+	keys[1] = ft_strdup(str + i - 1);
 	keys[2] = NULL;
-    return (keys);
+	return (keys);
 }
 
-char *strip_whitespaces(char *str)
+char	*strip_whitespaces(char *str)
 {
-	int start;
-	int end;
-	char *clean;
+	int		start;
+	int		end;
+	char	*clean;
 
 	start = 0;
 	end = ft_strlen(str) - 1;

@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   list.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/22 13:17:44 by ochoumou          #+#    #+#             */
+/*   Updated: 2022/09/22 13:23:04 by ochoumou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/cub3d.h"
 
-t_game_params   *last_param(t_game_params *lst)
+t_game_params	*last_param(t_game_params *lst)
 {
 	if (!lst)
 		return (NULL);
@@ -11,8 +23,8 @@ t_game_params   *last_param(t_game_params *lst)
 
 int	game_param_size(t_game_params *lst)
 {
-	int i;
-	t_game_params *tmp;
+	int				i;
+	t_game_params	*tmp;
 
 	i = 0;
 	tmp = lst;
@@ -59,26 +71,26 @@ void	add_line(t_map_line **lst, t_map_line *new)
 	last_node->next = new;
 }
 
-void    print_params_list(t_game_params *list)
+void	print_params_list(t_game_params *list)
 {
-    t_game_params *tmp;
+	t_game_params	*tmp;
 
-    tmp = list;
-    while (tmp != NULL)
-    {
-        printf("Key:|%s| Value:|%s|\n", tmp->key ,tmp->value);
-        tmp = tmp->next;
-    }
+	tmp = list;
+	while (tmp != NULL)
+	{
+		printf("Key:|%s| Value:|%s|\n", tmp->key, tmp->value);
+		tmp = tmp->next;
+	}
 }
 
-void    print_lines_list(t_map_line *list)
+void	print_lines_list(t_map_line *list)
 {
-    t_map_line *tmp;
+	t_map_line	*tmp;
 
-    tmp = list;
-    while (tmp != NULL)
-    {
-        printf("%s\n", tmp->line);
-        tmp = tmp->next;
-    }
+	tmp = list;
+	while (tmp != NULL)
+	{
+		printf("%s\n", tmp->line);
+		tmp = tmp->next;
+	}
 }

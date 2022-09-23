@@ -34,7 +34,7 @@ t_global_state *init_simulation_data(char **argv)
 void init_window (t_global_state *state)
 {
     state->vars->mlx = mlx_init ();
-    state->vars->mlx_win = mlx_new_window (state->vars->mlx, state->data->window_width, state->data->window_height, "CUB3D");
+    state->vars->mlx_win = mlx_new_window (state->vars->mlx, state->data->window_width, state->data->window_height, "Insurgency: Sandstorm");
     state->img.img = mlx_new_image (state->vars->mlx, state->data->window_width, state->data->window_height);
     state->img.addr = (int *)mlx_get_data_addr (state->img.img, &(state->img.bits_per_pixel), &(state->img.line_length), &(state->img.endian));
 }
