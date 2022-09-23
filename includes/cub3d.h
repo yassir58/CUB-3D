@@ -338,5 +338,8 @@ void play_sound (int flag);
 int handle_events (t_global_state *state);
 int handle_keyup  (int keycode, t_global_state *state);
 void init_hooks (t_global_state *state);
+void move_player_2 (int flag, t_global_state *state);
+int handle_events_2  (t_global_state *state);
+void rerender_map_sprites (t_global_state *state);
 
 #endif 

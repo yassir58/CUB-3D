@@ -52,7 +52,7 @@ int handle_keyup  (int keycode, t_global_state *state)
 int handle_events (t_global_state *state)
 {
      if (state->move_up)
-        move_player (UP, state);
+        move_player(UP, state);
     if (state->move_down)
         move_player (DOWN, state);
     if (state->move_left)
@@ -63,7 +63,6 @@ int handle_events (t_global_state *state)
         move_player (L, state);
     if (state->rotate_right)
         move_player(R, state);
-    handle_shoot_sprite (state);
     return (0);   
 }
 

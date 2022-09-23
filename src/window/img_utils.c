@@ -75,3 +75,21 @@ void draw_column (int x, int y, t_global_state *state, double colHeight)
 		start++;
 	}
 }
+
+int handle_events_2  (t_global_state *state)
+{
+     if (state->move_up)
+        move_player_2 (UP, state);
+    if (state->move_down)
+        move_player_2  (DOWN, state);
+    if (state->move_left)
+        move_player_2 (LEFT, state);
+    if (state->move_right)
+        move_player_2 (RIGHT, state);
+    if (state->rotate_left)
+        move_player_2  (L, state);
+    if (state->rotate_right)
+        move_player_2 (R, state);
+    handle_shoot_sprite (state);
+    return (0);   
+}

@@ -15,7 +15,7 @@ int handle_shoot_sprite (t_global_state *state)
     if (state->trigger)
     {
         state->current_sprite = state->sprites[i++];
-        rerender_map (state);
+        rerender_map_sprites (state);
         if (i == 5)
         {
             state->trigger = 0;
@@ -25,13 +25,13 @@ int handle_shoot_sprite (t_global_state *state)
     else if (state->releaod)
     {
         state->current_sprite = state->releaod_sprites[j++];
-        rerender_map (state);
+        rerender_map_sprites (state);
         if (j == 10)
         {
             state->releaod = 0;
             j = 0;
             state->current_sprite = state->sprites[0];
-            rerender_map (state);
+            rerender_map_sprites (state);
         }
     }
     return (0);
