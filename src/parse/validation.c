@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validation.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:18:24 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/22 15:19:07 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/23 16:27:25 by yelatman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	validate_player_occurrence(char **map, t_game_data *data)
 		{
 			if (ft_strchr(PLAYER_CHARS, map[i][j]) && !player)
 			{
-				data->playerDirection = map[i][j];
+				data->player_direction = map[i][j];
 				player = true;
 			}
 			else if (ft_strchr(PLAYER_CHARS, map[i][j]) && player)

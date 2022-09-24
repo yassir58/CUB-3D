@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wall_collision.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:16:28 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/22 15:30:10 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/23 18:23:34 by yelatman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int checkCoordinatesWall(double x, double y, t_global_state *state)
     double X;
     double Y;
 
-    X = floor(x / state->data->tileX);
-    Y = floor(y / state->data->tileY);
+    X = floor(x / state->data->tile_x);
+    Y = floor(y / state->data->tile_y);
     if (!(X < state->grid->col && Y < state->grid->row))
         return (1);
     if (state->data->map[(int)Y][(int)X] == '1')
@@ -30,14 +30,14 @@ int checkCoordinatesWallTest(double x, double y, t_global_state *state, int flag
 {
     double X;
     double Y;
-    int moveSpeed;
+    int move_speed;
 
-    moveSpeed = state->player->moveSpeed;
-    X = floor(x / state->data->tileX);
-    Y = floor(y / state->data->tileY);
-    if (flag == UP && state->cast->distance_to_wall - moveSpeed  < 2)
+    move_speed = state->player->move_speed;
+    X = floor(x / state->data->tile_x);
+    Y = floor(y / state->data->tile_y);
+    if (flag == UP && state->cast->distance_to_wall - move_speed  < 2)
             return (1);
-    else if (flag == DOWN && state->cast->distance_to_wall + moveSpeed < 2)
+    else if (flag == DOWN && state->cast->distance_to_wall + move_speed < 2)
             return (1);
     if (!(X > 0 && X < state->grid->col && Y > 0 && Y < state->grid->row))
         return (1);
