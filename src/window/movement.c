@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   movement.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:16:54 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/23 18:29:20 by yelatman         ###   ########.fr       */
+/*   Updated: 2022/09/24 20:18:22 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void    correctPlayerAngle(t_global_state *state)
+void    corrent_player_angle(t_global_state *state)
 {
 	if (state->player->v_angle < 0)
 		state->player->v_angle += 360;
@@ -35,9 +35,9 @@ void move_player (int flag, t_global_state *state)
 		moveDirection = -1;
 	else if (flag == RIGHT)
 	{
-		newPlayerX = state->player->initx - state->player->move_speed * sin(deg_to_radian(state->player->v_angle));
-		newPlayerY = state->player->inity + state->player->move_speed * cos(deg_to_radian(state->player->v_angle));
-		if (!checkCoordinatesWallTest(newPlayerX, newPlayerY, state, flag))
+		newPlayerX = state->player->initx - state->player->move_speed * sin(deg_to_rad(state->player->v_angle));
+		newPlayerY = state->player->inity + state->player->move_speed * cos(deg_to_rad(state->player->v_angle));
+		if (!check_wall_move(newPlayerX, newPlayerY, state, flag))
 		{
 			state->player->initx = newPlayerX;
 			state->player->inity = newPlayerY;
@@ -46,9 +46,9 @@ void move_player (int flag, t_global_state *state)
 	}
 	else if (flag == LEFT)
 	{
-		newPlayerX = state->player->initx + state->player->move_speed * sin(deg_to_radian(state->player->v_angle));
-		newPlayerY = state->player->inity - state->player->move_speed * cos(deg_to_radian(state->player->v_angle));
-		if (!checkCoordinatesWallTest(newPlayerX, newPlayerY, state, flag))
+		newPlayerX = state->player->initx + state->player->move_speed * sin(deg_to_rad(state->player->v_angle));
+		newPlayerY = state->player->inity - state->player->move_speed * cos(deg_to_rad(state->player->v_angle));
+		if (!check_wall_move(newPlayerX, newPlayerY, state, flag))
 		{
 			state->player->initx = newPlayerX;
 			state->player->inity = newPlayerY;
@@ -60,10 +60,10 @@ void move_player (int flag, t_global_state *state)
 	else if (flag == R)
 		rotationDirection = 1;
 	state->player->v_angle += rotationDirection * ROTATION_SPEED;
-	correctPlayerAngle(state);
-	newPlayerX = state->player->initx + (moveDirection * state->player->move_speed) * cos(deg_to_radian(state->player->v_angle));
-	newPlayerY = state->player->inity + (moveDirection * state->player->move_speed) * sin(deg_to_radian(state->player->v_angle));
-	if (!checkCoordinatesWallTest(newPlayerX, newPlayerY, state, flag))
+	corrent_player_angle(state);
+	newPlayerX = state->player->initx + (moveDirection * state->player->move_speed) * cos(deg_to_rad(state->player->v_angle));
+	newPlayerY = state->player->inity + (moveDirection * state->player->move_speed) * sin(deg_to_rad(state->player->v_angle));
+	if (!check_wall_move(newPlayerX, newPlayerY, state, flag))
 	{
 		state->player->initx = newPlayerX;
 		state->player->inity = newPlayerY;
@@ -106,9 +106,9 @@ void move_player_2 (int flag, t_global_state *state)
 		moveDirection = -1;
 	else if (flag == RIGHT)
 	{
-		newPlayerX = state->player->initx - state->player->move_speed * sin(deg_to_radian(state->player->v_angle));
-		newPlayerY = state->player->inity + state->player->move_speed * cos(deg_to_radian(state->player->v_angle));
-		if (!checkCoordinatesWallTest(newPlayerX, newPlayerY, state, flag))
+		newPlayerX = state->player->initx - state->player->move_speed * sin(deg_to_rad(state->player->v_angle));
+		newPlayerY = state->player->inity + state->player->move_speed * cos(deg_to_rad(state->player->v_angle));
+		if (!check_wall_move(newPlayerX, newPlayerY, state, flag))
 		{
 			state->player->initx = newPlayerX;
 			state->player->inity = newPlayerY;
@@ -117,9 +117,9 @@ void move_player_2 (int flag, t_global_state *state)
 	}
 	else if (flag == LEFT)
 	{
-		newPlayerX = state->player->initx + state->player->move_speed * sin(deg_to_radian(state->player->v_angle));
-		newPlayerY = state->player->inity - state->player->move_speed * cos(deg_to_radian(state->player->v_angle));
-		if (!checkCoordinatesWallTest(newPlayerX, newPlayerY, state, flag))
+		newPlayerX = state->player->initx + state->player->move_speed * sin(deg_to_rad(state->player->v_angle));
+		newPlayerY = state->player->inity - state->player->move_speed * cos(deg_to_rad(state->player->v_angle));
+		if (!check_wall_move(newPlayerX, newPlayerY, state, flag))
 		{
 			state->player->initx = newPlayerX;
 			state->player->inity = newPlayerY;
@@ -131,10 +131,10 @@ void move_player_2 (int flag, t_global_state *state)
 	else if (flag == R)
 		rotationDirection = 1;
 	state->player->v_angle += rotationDirection * ROTATION_SPEED;
-	correctPlayerAngle(state);
-	newPlayerX = state->player->initx + (moveDirection * state->player->move_speed) * cos(deg_to_radian(state->player->v_angle));
-	newPlayerY = state->player->inity + (moveDirection * state->player->move_speed) * sin(deg_to_radian(state->player->v_angle));
-	if (!checkCoordinatesWallTest(newPlayerX, newPlayerY, state, flag))
+	corrent_player_angle(state);
+	newPlayerX = state->player->initx + (moveDirection * state->player->move_speed) * cos(deg_to_rad(state->player->v_angle));
+	newPlayerY = state->player->inity + (moveDirection * state->player->move_speed) * sin(deg_to_rad(state->player->v_angle));
+	if (!check_wall_move(newPlayerX, newPlayerY, state, flag))
 	{
 		state->player->initx = newPlayerX;
 		state->player->inity = newPlayerY;

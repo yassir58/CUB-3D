@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 13:01:45 by yelatman          #+#    #+#             */
-/*   Updated: 2022/09/23 22:17:50 by yelatman         ###   ########.fr       */
+/*   Updated: 2022/09/24 20:11:07 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	init_player(t_global_state *state)
 	state->player->d_y = 0;
 	state->player->d_length = 50;
 	state->player->v_angle = get_angle(state->data->player_direction);
-	state->player->fov_angle = (FOV * (M_PI / 180));
+	state->player->fov = (FOV * (M_PI / 180));
 	state->player->rot_angle = (M_PI / 2);
 	if (state->flags->speed_factor == 0)
 		state->player->move_speed = 1;

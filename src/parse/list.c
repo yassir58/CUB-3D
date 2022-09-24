@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:17:44 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/22 13:23:04 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/24 20:17:30 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,28 +69,4 @@ void	add_line(t_map_line **lst, t_map_line *new)
 	}
 	last_node = last_line(*lst);
 	last_node->next = new;
-}
-
-void	print_params_list(t_game_params *list)
-{
-	t_game_params	*tmp;
-
-	tmp = list;
-	while (tmp != NULL)
-	{
-		printf("Key:|%s| Value:|%s|\n", tmp->key, tmp->value);
-		tmp = tmp->next;
-	}
-}
-
-void	print_lines_list(t_map_line *list)
-{
-	t_map_line	*tmp;
-
-	tmp = list;
-	while (tmp != NULL)
-	{
-		printf("%s\n", tmp->line);
-		tmp = tmp->next;
-	}
 }

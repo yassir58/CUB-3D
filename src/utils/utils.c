@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 13:01:41 by yelatman          #+#    #+#             */
-/*   Updated: 2022/09/23 14:44:08 by yelatman         ###   ########.fr       */
+/*   Updated: 2022/09/24 20:12:07 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-double	deg_to_radian(int deg)
+double	deg_to_rad(int deg)
 {
 	return (deg * (M_PI / 180));
 }

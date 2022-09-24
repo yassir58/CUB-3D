@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:18:06 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/22 15:22:52 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/24 20:16:48 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,11 @@ int	get_color(char *str)
 	validate_color_number(rgb);
 	if (count_seperator(str, ',') == 2)
 	{
-		if (ft_atoi(rgb[0]) <= 255 && ft_atoi(rgb[1]) <= 255 && ft_atoi(rgb[2]) <= 255)
+		if (ft_atoi(rgb[0]) <= 255 && ft_atoi(rgb[1]) <= 255 \
+		&& ft_atoi(rgb[2]) <= 255)
 		{
-			color = 65536 * ft_atoi(rgb[0]) + 256 * ft_atoi(rgb[1]) + ft_atoi(rgb[2]);
+			color = 65536 * ft_atoi(rgb[0]) + 256 * ft_atoi(rgb[1]) \
+			+ ft_atoi(rgb[2]);
 			free_table(rgb);
 			return (color);
 		}

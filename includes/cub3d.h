@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:25:20 by yelatman          #+#    #+#             */
-/*   Updated: 2022/09/24 15:53:23 by yelatman         ###   ########.fr       */
+/*   Updated: 2022/09/24 20:14:22 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,8 @@ typedef struct s_intersection_data {
 	double	wall_horz_hit_y;
 	double	wall_vert_hit_x;
 	double	wall_vert_hit_y;
-	double	next_horz_touch_x;
-	double	next_horz_touch_y;
+	double	next_h_touch_x;
+	double	next_h_touch_y;
 	double	next_vert_touchx;
 	double	next_vert_touchy;
 	double	distance_horizontal;
@@ -186,7 +186,7 @@ typedef struct s_player
 	int		d_length;
 	int		v_angle;
 	int		move_speed;
-	double	fov_angle;
+	double	fov;
 	double	rot_angle;
 }	t_player;
 
@@ -255,7 +255,7 @@ void			draw_player(int color, t_global_state *state);
 int				handle_keypress(int keycode, t_global_state *state);
 void			get_rotation_cords(int *x_2, int *y_2, double angle,
 					t_global_state *state);
-double			deg_to_radian(int deg);
+double			deg_to_rad(int deg);
 int				radian_to_deg(double rad);
 void			rerender_map(t_global_state *state);
 void			rotate_player(int direction, t_global_state *state);
@@ -302,10 +302,12 @@ void			raycaster(t_global_state *state);
 double			castRay(double ray_angle, t_raycast *data,
 					t_global_state *state);
 double			getCorrectAgnle(double angle);
-double			calculateDistance(double x, double y, double x1, double y1);
-int				checkCoordinatesWall(double x, double y, t_global_state *state);
+double			calculate_distance(double x, double y, double x1, double y1);
+int				check_wall(double x, double y, t_global_state *state);
+int				check_wall_move(double x, double y, t_global_state *state, \
+int flag);
 int				get_angle_direction(double ray_angle);
-double			get_correct_angle(double angle);
+double			correct_angle(double angle);
 void			draw_column(int x, int y, t_global_state *state,
 					double colHeight);
 int				mouse_handle(int x, int y, void *param);
@@ -331,8 +333,6 @@ int				ray_facing_up(double ray_angle);
 int				ray_facing_left(double ray_angle);
 void			handle_sprite(t_global_state *state);
 void			rerender_sprite(t_global_state *state, t_texture sprite);
-int				checkCoordinatesWallTest(double x, double y,
-					t_global_state *state, int flag);
 void			draw_gun_pointer(int color, t_global_state *state);
 void			init_releaod_sprites(t_global_state *state);
 int				handle_shoot_sprite(t_global_state *state);
@@ -350,4 +350,9 @@ void			set_colors(t_global_state *state);
 void			init_player_attributes(t_global_state *state);
 int				mouse_handle_2(int x, int y, void *param);
 void			init_hooks(t_global_state *state, int flag);
+void			vintercept(double ray_angle, t_raycast *data, \
+t_global_state *state);
+void			hintercept(double ray_angle, t_raycast *data, \
+t_global_state *state);
+void			calculate_ray_distance(t_global_state *state, t_raycast *data);
 #endif 
