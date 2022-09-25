@@ -6,138 +6,100 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:16:54 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/24 20:18:22 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/25 12:57:53 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-void    corrent_player_angle(t_global_state *state)
+void	move_left(int flag, int render, t_global_state *state)
 {
-	if (state->player->v_angle < 0)
-		state->player->v_angle += 360;
-	else if (state->player->v_angle > 360)
-		state->player->v_angle = state->player->v_angle % 360;
+	double	new_player_x;
+	double	new_player_y;
+
+	new_player_x = state->player->initx + state->player->move_speed \
+	* sin(deg_to_rad(state->player->v_angle));
+	new_player_y = state->player->inity - state->player->move_speed \
+	* cos(deg_to_rad(state->player->v_angle));
+	if (!check_wall_move(new_player_x, new_player_y, state, flag))
+	{
+		state->player->initx = new_player_x;
+		state->player->inity = new_player_y;
+	}
+	if (render)
+		return (rerender_map_sprites(state));
+	return (rerender_map(state));
 }
 
-void move_player (int flag, t_global_state *state)
+void	move_right(int flag, int render, t_global_state *state)
 {
-	double newPlayerX;
-	double newPlayerY;
-	int moveDirection;
-	int rotationDirection;
+	double	new_player_x;
+	double	new_player_y;
 
-	rotationDirection = 0;
-	moveDirection = 0;
-	if (flag == UP)
-		moveDirection = 1;
-	else if (flag == DOWN)
-		moveDirection = -1;
-	else if (flag == RIGHT)
+	new_player_x = state->player->initx - state->player->move_speed \
+	* sin(deg_to_rad(state->player->v_angle));
+	new_player_y = state->player->inity + state->player->move_speed \
+	* cos(deg_to_rad(state->player->v_angle));
+	if (!check_wall_move(new_player_x, new_player_y, state, flag))
 	{
-		newPlayerX = state->player->initx - state->player->move_speed * sin(deg_to_rad(state->player->v_angle));
-		newPlayerY = state->player->inity + state->player->move_speed * cos(deg_to_rad(state->player->v_angle));
-		if (!check_wall_move(newPlayerX, newPlayerY, state, flag))
-		{
-			state->player->initx = newPlayerX;
-			state->player->inity = newPlayerY;
-		}
-		return (rerender_map(state));
+		state->player->initx = new_player_x;
+		state->player->inity = new_player_y;
 	}
-	else if (flag == LEFT)
-	{
-		newPlayerX = state->player->initx + state->player->move_speed * sin(deg_to_rad(state->player->v_angle));
-		newPlayerY = state->player->inity - state->player->move_speed * cos(deg_to_rad(state->player->v_angle));
-		if (!check_wall_move(newPlayerX, newPlayerY, state, flag))
-		{
-			state->player->initx = newPlayerX;
-			state->player->inity = newPlayerY;
-		}
-		return (rerender_map(state));
-	}
-	else if (flag == L)
-		rotationDirection = -1;
+	if (render)
+		return (rerender_map_sprites(state));
+	return (rerender_map(state));
+}
+
+void	rotate_player(int flag, int render, t_global_state *state)
+{
+	int	rotation_direction;
+
+	rotation_direction = 0;
+	if (flag == L)
+		rotation_direction = -1;
 	else if (flag == R)
-		rotationDirection = 1;
-	state->player->v_angle += rotationDirection * ROTATION_SPEED;
-	corrent_player_angle(state);
-	newPlayerX = state->player->initx + (moveDirection * state->player->move_speed) * cos(deg_to_rad(state->player->v_angle));
-	newPlayerY = state->player->inity + (moveDirection * state->player->move_speed) * sin(deg_to_rad(state->player->v_angle));
-	if (!check_wall_move(newPlayerX, newPlayerY, state, flag))
+		rotation_direction = 1;
+	state->player->v_angle += rotation_direction * ROTATION_SPEED;
+	correct_player_angle(state);
+	if (render)
+		return (rerender_map_sprites(state));
+	return (rerender_map(state));
+}
+
+void	move_player(int flag, t_global_state *state)
+{
+	int		move_direction;
+	double	new_player_x;
+	double	new_player_y;
+
+	move_direction = 0;
+	if (flag == UP)
+		move_direction = 1;
+	else if (flag == DOWN)
+		move_direction = -1;
+	else if (flag == RIGHT)
+		move_right(flag, 0, state);
+	else if (flag == LEFT)
+		move_left(flag, 0, state);
+	rotate_player(flag, 0, state);
+	new_player_x = state->player->initx + (move_direction * \
+	state->player->move_speed) \
+	* cos(deg_to_rad(state->player->v_angle));
+	new_player_y = state->player->inity + (move_direction * \
+	state->player->move_speed) * sin(deg_to_rad(state->player->v_angle));
+	if (!check_wall_move(new_player_x, new_player_y, state, flag))
 	{
-		state->player->initx = newPlayerX;
-		state->player->inity = newPlayerY;
+		state->player->initx = new_player_x;
+		state->player->inity = new_player_y;
 	}
 	rerender_map (state);
 }
 
-
-void rerender_map (t_global_state *state)
+void	rerender_map(t_global_state *state)
 {
 	mlx_clear_window (state->vars->mlx, state->vars->mlx_win);
 	raycaster (state);
 	draw_gun_pointer (0xFF0000, state);
-	mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, state->img.img, 0,0);
-}
-
-
-void rerender_map_sprites (t_global_state *state)
-{
-	mlx_clear_window (state->vars->mlx, state->vars->mlx_win);
-	raycaster (state);
-	draw_gun_pointer (0xFF0000, state);
-	mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, state->img.img, 0,0);
-	mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, state->current_sprite.img.img, (state->data->window_width) - state->current_sprite.width, state->data->window_height -  state->current_sprite.height);
-}
-
-
-void move_player_2 (int flag, t_global_state *state)
-{
-	double newPlayerX;
-	double newPlayerY;
-	int moveDirection;
-	int rotationDirection;
-
-	rotationDirection = 0;
-	moveDirection = 0;
-	if (flag == UP)
-		moveDirection = 1;
-	else if (flag == DOWN)
-		moveDirection = -1;
-	else if (flag == RIGHT)
-	{
-		newPlayerX = state->player->initx - state->player->move_speed * sin(deg_to_rad(state->player->v_angle));
-		newPlayerY = state->player->inity + state->player->move_speed * cos(deg_to_rad(state->player->v_angle));
-		if (!check_wall_move(newPlayerX, newPlayerY, state, flag))
-		{
-			state->player->initx = newPlayerX;
-			state->player->inity = newPlayerY;
-		}
-		return (rerender_map_sprites(state));
-	}
-	else if (flag == LEFT)
-	{
-		newPlayerX = state->player->initx + state->player->move_speed * sin(deg_to_rad(state->player->v_angle));
-		newPlayerY = state->player->inity - state->player->move_speed * cos(deg_to_rad(state->player->v_angle));
-		if (!check_wall_move(newPlayerX, newPlayerY, state, flag))
-		{
-			state->player->initx = newPlayerX;
-			state->player->inity = newPlayerY;
-		}
-		return (rerender_map_sprites(state));
-	}
-	else if (flag == L)
-		rotationDirection = -1;
-	else if (flag == R)
-		rotationDirection = 1;
-	state->player->v_angle += rotationDirection * ROTATION_SPEED;
-	corrent_player_angle(state);
-	newPlayerX = state->player->initx + (moveDirection * state->player->move_speed) * cos(deg_to_rad(state->player->v_angle));
-	newPlayerY = state->player->inity + (moveDirection * state->player->move_speed) * sin(deg_to_rad(state->player->v_angle));
-	if (!check_wall_move(newPlayerX, newPlayerY, state, flag))
-	{
-		state->player->initx = newPlayerX;
-		state->player->inity = newPlayerY;
-	}
-	rerender_map_sprites (state);
+	mlx_put_image_to_window (state->vars->mlx, state->vars->mlx_win, \
+	state->img.img, 0, 0);
 }

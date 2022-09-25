@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:25:20 by yelatman          #+#    #+#             */
-/*   Updated: 2022/09/24 20:14:22 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/25 13:00:56 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@
 # include <limits.h>
 # include <stdbool.h>
 # include "../src/lib/libft/libft.h"
-# include "../src/lib/gnl/get_next_line.h"
 # include <mlx.h>
 
 # define FOV 60
@@ -258,7 +257,8 @@ void			get_rotation_cords(int *x_2, int *y_2, double angle,
 double			deg_to_rad(int deg);
 int				radian_to_deg(double rad);
 void			rerender_map(t_global_state *state);
-void			rotate_player(int direction, t_global_state *state);
+void			rotate_player(int flag, int render, t_global_state *state);
+void			correct_player_angle(t_global_state *state);
 void			init_image(t_global_state *state);
 unsigned int	get_pixel_color(int x, int y, t_img *img);
 t_game_params	*new_params(char *key, char *value);
@@ -292,6 +292,10 @@ int				wall_line(char *line);
 void			app_error(int code);
 void			print_map(char **map);
 
+// Movement
+
+void			move_left(int flag, int render, t_global_state *state);
+void			move_right(int flag, int render, t_global_state *state);
 // Ray casting related functions
 void			color(t_global_state *state, int color, int start);
 void			horz_ray(double ray_angle, t_raycast *data,
