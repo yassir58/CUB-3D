@@ -6,30 +6,30 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 20:09:03 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/24 20:15:44 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/25 13:51:10 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-double	calculate_distance(double x, double y, double x1, double y1)
+double	calculate_distance(double xp, double xa, double angle)
 {
 	double	distance;
 
-	distance = sqrt(((x1 - x) * (x1 - x)) + ((y1 - y) * (y1 - y)));
+	distance = fabs((xp - xa) / cos(angle));
 	return (distance);
 }
 
-void	calculate_ray_distance(t_global_state *state, t_raycast *data)
+void	calculate_ray_distance(t_global_state *s, t_raycast *data, double ang)
 {
 	if (data->wall_horz_intesected)
-		data->horizontal_distance = calculate_distance(state->player->initx, \
-		state->player->inity, data->wall_horz_hit_x, data->wall_horz_hit_y);
+		data->horizontal_distance = calculate_distance(s->player->initx, \
+		data->wall_horz_hit_x, ang);
 	else
 		data->horizontal_distance = INT_MAX;
 	if (data->wall_vert_intesected)
-		data->vertical_distance = calculate_distance(state->player->initx, \
-		state->player->inity, data->wall_vert_hit_x, data->wall_vert_hit_y);
+		data->vertical_distance = calculate_distance(s->player->initx, \
+		data->wall_vert_hit_x, ang);
 	else
 		data->vertical_distance = INT_MAX;
 }

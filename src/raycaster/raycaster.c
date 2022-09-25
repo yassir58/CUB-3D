@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:16:22 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/24 20:12:07 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/25 13:44:01 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ double	cast_ray(double ray_angle, t_raycast *data, t_global_state *state)
 {
 	horz_ray(ray_angle, data, state);
 	vert_ray(ray_angle, data, state);
-	calculate_ray_distance(state, data);
+	calculate_ray_distance(state, data, ray_angle);
 	if (data->vertical_distance > data->horizontal_distance)
 	{
 		data->was_intersection_vertical = false;
