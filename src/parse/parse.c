@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:17:59 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/22 15:19:19 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/25 11:09:37 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	add_params_to_list(char *line, t_game_params **params_list)
 	char	**splitted;
 	char	*key;
 	char	*value;
-	int		color;
 
 	splitted = get_key_value(line);
 	if (ft_strlen(splitted[0]) && ft_strlen(splitted[1]))
@@ -55,11 +54,7 @@ void	add_params_to_list(char *line, t_game_params **params_list)
 		if (!search_params_list(key, params_list))
 		{
 			if (check_identifier(key) == 2)
-			{
-				color = get_color(value);
-				free(value);
-				value = ft_itoa(color);
-			}
+				value = ft_itoa(get_color(value));
 			else if (check_identifier(key) == 1)
 				check_path(value);
 			else
