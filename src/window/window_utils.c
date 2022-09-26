@@ -6,7 +6,7 @@
 /*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 13:01:13 by yelatman          #+#    #+#             */
-/*   Updated: 2022/09/24 15:50:09 by yelatman         ###   ########.fr       */
+/*   Updated: 2022/09/25 18:52:23 by yelatman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,10 @@ void	play_sound(int flag)
 
 void	set_player_position(t_global_state *state, int x, int y)
 {
-	state->player->initx = x + (state->data->tile_x / 2);
-	state->player->inity = y + (state->data->tile_y / 2);
+	// state->player->initx = x + (state->data->tile_x / 2);
+	// state->player->inity = y + (state->data->tile_y / 2);
+	state->player->initx = x;
+	state->player->inity = y;
 	state->player->minimap_x = x + (MINIMAP_CEL / 2);
 	state->player->minimap_y = y + (MINIMAP_CEL / 2);
 }
