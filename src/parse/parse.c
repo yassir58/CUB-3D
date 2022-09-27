@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:17:59 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/25 11:09:37 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/27 12:21:05 by yelatman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	add_params_to_list(char *line, t_game_params **params_list)
 		else
 			app_error(3);
 	}
+	free(splitted);
 }
 
 void	get_lists(int fd, t_game_data *data)
@@ -77,7 +78,7 @@ void	get_lists(int fd, t_game_data *data)
 	params_list = NULL;
 	lines_list = NULL;
 	line = advanced_get_next_line(fd, 0);
-	while (!check_map_line(line))
+	while (!check_map_line(line) && i < 3)
 	{
 		add_params_to_list(line, &params_list);
 		free(line);
