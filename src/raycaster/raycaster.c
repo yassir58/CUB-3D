@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:16:22 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/25 13:44:01 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/27 11:14:18 by yelatman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,6 @@ void	raycaster(t_global_state *state)
 	col_height = 0;
 	ray_distance = 0;
 	ray_angle = deg_to_rad(state->player->v_angle) - (state->player->fov / 2.0);
-	state->cast->pp_distance = (RES_X_2) / (tan(state->player->fov / 2.0));
 	color(state, state->data->floor, RES_Y_2);
 	color(state, state->data->ceil, 0);
 	while (column_id < RES_X)
@@ -133,8 +132,7 @@ void	raycaster(t_global_state *state)
 		ray_distance = cast_ray(correct_angle(ray_angle), state->cast, state);
 		if (column_id == RES_X_2)
 			state->cast->distance_to_wall = ray_distance;
-		col_height = (state->data->tile_y / ray_distance) * \
-		state->cast->pp_distance;
+		col_height = (state->data->window_height / ray_distance) * state->data->tile_y;
 		draw_column (column_id, ((RES_Y_2) - (col_height / 2)), \
 		state, col_height);
 		ray_angle += state->player->fov / RES_X;
