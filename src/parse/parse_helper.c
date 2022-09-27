@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:17:55 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/22 13:23:44 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/27 12:11:06 by yelatman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	wall_line(char *line)
 	i = 0;
 	while (line[i])
 	{
-		if (!strchr(WALL_LINE, line[i]))
+		if (!ft_strchr(WALL_LINE, line[i]))
 			return (0);
 		i++;
 	}

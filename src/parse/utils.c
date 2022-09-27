@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:18:06 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/25 11:04:13 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/27 12:10:21 by yelatman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	validate_extension(char *path, char *ext)
 	int	size;
 
 	size = ft_strlen(path) - 4;
-	if (strcmp(ext, path + size))
+	if (ft_strcmp(ext, path + size))
 		app_error(4);
 }
 
