@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:16:22 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/25 13:44:01 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/27 18:09:23 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ double	cast_ray(double ray_angle, t_raycast *data, t_global_state *state)
 	}
 	render_txt(state, data, ray_angle);
 	return (data->ray_distance * \
-	cos(deg_to_rad(state->player->v_angle) - ray_angle));
+	cos(ray_angle - deg_to_rad(state->player->v_angle)));
 }
 
 void	horz_ray(double ray_angle, t_raycast *data, t_global_state *state)
