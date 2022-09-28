@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:17:24 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/22 13:20:46 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/28 13:00:11 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,18 @@ int	number_of_el(char **table)
 	return (i);
 }
 
-void	print_map(char **map)
+int	check_spaces(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (i < number_of_el(map))
+	while (str[i])
 	{
-		printf("%s\n", map[i]);
+		if (str[i] != ' ')
+			return (1);
 		i++;
 	}
+	return (0);
 }
 
 int	count_seperator(char *str, char c)

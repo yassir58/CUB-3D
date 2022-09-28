@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:25:20 by yelatman          #+#    #+#             */
-/*   Updated: 2022/09/27 12:10:52 by yelatman         ###   ########.fr       */
+/*   Updated: 2022/09/28 12:58:35 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,6 +286,7 @@ int				get_color(char *str);
 void			free_table(char **table);
 int				check_identifier(char *id);
 int				wall_line(char *line);
+int				check_spaces(char *str);
 // Error management
 
 void			app_error(int code);

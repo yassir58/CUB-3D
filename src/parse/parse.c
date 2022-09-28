@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:17:59 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/27 12:21:05 by yelatman         ###   ########.fr       */
+/*   Updated: 2022/09/28 13:00:46 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ void	add_params_to_list(char *line, t_game_params **params_list)
 	char	*key;
 	char	*value;
 
-	splitted = get_key_value(line);
-	if (ft_strlen(splitted[0]) && ft_strlen(splitted[1]))
+	splitted = NULL;
+	if (check_spaces(line))
+		splitted = get_key_value(line);
+	if (splitted && ft_strlen(splitted[0]) && ft_strlen(splitted[1]))
 	{
 		key = strip_whitespaces(splitted[0]);
 		value = strip_whitespaces(splitted[1]);
@@ -78,7 +80,7 @@ void	get_lists(int fd, t_game_data *data)
 	params_list = NULL;
 	lines_list = NULL;
 	line = advanced_get_next_line(fd, 0);
-	while (!check_map_line(line) && i < 3)
+	while (!check_map_line(line))
 	{
 		add_params_to_list(line, &params_list);
 		free(line);

@@ -10,7 +10,6 @@ This project object is to improve our skills in game development we will be lear
 - [x] Rendering the wall projections.
 - [x] Drawing Textures
 - [x] Add event for the mouse movements.
-- [ ] Converting the player rotation angle to radians.
  
 ## Modification:
 
