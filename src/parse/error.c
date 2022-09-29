@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:17:28 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/22 13:21:11 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/29 18:33:58 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	app_error(int code)
 	else if (code == 4)
 		printf("Error: invalid map or texture extension.\n");
 	else if (code == 5)
-		printf("Error: could not open file.\n");
+		printf("Error: could not open file, error reading the file.\n");
 	else if (code == 6)
 		printf("Error: invalid identifer\n");
 	else if (code == 7)
@@ -36,6 +36,8 @@ void	app_error(int code)
 		printf("Error: player does not exist.\n");
 	else if (code == 11)
 		printf("Error: missing identifiers.\n");
+	else if (code == 12)
+		printf("Error: empty file.\n");
 	exit(1);
 }
 
@@ -47,4 +49,20 @@ void	free_table(char **table)
 	while (table[i])
 		free(table[i++]);
 	free(table);
+}
+
+void	check_map_file(char *path)
+{
+	int		fd;
+	char	buff[1];
+
+	buff[0] = 0;
+	fd = open(path, O_RDONLY);
+	validate_extension(path, ".cub");
+	read(fd, buff, 1);
+	if (!buff[0])
+		app_error(12);
+	close(fd);
+	if (fd < 0)
+		app_error(5);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:18:06 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/27 12:10:21 by yelatman         ###   ########.fr       */
+/*   Updated: 2022/09/29 18:29:24 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,15 @@ int	check_identifier(char *id)
 
 void	check_path(char *path)
 {
-	int	fd;
+	int		fd;
+	char	buff[1];
 
-	validate_extension(path, ".xpm");
+	buff[0] = 0;
 	fd = open(path, O_RDONLY);
+	validate_extension(path, ".xpm");
+	read(fd, buff, 1);
+	if (!buff[0])
+		app_error(12);
 	close(fd);
 	if (fd < 0)
 		app_error(5);

@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:25:20 by yelatman          #+#    #+#             */
-/*   Updated: 2022/09/28 12:58:35 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/29 18:35:27 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -306,7 +306,7 @@ void			raycaster(t_global_state *state);
 double			castRay(double ray_angle, t_raycast *data,
 					t_global_state *state);
 double			getCorrectAgnle(double angle);
-double			calculate_distance(double xp, double xa, double angle);
+double			calculate_distance(double xp, double xa, double yp, double ya);
 int				check_wall(double x, double y, t_global_state *state);
 int				check_wall_move(double x, double y, t_global_state *state, \
 int flag);
@@ -358,6 +358,7 @@ void			vintercept(double ray_angle, t_raycast *data, \
 t_global_state *state);
 void			hintercept(double ray_angle, t_raycast *data, \
 t_global_state *state);
-void			calculate_ray_distance(t_global_state *state, \
-t_raycast *data, double angle);
-#endif 
+void			calculate_ray_distance(t_global_state *s, t_raycast *data);
+void			check_map_file(char *path);
+
+#endif
