@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 13:01:13 by yelatman          #+#    #+#             */
-/*   Updated: 2022/09/27 11:18:52 by yelatman         ###   ########.fr       */
+/*   Updated: 2022/09/29 16:02:43 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	play_sound(int flag)
 
 void	set_player_position(t_global_state *state, int x, int y)
 {
-	state->player->initx = x;
-	state->player->inity = y;
+	state->player->initx = x + (state->data->tile_x / 2);
+	state->player->inity = y + (state->data->tile_x / 2);
 	state->player->minimap_x = x + (MINIMAP_CEL / 2);
 	state->player->minimap_y = y + (MINIMAP_CEL / 2);
 }
