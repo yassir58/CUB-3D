@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:17:28 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/29 18:33:58 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/09/29 19:10:20 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	app_error(int code)
 	else if (code == 10)
 		printf("Error: player does not exist.\n");
 	else if (code == 11)
-		printf("Error: missing identifiers.\n");
+		printf("Error: missing identifiers. or duplicated identifer\n");
 	else if (code == 12)
-		printf("Error: empty file.\n");
+		printf("Error: empty file or file does not exist.\n");
 	exit(1);
 }
 
@@ -60,7 +60,7 @@ void	check_map_file(char *path)
 	fd = open(path, O_RDONLY);
 	validate_extension(path, ".cub");
 	read(fd, buff, 1);
-	if (!buff[0])
+	if (buff[0] == 0)
 		app_error(12);
 	close(fd);
 	if (fd < 0)
