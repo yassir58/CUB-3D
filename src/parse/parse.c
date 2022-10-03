@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:17:59 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/29 19:10:27 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/10/03 12:57:06 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,12 +98,10 @@ void	get_lists(int fd, t_game_data *data)
 	close(fd);
 }
 
-// Still need to check why the map is not validating the closing of the map.
-
 void	parse_map(char *path, t_global_state *state)
 {
 	int		fd;
-	
+
 	check_map_file(path);
 	fd = open(path, O_RDONLY);
 	get_lists(fd, state->data);
