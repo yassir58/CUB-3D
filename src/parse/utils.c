@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:18:06 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/29 18:29:24 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/10/03 15:46:26 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,11 @@ void	validate_color_number(char **table)
 			else
 				app_error(3);
 		}
+		if (!check_spaces(table[i]))
+			app_error(3);
 		i += 1;
 	}
+	
 }
 
 // Formulat to convert rgb to int: rgb = 65536 * r + 256 * g + b;

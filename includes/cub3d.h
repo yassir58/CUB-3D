@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:25:20 by yelatman          #+#    #+#             */
-/*   Updated: 2022/09/29 18:35:27 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/10/03 15:45:04 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,5 +360,6 @@ void			hintercept(double ray_angle, t_raycast *data, \
 t_global_state *state);
 void			calculate_ray_distance(t_global_state *s, t_raycast *data);
 void			check_map_file(char *path);
+int				check_only_spaces(char *str);
 
 #endif

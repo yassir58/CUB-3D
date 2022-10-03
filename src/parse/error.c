@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:17:28 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/29 19:10:20 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/10/03 15:43:33 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,4 +65,18 @@ void	check_map_file(char *path)
 	close(fd);
 	if (fd < 0)
 		app_error(5);
+}
+
+int	check_only_spaces(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+			return (1);
+		i++;
+	}
+	return (0);
 }
