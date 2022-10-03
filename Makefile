@@ -38,3 +38,5 @@ clean:
 fclean: clean
 	@cd src/lib/libft && make fclean && cd ../../..
 	rm -rf $(NAME) $(BONUS)
+	
+re:fclean all
