@@ -27,3 +27,13 @@ We will be building a game that is similar to the Wolfenstein 3D or Doom II
 - [x] Add event for the mouse movements.
 - [X] Converting the player rotation angle to radians.
  
+ ```bash
+# Clone this repository
+$ git clone https://github.com/yassir58/CUB-3D
+$ cd CUB-3D
+# Build executable
+$ make
+
+#run program
+$ ./cub3d maps/map.cub
+```
