@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:17:28 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/10/03 15:43:33 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/10/09 11:03:18 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	check_map_file(char *path)
 
 int	check_only_spaces(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])

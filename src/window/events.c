@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 13:01:37 by yelatman          #+#    #+#             */
-/*   Updated: 2022/09/24 12:16:38 by yelatman         ###   ########.fr       */
+/*   Updated: 2022/10/09 11:35:51 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,12 @@ int	mouse_handle(int x, int y, void *param)
 	(void)y;
 	state = (t_global_state *)param;
 	prev_pos = state->data->prev_pos_mouse;
+	if (x < 0)
+		prev_pos *= -1;
 	calc_pos = x - prev_pos;
-	if (calc_pos < 0)
+	printf("The x position: %d\n", x);
+	printf("The calculated position: %d\n",calc_pos);
+	if (calc_pos < 0) 
 		state->player->v_angle -= 2;
 	else
 		state->player->v_angle += 2;
