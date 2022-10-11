@@ -6,7 +6,7 @@
 /*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 13:01:37 by yelatman          #+#    #+#             */
-/*   Updated: 2022/10/10 12:46:56 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/10/11 10:12:05 by ochoumou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	mouse_handle(int x, int y, void *param)
 	if (x < 0)
 		prev_pos *= -1;
 	calc_pos = x - prev_pos;
-	if (calc_pos < 0) 
+	if (calc_pos < 0)
 		state->player->v_angle -= 2;
 	else
 		state->player->v_angle += 2;
