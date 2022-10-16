@@ -6,7 +6,7 @@
 /*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 15:21:09 by yelatman          #+#    #+#             */
-/*   Updated: 2022/09/24 15:53:38 by yelatman         ###   ########.fr       */
+/*   Updated: 2022/10/16 10:50:13 by yelatman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,18 @@ void	load_texture_images(t_global_state *state)
 void	init_shoot_sprites(t_global_state *state)
 {
 	int		i;
-	int		j;
 	char	*path;
+	char	*tmp;
+	char	*indx;
 
 	i = 0;
-	j = 1;
 	path = NULL;
 	state->sprites = malloc (sizeof (t_texture) * 7);
 	while (i < 7)
 	{
-		path = ft_strjoin ("frames/fr", ft_itoa(j));
-		path = ft_strjoin (path, ".xpm");
+		indx = ft_itoa(i + 1);
+		tmp = ft_strjoin ("frames/fr", indx);
+		path = ft_strjoin (tmp, ".xpm");
 		state->sprites[i].img.img = mlx_xpm_file_to_image (state->vars->mlx,
 				path, &state->sprites[i].width, &state->sprites[i].height);
 		state->sprites[i].img.addr = (int *)mlx_get_data_addr
@@ -88,7 +89,9 @@ void	init_shoot_sprites(t_global_state *state)
 				&state->sprites[i].img.bits_per_pixel,
 				&state->sprites[i].img.line_length,
 				&state->sprites[i].img.endian);
-		j++;
+		free (path);
+		free (tmp);
+		free (indx);
 		i++;
 	}
 }
@@ -96,17 +99,17 @@ void	init_shoot_sprites(t_global_state *state)
 void	init_releaod_sprites(t_global_state *state)
 {
 	int		i;
-	int		j;
 	char	*path;
+	char	*tmp;
+	char	*indx;
 
 	i = 0;
-	j = 8;
-	path = NULL;
 	state->releaod_sprites = malloc (sizeof (t_texture) * 10);
 	while (i < 10)
 	{
-		path = ft_strjoin ("frames/fr", ft_itoa(j));
-		path = ft_strjoin (path, ".xpm");
+		indx = ft_itoa(8 + i);
+		tmp = ft_strjoin ("frames/fr", indx);
+		path = ft_strjoin (tmp, ".xpm");
 		state->releaod_sprites[i].img.img = mlx_xpm_file_to_image
 			(state->vars->mlx, path,
 				&state->releaod_sprites[i].width,
@@ -116,7 +119,7 @@ void	init_releaod_sprites(t_global_state *state)
 				&state->releaod_sprites[i].img.bits_per_pixel,
 				&state->releaod_sprites[i].img.line_length,
 				&state->releaod_sprites[i].img.endian);
-		j++;
+		free_vars (path, tmp, indx);
 		i++;
 	}
 }

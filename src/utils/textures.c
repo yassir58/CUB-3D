@@ -6,7 +6,7 @@
 /*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 18:37:35 by yelatman          #+#    #+#             */
-/*   Updated: 2022/09/24 15:42:49 by yelatman         ###   ########.fr       */
+/*   Updated: 2022/10/16 10:53:14 by yelatman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,11 @@ void	init_hooks(t_global_state *state, int flag)
 		mlx_hook(state->vars->mlx_win, 6, 0L, mouse_handle, state);
 	else
 		mlx_hook(state->vars->mlx_win, 6, 0L, mouse_handle_2, state);
+}
+
+void	free_vars(char *path, char *indx, char *tmp)
+{
+	free (tmp);
+	free (indx);
+	free (path);
 }

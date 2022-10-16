@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 16:25:20 by yelatman          #+#    #+#             */
-/*   Updated: 2022/10/09 11:22:45 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/10/16 10:53:28 by yelatman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,5 +361,6 @@ t_global_state *state);
 void			calculate_ray_distance(t_global_state *s, t_raycast *data);
 void			check_map_file(char *path);
 int				check_only_spaces(char *str);
+void			free_vars(char *path, char *indx, char *tmp);
 
 #endif
