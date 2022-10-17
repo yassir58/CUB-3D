@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycaster.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ochoumou <ochoumou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/22 13:16:22 by ochoumou          #+#    #+#             */
-/*   Updated: 2022/09/29 17:00:30 by ochoumou         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:08:40 by yelatman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void	raycaster(t_global_state *state)
 			state->cast->distance_to_wall = ray_distance;
 		col_height = (state->data->window_height / ray_distance) \
 			* state->data->tile_y;
+		// printf ("%d \n");
 		draw_column (column_id, ((RES_Y_2) - (col_height / 2)), \
 		state, col_height);
 		ray_angle += state->player->fov / RES_X;

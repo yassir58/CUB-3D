@@ -6,7 +6,7 @@
 /*   By: yelatman <yelatman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 13:01:33 by yelatman          #+#    #+#             */
-/*   Updated: 2022/09/23 15:51:10 by yelatman         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:17:43 by yelatman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,11 @@ void	draw_column(int x, int y, t_global_state *state, double colHeight)
 	int	off_y;
 
 	start = y;
+	if(start < 0)
+		start = 0;
 	end = colHeight;
+	if(end > RES_Y)
+		end = RES_Y;
 	while (end--)
 	{
 		off_y = (start - y) * (state->current.height / colHeight);
