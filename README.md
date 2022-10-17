@@ -17,6 +17,8 @@ Goals:
 This project object is to improve our skills in game development we will be learning how to work with windows, colors, events, and fill shapes.
 We will be building a game that is similar to the Wolfenstein 3D or Doom II
 
+<img src="https://github.com/yassir58/CUB-3D/blob/main/assets/raycast.gif"/>
+
 ## Tasks:
 
 - [x] Parsing.
